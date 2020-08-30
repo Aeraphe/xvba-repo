@@ -1,0 +1,32 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: center;
+  height: 37px;
+  background-color: #262626;
+  padding: 7px;
+}
+
+.header  a{
+    color: #ffff;
+}
+.header-menu {
+  display: flex;
+}
+
+.header-menu li {
+  margin-left: 7px;
+}
+
+.header-menu li a{
+    color: #939393;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 1.1rem;
+    padding: 7px;
+    
+}
+
+.header-menu li a:hover{
+    color: #f4f4f4;
+}
