@@ -1,0 +1,10 @@
+.SearchResultBar{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 11px;
+    padding: 15px;
+    line-height: 33px;
+    height: 15px;
+    border-bottom:1px solid #CCCCCC;
+    
+}
