@@ -1,0 +1,14 @@
+.Search{
+    display: flex;
+    justify-content: center;
+    margin-top: 17px;
+}
+
+.Search-Title{
+    font-size: 11rem;
+}
+
+.Search-Input{
+    width: 35%;
+    height: 27px;
+}
