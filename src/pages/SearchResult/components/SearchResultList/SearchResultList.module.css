@@ -1,0 +1,57 @@
+.SearchResultList{
+
+    display: flex;
+    justify-content: space-between;
+    margin-top: 3px;
+    background-color: rgb(194, 202, 195);
+    min-height: 85px;
+    padding: 7px;
+    text-align: left;
+
+
+}
+
+.SearchResultList ul li{
+    font-size: 17px; 
+    margin: 5px;
+}
+
+.Package-Name a{
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.781);
+}
+
+.Package-Name a:hover{
+
+    font-size: 18px;
+    font-weight: bold;
+    color: rgb(1, 146, 1);
+  
+}
+
+.Description{
+    margin-top: 7px;
+}
+
+.User{
+    font-size: 15px;
+    margin-top: 7px;
+}
+
+.User a{
+    
+    margin-top: 7px;
+    font-weight: bold;
+    color: rgb(77, 117, 77);
+}
+
+.User a:hover{
+    color: rgb(7, 144, 7);
+}
+
+
+.Classification ul li{
+    font-size: 13px;
+    color: darkgreen;
+    font-weight: 500;
+}
