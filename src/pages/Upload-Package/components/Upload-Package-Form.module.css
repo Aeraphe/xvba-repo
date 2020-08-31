@@ -1,0 +1,42 @@
+.Uplaod-Package-Form{
+    display: block;
+    max-width: 350px;
+    background-color: #ffff;
+    margin: auto;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.Uplaod-Package-Form-Container{
+    margin-top: 17px;
+    padding-top: 25px;
+    border: 1px solid rgb(67, 114, 75);
+    height: 150px;
+    line-height: 37px;
+    padding-left: 25px;
+    padding-right: 25px;
+
+
+}
+.Uplaod-Package-Form-Container label{
+    display: block;
+    text-align: left;
+    font-size: 17px;
+
+
+
+}
+
+.Uplaod-Package-Form-Container input{
+    display: block;
+    text-align: left;
+    width: 100%;
+    height: 21px;
+    margin-bottom: 11px;
+    margin-bottom: 11px;
+
+}
+.Form-Btn{
+    position: relative;
+    right: -127px;
+    margin-top: 15px;
+}
