@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './Search.module.css';
+import { XvbaLogoSharedComp } from '../../../../shared/components/Xvba-Logo.shared.component';
 
 
 export const SearchComp = () => {
@@ -7,7 +8,7 @@ export const SearchComp = () => {
     return (
         <div>
             <div className={styles.Search}>
-                <div className={styles['Search-Title']}><span style={{ color: '#81B441', fontWeight: 'bold' }}>X</span>vba</div>
+                <XvbaLogoSharedComp size="7rem"></XvbaLogoSharedComp>
 
             </div>
             <SearchInputComp></SearchInputComp>
