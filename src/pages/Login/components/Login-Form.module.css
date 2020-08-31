@@ -1,0 +1,46 @@
+.Login-Form{
+    display: flex;
+    justify-content: center;
+}
+
+.Login-Form-Content{
+    border: solid 1px black;
+    height: 280px;
+    width: 317px;
+    padding: 21px;
+    background-color: #ffff;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    margin-top: 17px;
+    
+}
+
+.Login-Form-Content p{
+    font-size: 25px;
+    margin-bottom: 15px;
+    margin-top: 11px;
+}
+.Login-Form-Content label{
+    padding-top: 11px;
+    display: block;
+    text-align: left;
+    font-size: 15px;
+    color: black;
+
+}
+
+.Login-Form-Content input{
+  width: 100%;
+  height: 23px;
+  display: block;
+  margin: 3px 0 3px 0;
+  padding: 0 0 0 0;
+
+}
+
+
+.Form-Btn{
+    position: relative;
+    right: -137px;
+    margin-top: 21px;
+
+}
