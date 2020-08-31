@@ -14,6 +14,7 @@ export const Header = () => {
                     <li><Link to="/">Home</Link></li>
                     <li><Link to="/suport">Suport</Link></li>
                     <li><Link to="/tutorial">Tutorial</Link></li>
+                    <li> <Link to="/upload-package">Publish</Link></li>
                     <li><Link to="login">Login</Link></li>
                 </ul>
             </nav>
