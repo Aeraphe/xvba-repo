@@ -1,10 +1,11 @@
 import React from 'react';
 import { SerachResultBarComp } from './components/SearchResultBar/SearchResultBar.comp'
 import { SearchResultListComp } from './components/SearchResultList/SearchResultList.comp'
-
-export const SearchResultPage = () => {
+import { SearchComp } from './components/Search/Search.comp';
+export const SearchPage = () => {
     return (
         <div>
+            <SearchComp></SearchComp>
             <SerachResultBarComp></SerachResultBarComp>
             <SearchResultListComp 
             package="GausCurve" 
