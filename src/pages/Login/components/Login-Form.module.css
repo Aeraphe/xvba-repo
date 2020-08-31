@@ -5,6 +5,7 @@
 
 .Login-Form-Content{
     border: solid 1px black;
+    box-shadow: 0px 0px 21px -5px;
     height: 280px;
     width: 317px;
     padding: 21px;
@@ -42,5 +43,11 @@
     position: relative;
     right: -137px;
     margin-top: 21px;
+
+}
+
+.Form-Logout-Btn{
+  
+    margin-top: 27px;
 
 }
