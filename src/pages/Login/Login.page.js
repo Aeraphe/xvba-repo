@@ -1,25 +1,18 @@
 import React from 'react';
-import { auth } from 'firebase';
-
+import { XvbaLogoSharedComp } from '../../shared/components/Xvba-Logo.shared.component';
+import { LoginFormComponent } from "./components/Login-Form.component";
+import styles from './Login.module.css';
 
 export const LoginPage = () => {
 
     return (
-        <div>
-            <LoginComp></LoginComp>
+        <div className={styles['LoginPage']} >
+
+            <LoginFormComponent>
+                <XvbaLogoSharedComp size="3rem"></XvbaLogoSharedComp>
+
+            </LoginFormComponent>
         </div>
     )
 }
 
-const LoginComp = () => {
-
-    const log = () => {
-        let authFire = auth().signInWithEmailAndPassword('alberto.aeraph@gmail.com', 'yuri123#$');
-        console.log(authFire);
-    }
-    return (
-        <div>
-            {log()}
-        </div>
-    )
-}
