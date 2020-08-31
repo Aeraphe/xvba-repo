@@ -1,0 +1,33 @@
+.Footer{
+    position: absolute;
+    bottom: 0px;
+    background-color: rgb(59, 68, 59);
+    height: 61px;
+    width: 100%;
+}
+
+
+.Footer-Content{
+
+    display: flex;
+    justify-content: center;
+    margin: 7px;
+    padding-top: 3px;
+ 
+}
+
+
+.Footer-Content a{
+    color: #ffff;
+    font-size: 15px;
+}
+
+.Footer-Created-By {
+    color: #ffff;
+
+}
+
+.Footer-Created-By p{
+ 
+    font-size: 10px;
+}
