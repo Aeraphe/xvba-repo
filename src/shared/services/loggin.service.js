@@ -1,30 +1,27 @@
-import app from 'firebase/app';
+import { auth } from 'firebase';
 
 
 class FirebaseLoginService {
 
-    constructor() {
-        this.auth = app.auth();
-    }
 
     async login(email, pass) {
-        return await this.auth.signInWithEmailAndPassword(email, pass);
+        return await auth().signInWithEmailAndPassword(email, pass);
 
     }
 
     async logout() {
-        return await this.auth.signOut();
+        return await auth().signOut();
     }
 
     async register(name, email, password) {
-        await this.auth.createUserWithEmailAndPassword(email, password);
-        return this.auth.currentUser.updateProfile({
+        await auth().createUserWithEmailAndPassword(email, password);
+        return auth().currentUser.updateProfile({
             displayName: name
         })
     }
 
     getCurrentUser() {
-        return this.auth.currentUser ? this.auth.currentUser : undefined
+        return auth().currentUser?auth().currentUser:undefined
     }
 
 }
