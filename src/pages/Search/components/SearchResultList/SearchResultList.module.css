@@ -3,10 +3,12 @@
     display: flex;
     justify-content: space-between;
     margin-top: 3px;
-    background-color: rgb(251, 251, 251);
+    background-color: rgb(255, 255, 255);
     min-height: 85px;
     padding: 7px;
     text-align: left;
+    margin-left: 13px;
+    margin-right: 13px;
 
 
 }

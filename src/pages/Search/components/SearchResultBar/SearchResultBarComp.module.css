@@ -1,10 +1,12 @@
 .SearchResultBar{
     display: flex;
     justify-content: space-between;
-    margin-top: 11px;
     padding: 15px;
-    line-height: 33px;
-    height: 15px;
+    line-height: 7px;
+    height: 7px;
     border-bottom:1px solid #CCCCCC;
+    margin: 31px 13px -5px 13px; 
+    background-color: rgb(158, 209, 143);
+    font-size: 15px;
     
 }
