@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useSelector } from "react-redux";
 import styles from './Header.module.css'
 import { Link } from 'react-router-dom';
@@ -12,7 +12,7 @@ export const Header = () => {
             <nav >
                 <ul className={styles['header-menu']}>
                     <li><Link to="/">Home</Link></li>
-                    <li><Link to="/suport">Suport</Link></li>
+                    <li><Link to="/donate">Donate</Link></li>
                     <li><Link to="/tutorial">Tutorial</Link></li>
                     <li> <Link to="/upload-package">Publish</Link></li>
                     <li><Link to="login">{isLogged?'Logout':'Login'}</Link></li>
