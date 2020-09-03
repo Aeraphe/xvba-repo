@@ -7,11 +7,13 @@ export const SearchComp = () => {
 
     return (
         <div>
-            <div className={styles.Search}>
+            <div className={styles['Search-Logo']}>
                 <XvbaLogoSharedComp size="7rem"></XvbaLogoSharedComp>
-
             </div>
-            <SearchInputComp></SearchInputComp>
+            <div className={styles['Search-Container']}>
+                <SearchInputComp></SearchInputComp>
+            </div>
+
         </div>
 
     )

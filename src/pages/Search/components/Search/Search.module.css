@@ -1,7 +1,12 @@
-.Search{
+.Search-Logo{
     display: flex;
     justify-content: center;
     margin-top: 17px;
+}
+.Search-Container{
+    display: flex;
+    justify-content: center;
+
 }
 
 .Search-Title{
@@ -9,7 +14,8 @@
 }
 
 .Search-Input {
-    width: 35%;
+    
+    width: 350px;
     max-width: 350px;
     height: 27px;
 }
