@@ -19,14 +19,14 @@ function App() {
   return (
     <Provider store={store}>
       <BrowserRouter>
-        <div className="App">
+       
           <Template>
             <Route path='/' exact component={SearchPage}></Route>
             <Route path='/login' exact component={LoginPage}></Route>
             <Route path='/show-package/:package' exact component={ShowPackagePage} ></Route>
             <Route path='/upload-package' exact component={UploadPackagePage}></Route>
           </Template>
-        </div>
+       
       </BrowserRouter>
     </Provider>
 
