@@ -22,6 +22,8 @@
 
 .Footer-Created-By {
     color: #ffff;
+    display: flex;
+    justify-content: center;
 
 }
 
