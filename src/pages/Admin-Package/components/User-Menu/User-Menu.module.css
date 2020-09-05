@@ -1,7 +1,8 @@
 .Container{
     display:block;
-
-    margin:7px;
+    background-color: white;
+    height: 100%;
+    padding:7px;
     width: 257px;
 }
 
@@ -15,12 +16,15 @@
     background-position: center;
     height: 150px;
     background-color: rgb(139, 172, 152);
- 
     border: solid 1px #cccc;
+    transition: ease-in ;
+    transition-property: background-color,background-size;
+    transition-duration: 300ms;
 }
 
 .User-Image:hover{
     background-color: rgb(143, 149, 145);
+    background-size: 90px 90px;
 }
 
 .User-Menu-Btn button{
@@ -32,9 +36,10 @@
     background-color:rgb(107, 160, 131);
     text-align: left;
     color: #fff;
-    font-size: 17px;
+    font-size: 14px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     transition: ease-in ;
-    transition-property: background;
+    transition-property: background,padding-left;
     transition-duration: 300ms;
 }
 
@@ -42,7 +47,7 @@
     background-color:rgb(41, 82, 59); 
     padding-left: 10px;
 
-    transform: scale(1.01)
+ 
 
 }
 
