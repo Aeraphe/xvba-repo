@@ -1,0 +1,54 @@
+.Container{
+    display:block;
+
+    margin:7px;
+    width: 257px;
+}
+
+
+.User-Image{
+    display: flex;
+    justify-items: center;
+    background-image: url('/images/user-icon.png');
+    background-repeat: no-repeat;
+    background-size: 110px 110px;
+    background-position: center;
+    height: 150px;
+    background-color: rgb(139, 172, 152);
+ 
+    border: solid 1px #cccc;
+}
+
+.User-Image:hover{
+    background-color: rgb(143, 149, 145);
+}
+
+.User-Menu-Btn button{
+
+    border: solid 1px #ccc;
+    height: 37px;
+    width: 100%;
+    cursor: pointer;
+    background-color:rgb(107, 160, 131);
+    text-align: left;
+    color: #fff;
+    font-size: 17px;
+    transition: ease-in ;
+    transition-property: background;
+    transition-duration: 300ms;
+}
+
+.User-Menu-Btn button:hover{
+    background-color:rgb(41, 82, 59); 
+    padding-left: 10px;
+
+    transform: scale(1.01)
+
+}
+
+.User-Menu-Nav{
+
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+
+
+}
