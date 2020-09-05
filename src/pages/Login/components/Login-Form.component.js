@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-import FirebaseService from "../../../shared/services/loggin.service";
+import FirebaseService from "../../../shared/services/logging";
 import styles from "./Login-Form.module.css";
 import { CardShared } from '../../../shared/components/Card/Card.shared'
-import { login,logout} from "./authenticationSlice";
-import {  useDispatch,useSelector} from "react-redux";
+import { login, logout } from "./authenticationSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 let dispatch;
 let isLogged;
 export const LoginFormComponent = (props) => {
-    isLogged = useSelector(state=>state.auth.isLogged);
+    isLogged = useSelector(state => state.auth.isLogged);
     dispatch = useDispatch();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -30,7 +30,7 @@ export const LoginFormComponent = (props) => {
             <div style={{ display: isLogged ? "block" : "none" }}>
                 <CardShared height="180px" width="250px">
                     {props.children}
-                    <button className={styles['Form-Logout-Btn']} type="submit" onClick={e => sginout(e)}>Logout</button>
+                    <button className={styles['Form-Logout-Btn']} type="submit" onClick={e => signout(e)}>Logout</button>
                 </CardShared>
 
             </div>
@@ -50,11 +50,11 @@ export const LoginFormComponent = (props) => {
         }
     }
 
-    async function sginout(e) {
+    async function signout(e) {
         e.preventDefault();
         try {
             await FirebaseService.logout();
-        
+            dispatch(logout());
         } catch (error) {
             console.error(error.message);
         }
