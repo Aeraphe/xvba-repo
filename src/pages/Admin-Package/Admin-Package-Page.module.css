@@ -1,0 +1,40 @@
+.Upload-Package{
+    display: grid;
+    height: 100%;
+    grid-template-columns: 271px 1fr;
+    grid-template-rows: 1fr;
+    grid-template-areas: 'User-Menu' 'User-Content' 'User-Packages';
+    justify-items: center   ;
+}
+
+.User-Menu{
+    grid-area: 'User-Menu';
+    height: 100%;
+    width: 100%;
+    
+}
+
+.User-Content{
+    grid-area: 'User-Content';
+    background-color:#ffff;
+    height: 100%;
+    width: 100%;
+    
+}
+
+.Upload{
+
+    display: flex;
+    background-color:#ffff;
+    height: 100%;
+    width: auto;
+    padding: 17px;
+    background-color: chartreuse;
+    
+}
+
+.User-Packages{
+    grid-area: 'User-Packages';
+    background-color: chartreuse;
+    height: 100%;
+}
