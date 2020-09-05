@@ -1,0 +1,34 @@
+
+
+.Upload-Package-Form {
+
+
+  background-color: #ffff;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.Upload-Package-Form-Container {
+  padding-top: 25px;
+  line-height: 37px;
+  padding-left: 25px;
+  padding-right: 25px;
+}
+.Upload-Package-Form-Container label {
+  display: block;
+  text-align: left;
+  font-size: 17px;
+}
+
+.Upload-Package-Form-Container input {
+  display: block;
+  text-align: left;
+  width: auto;
+  height: 21px;
+  margin-bottom: 11px;
+  margin-bottom: 11px;
+}
+.Form-Btn {
+  position: relative;
+  left: 250px;
+  margin-top: 15px;
+}
