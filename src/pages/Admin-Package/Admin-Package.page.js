@@ -3,6 +3,7 @@ import { UploadPackageForm } from "./components/Upload-Form/Upload-Package-Form.
 import styles from "./Admin-Package-Page.module.css";
 import { Modal } from "../../shared/components/index";
 import { UserMenuComp } from './components/User-Menu/User-Menu';
+import { UserListPackagesComp } from './components/User-List-Packages/User-List-Packages.comp';
 
 
 export const AdminPackagePage = () => {
@@ -14,9 +15,7 @@ export const AdminPackagePage = () => {
                 <UserMenuComp></UserMenuComp>
             </div>
             <div className={styles['User-Content']}>
-                <div className={styles['Upload']} >
-
-                </div>
+                <UserListPackagesComp></UserListPackagesComp>
             </div>
 
             <Modal height="210px">
