@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { UploadPackageForm } from "./components/Upload-Form/Upload-Package-Form.comp";
 import styles from "./Admin-Package-Page.module.css";
 import { Modal } from "../../shared/components/index";
@@ -8,17 +8,22 @@ import { UserListPackagesComp } from './components/User-List-Packages/User-List-
 
 export const AdminPackagePage = () => {
 
+    const [uploadPackageModalShow, setUploadPackageModalShow] = useState(false);
+    let handleShowPackageModal = () => {
+        setUploadPackageModalShow(!uploadPackageModalShow)
+    }
+
     return (
         <div className={styles['Upload-Package']}>
 
             <div className={styles['User-Menu']}>
-                <UserMenuComp></UserMenuComp>
+                <UserMenuComp showModalPackageUpload={() => handleShowPackageModal}></UserMenuComp>
             </div>
             <div className={styles['User-Content']}>
                 <UserListPackagesComp></UserListPackagesComp>
             </div>
 
-            <Modal height="210px">
+            <Modal height="210px" show={uploadPackageModalShow} showModal={() => handleShowPackageModal}>
                 <UploadPackageForm></UploadPackageForm>
             </Modal>
         </div>
