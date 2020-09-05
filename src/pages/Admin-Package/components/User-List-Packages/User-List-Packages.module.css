@@ -1,0 +1,28 @@
+.Container{
+    display: flex;
+    justify-items: center;
+    height: 100%;
+
+    margin: 7px;
+
+}
+
+.Header{
+    display: grid;
+    grid-template-columns: 57px 1fr 10% 10% 45px 61px;
+    text-align: center;
+    width: 100%;
+    font-size: 15px;
+    height: 37px;
+    line-height: 37px;
+    background-color: rgb(191, 216, 187);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.Header div{
+    border: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+.Header div:hover{
+    background-color: rgb(160, 189, 156);
+}
