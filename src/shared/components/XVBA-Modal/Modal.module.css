@@ -1,5 +1,13 @@
-.Modal {
+.Modal-Outer {
   position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+.Modal {
+  position: absolute;
   top: 0;
   left: 0;
   bottom: 0;
@@ -7,37 +15,35 @@
   background-color: rgb(0, 0, 0, 0.4);
   animation-name: on_show;
   animation-duration: 350ms;
-  animation-timing-function: linear;
+  animation-timing-function: ease-in-out;
 }
 
 .Modal-Container {
   position: relative;
-  margin: auto;
+  z-index: 10;
   border: 1px solid rgb(67, 114, 75);
   box-shadow: 0px 0px 21px -5px;
   top: 25%;
+  margin: auto;
   max-width: 450px;
   height: 210px;
   background-color: #ffff;
 }
-.Modal-Content{
+.Modal-Content {
   display: block;
-
-
 }
 
 .Modal-Close {
   position: absolute;
   top: 0px;
   right: 0px;
- 
+
   font-weight: 500;
-  
+
   cursor: pointer;
   width: 35px;
-
 }
-.Modal-Close-btn{
+.Modal-Close-btn {
   display: block;
   width: 30px;
   height: 25px;
@@ -49,7 +55,7 @@
   color: black;
 }
 
-.Modal-Close-btn:hover{
+.Modal-Close-btn:hover {
   background-color: crimson;
   color: white;
 }
@@ -57,22 +63,22 @@
 @keyframes on_show {
   0% {
     background-color: rgb(0, 0, 0, 0.1);
-    opacity: 0%;
+    opacity: 10%;
   }
   25% {
     background-color: rgb(0, 0, 0, 0.2);
-    opacity: 25%;
+    opacity: 35%;
   }
   50% {
     background-color: rgb(0, 0, 0, 0.3);
-    opacity: 50%;
+    opacity: 55%;
   }
   75% {
     background-color: rgb(0, 0, 0, 0.4);
-    opacity: 75%;
+    opacity: 65%;
   }
   100% {
     background-color: rgb(0, 0, 0, 0.5);
-    opacity: 100%;
+    opacity: 75%;
   }
 }
