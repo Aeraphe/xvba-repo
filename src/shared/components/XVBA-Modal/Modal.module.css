@@ -13,10 +13,13 @@
   bottom: 0;
   right: 0;
   background-color: rgb(0, 0, 0, 0.4);
-  animation-name: on_show;
-  animation-duration: 350ms;
-  animation-timing-function: ease-in-out;
+  animation-name: onShow ;
+  animation-duration:  350ms ;
+  animation-timing-function: linear;
+
 }
+
+
 
 .Modal-Container {
   position: relative;
@@ -60,25 +63,25 @@
   color: white;
 }
 
-@keyframes on_show {
+@keyframes onShow {
   0% {
     background-color: rgb(0, 0, 0, 0.1);
-    opacity: 10%;
+    opacity: 0.1;
   }
   25% {
     background-color: rgb(0, 0, 0, 0.2);
-    opacity: 35%;
+    opacity:  0.35;
   }
   50% {
     background-color: rgb(0, 0, 0, 0.3);
-    opacity: 55%;
+    opacity:  0.55;
   }
   75% {
     background-color: rgb(0, 0, 0, 0.4);
-    opacity: 65%;
+    opacity:  0.65;
   }
   100% {
     background-color: rgb(0, 0, 0, 0.5);
-    opacity: 75%;
+    opacity: 0.65;
   }
 }
