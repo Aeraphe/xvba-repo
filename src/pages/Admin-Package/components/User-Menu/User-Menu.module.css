@@ -1,9 +1,15 @@
 .Container{
-    display:block;
+    display:relative;
     background-color: white;
     height: 100%;
-    padding:7px;
-    width: 257px;
+    width: 100%;
+}
+
+.Menu{
+    display:relative;
+    background-color: white;
+   padding: 5px;
+
 }
 
 
@@ -12,9 +18,9 @@
     justify-items: center;
     background-image: url('/images/user-icon.png');
     background-repeat: no-repeat;
-    background-size: 110px 110px;
+    background-size: 97px 97px;
     background-position: center;
-    height: 150px;
+    height: 130px;
     background-color: rgb(139, 172, 152);
     border: solid 1px #cccc;
     transition: ease-in ;
@@ -30,7 +36,7 @@
 .User-Menu-Btn button{
 
     border: solid 1px #ccc;
-    height: 37px;
+    height: 31px;
     width: 100%;
     cursor: pointer;
     background-color:rgb(107, 160, 131);

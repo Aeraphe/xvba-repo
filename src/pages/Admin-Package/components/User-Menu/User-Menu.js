@@ -5,10 +5,12 @@ export const UserMenuComp = (props) => {
 
     return (
         <div className={styles['Container']}>
-            <div className={styles['User-Image']}>
-            </div>
-            <div className={styles['User-Menu-Nav']}>
-                <UserMenuButtons showModalPackages={props.showModalPackageUpload}></UserMenuButtons>
+            <div className={styles['Menu']}>
+                <div className={styles['User-Image']}>
+                </div>
+                <div className={styles['User-Menu-Nav']}>
+                    <UserMenuButtons showModalPackages={props.showModalPackageUpload}></UserMenuButtons>
+                </div>
             </div>
         </div>
     )
