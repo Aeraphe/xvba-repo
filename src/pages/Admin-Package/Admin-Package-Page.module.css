@@ -1,7 +1,7 @@
 .Upload-Package{
     display: grid;
     height: 100%;
-    grid-template-columns: 271px 1fr;
+    grid-template-columns: 210px 1fr;
     grid-template-rows: 1fr;
     grid-template-areas: 'User-Menu' 'User-Content' 'User-Packages';
     justify-items: center   ;
