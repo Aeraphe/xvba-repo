@@ -1,13 +1,18 @@
-.header {
+.Container {
+  display: relative;
+  height: 100%;
+  width: 100%;
+
+}
+.header{
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
   align-items: center;
-  height: 33px;
   background-color: #262626;
   padding: 7px;
+  
 }
-
 .header  a{
     color: #ffff;
 }
