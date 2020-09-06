@@ -1,6 +1,6 @@
 .Footer{
     background-color: rgb(59, 68, 59);
-    height: 70px;
+    height: 63px;
     width: 100%;
 }
 
@@ -17,8 +17,8 @@
 
 .Footer-Content a{
     color: #ffff;
-    font-size: 15px;
-    padding-top: 15px;
+    font-size: 12px;
+    padding-top: 12px;
 }
 
 .Footer-Created-By {

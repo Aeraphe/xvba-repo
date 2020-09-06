@@ -3,7 +3,7 @@
   justify-content: space-between;
   flex-wrap: wrap;
   align-items: center;
-  height: 37px;
+  height: 33px;
   background-color: #262626;
   padding: 7px;
 }
@@ -22,7 +22,7 @@
 .header-menu li a{
     color: #939393;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    font-size: 1.1rem;
+    font-size: 1.0rem;
     padding: 7px;
     
 }
