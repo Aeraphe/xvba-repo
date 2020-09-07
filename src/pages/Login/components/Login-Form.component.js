@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
-import FirebaseService from "../../../shared/services/logging";
+import { loginFirebase, logoutFirebase } from "../../../shared/services/logging";
 import styles from "./Login-Form.module.css";
 import { CardShared } from '../../../shared/components/Card/Card.shared'
-import { login, logout } from "./authenticationSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
-let dispatch;
 let isLogged;
 export const LoginFormComponent = (props) => {
     isLogged = useSelector(state => state.auth.isLogged);
-    dispatch = useDispatch();
+    const dispatch = useDispatch();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     return (
@@ -40,24 +39,12 @@ export const LoginFormComponent = (props) => {
 
     async function authentication(e) {
         e.preventDefault();
-        try {
-
-            await FirebaseService.login(email, password);
-            dispatch(login())
-
-        } catch (error) {
-
-        }
+        await loginFirebase(email, password, dispatch);
     }
 
     async function signout(e) {
         e.preventDefault();
-        try {
-            await FirebaseService.logout();
-            dispatch(logout());
-        } catch (error) {
-            console.error(error.message);
-        }
+        await logoutFirebase(dispatch);
 
     }
 

@@ -1,30 +1,39 @@
 import { auth } from 'firebase';
+import { login, logout } from "../reducers/authenticationSlice";
 
 
-class FirebaseLoginService {
 
-
-    async login(email, pass) {
-        return await auth().signInWithEmailAndPassword(email, pass);
-
-    }
-
-    async logout() {
-        return await auth().signOut();
-    }
-
-    async register(name, email, password) {
-        await auth().createUserWithEmailAndPassword(email, password);
-        return auth().currentUser.updateProfile({
-            displayName: name
-        })
-    }
-
-    getCurrentUser() {
-        return auth().currentUser?auth().currentUser:undefined
+export const loginFirebase = async (email, pass, dispatch) => {
+    try {
+        const logData = await auth().signInWithEmailAndPassword(email, pass);
+        const token = (await logData.user.getIdTokenResult()).token;
+        const expirationTime = (await logData.user.getIdTokenResult()).expirationTime;
+        dispatch(login({ token, expirationTime }))
+    } catch (error) {
+        console.error(error.message);
     }
 
 }
 
+export const logoutFirebase = async (dispatch) => {
+    try {
+        await auth().signOut();
+        dispatch(logout());
+    } catch (error) {
+        console.error(error.message);
+    }
+}
 
-export default new FirebaseLoginService();
+export const register = async (name, email, password) => {
+    await auth().createUserWithEmailAndPassword(email, password);
+    return auth().currentUser.updateProfile({
+        displayName: name
+    })
+}
+
+export const getCurrentUser = () => {
+    return auth().currentUser ? auth().currentUser : undefined
+}
+
+
+
