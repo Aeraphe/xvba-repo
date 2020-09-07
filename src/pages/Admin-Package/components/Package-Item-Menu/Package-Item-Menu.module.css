@@ -1,0 +1,65 @@
+.Container {
+ position: relative;
+display: flex;
+  border: 0px solid;
+  width: 100%;
+  height: 100%;
+ 
+}
+
+.List-Item {
+  overflow: hidden;
+  display: flex;
+  justify-content: space-between;
+  border-width: 0px;
+  width: 100%;
+  height: 100%;
+}
+
+.Btn-Show {
+  display: block;
+  width: 17px;
+  height: 20px;
+  line-height: 16px;
+  font-size: 21px;
+  font-weight: bold;
+  cursor: pointer;
+  margin: 3px;
+}
+
+.Btn-Show:hover {
+  color: rgb(0, 0, 0);
+  background-color: rgb(98, 211, 113);
+  overflow: hidden;
+}
+
+
+.Menu {
+  position: absolute;
+  z-index: 10;
+  right: -30px;
+  top: 20px;
+   width: 80px;
+  border-collapse: collapse;
+ 
+}
+
+.Menu ul li {
+  height: 23px;
+  font-size: 12px;
+  line-height: 23px;
+  cursor: pointer;
+  background-color: rgb(107, 197, 104);
+  border: solid 1px #fff;
+  font-weight: 600;
+  transition-property:background-color ;
+  transition-duration: 550ms;
+  transition-timing-function: ease-in-out;
+
+}
+
+.Menu ul li:hover {
+  background-color: rgb(46, 90, 57);
+  overflow: hidden;
+  color: #fff;
+}
