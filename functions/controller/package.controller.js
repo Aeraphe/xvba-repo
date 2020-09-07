@@ -1,16 +1,23 @@
-
-//functions/controller
-
 /**
  * Package Controller
+ * @author Alberto Eduardo alberto.aeraph@gmail.com
  */
 const admin = require('../firestore.init');
-
 const db = admin.firestore();
+
 module.exports = {
     getPackage: async () => {
-        return await db.collection('packages').get()
-     },
+        let packages = [];
+        await db.collection('packages').get().then(function (querySnapshot) {
+
+            querySnapshot.forEach(function (doc) {
+                packages.push({ id: doc.id, package: doc.data() })
+
+            });
+
+        })
+        return packages;
+    },
     addPackage: async (req) => {
         const pack = {
             name: 'gauss-curve',

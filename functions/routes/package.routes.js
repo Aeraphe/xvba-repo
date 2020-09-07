@@ -11,10 +11,10 @@ const router = express.Router();
 router
     .post('/', async (req, res) => {
         const response = await packageController.addPackage(req)
-         res.send(JSON.stringify(response));
+        res.send(JSON.stringify(response));
     }).get('/', async (req, res) => {
         const response = await packageController.getPackage();
-         res.send(response);
+        res.json(response);
     })
 
 module.exports = router
