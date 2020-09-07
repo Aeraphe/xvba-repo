@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './SearchResultBarComp.module.css';
 
 
-export const SerachResultBarComp = () => {
+export const SearchResultBarComp = () => {
 
     return (
         <div className={styles.SearchResultBar}>
