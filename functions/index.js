@@ -1,4 +1,9 @@
-
+/**
+ * XVBA repository api
+ * @author Alberto Eduardo  alberto.aeraph@yahoo.com
+ * @since 07/09/2020
+ * 
+ */
 const  bodyParser = require('body-parser');
 const  express = require('express');
 const functions = require('firebase-functions');
