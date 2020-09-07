@@ -5,5 +5,10 @@ const url = baseUrl + apiVersion;
  * Global Api Endpoints Manager
  */
 export const packages = {
-    get: url + 'packages'
+    url: url + 'packages'
 }
+
+export const users ={
+    url: url + 'users'
+}
+
