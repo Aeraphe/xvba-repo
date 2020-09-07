@@ -7,6 +7,7 @@
 const  bodyParser = require('body-parser');
 const  express = require('express');
 const functions = require('firebase-functions');
+var cors = require('cors')
 //Routes
 const userRoutes = require('./routes/user.routes');
 const packageRoutes = require('./routes/package.routes') ;
@@ -17,8 +18,10 @@ require('./firestore.init');
 
 
 let app = express();
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }))
+
 module.exports.api = functions.https.onRequest(app);
 
 //Load api Routes
