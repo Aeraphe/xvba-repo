@@ -1,5 +1,6 @@
 import React from "react";
 import styles from './User-List-Packages.module.css'
+import { PackageItemMenuComp } from "../Package-Item-Menu/Package-Item-Menu.comp";
 
 export const UserListPackagesComp = () => {
 
@@ -35,7 +36,7 @@ const PackageListItem = () => {
 
             <div className={styles['Body-Item']}>
                 <div>Item</div>
-                <div>Name</div>
+                <div><PackageItemMenuComp>Name</PackageItemMenuComp></div>
                 <div>Version</div>
                 <div>Rating</div>
                 <div>Installs</div>
