@@ -18,12 +18,12 @@ module.exports = {
         })
         return packages;
     },
+    /**
+     * @param {Request} req
+     */
     addPackage: async (req) => {
-        const pack = {
-            name: 'gauss-curve',
-            file: 'gauss.xvba'
-        }
-        const response = await db.collection('packages').add(pack);
+
+        const response = await db.collection('packages').add(req);
         return response
     }
 }
