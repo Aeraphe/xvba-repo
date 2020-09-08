@@ -29,8 +29,17 @@ class PackagesHttpService {
      * 
      * @param {string} search 
      */
-    search = async (search) => {
+    fuseSearch = async (search) => {
         let data = { name: search }
+        return await axios.post(endpoints.packages.url + '/fuse-search', data, config).then(
+            res => {
+                return res.data
+            }
+        )
+    }
+
+    search =  async (search) =>{
+        let data ={name:search};
         return await axios.post(endpoints.packages.url + '/search', data, config).then(
             res => {
                 return res.data
