@@ -2,15 +2,15 @@ import React from 'react';
 import styles from './SearchResultBarComp.module.css';
 
 
-export const SearchResultBarComp = () => {
+export const SearchResultBarComp = (props) => {
 
     return (
         <div className={styles.SearchResultBar}>
             <div>
-                Find 10 results
+                Find {props.total} results
             </div>
             <div>
-                1,2,3,4...
+               Pages: {Math.ceil(props.total/10)}
             </div>
         </div>
     )
