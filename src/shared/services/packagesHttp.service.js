@@ -24,6 +24,19 @@ class PackagesHttpService {
             }
         )
     }
+    /**
+     * Search for packages by name
+     * 
+     * @param {string} search 
+     */
+    search = async (search) => {
+        let data = { name: search }
+        return await axios.post(endpoints.packages.url + '/search', data, config).then(
+            res => {
+                return res.data
+            }
+        )
+    }
 }
 
 
