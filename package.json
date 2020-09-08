@@ -10,6 +10,7 @@
     "axios": "^0.20.0",
     "firebase": "^7.19.0",
     "firebaseui": "^4.6.1",
+    "lodash": "^4.17.20",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-redux": "^7.2.1",
