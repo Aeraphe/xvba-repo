@@ -38,9 +38,9 @@ class PackagesHttpService {
         )
     }
 
-    search =  async (search) =>{
+    searchByName =  async (search) =>{
         let data ={name:search};
-        return await axios.post(endpoints.packages.url + '/search', data, config).then(
+        return await axios.post(endpoints.packages.url + '/search-name', data, config).then(
             res => {
                 return res.data
             }
