@@ -6,9 +6,7 @@ module.exports.format = (data, req, status) => {
             "code": status.code ? status.code : 500,
             "message": status.message ? status.message : "Default message"
         },
-        data: {
-            ...data
-        },
+        data: data,
         pagination: {
             "url": url,
         }
