@@ -67,7 +67,7 @@ export const SearchComp = () => {
 
 const handlerGetPackages = async (val) => {
 
-    let packages = await PackagesHttpService.search(val);
+    let packages = await PackagesHttpService.fuseSearch(val);
     let response = [];
     let totalPackages = packages.data.length;
     if (totalPackages > 0) {
