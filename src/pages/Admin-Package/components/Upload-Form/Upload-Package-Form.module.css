@@ -2,7 +2,7 @@
 
 .Upload-Package-Form {
   position: relative;
-  height: 351px;
+  height: 100%;
   background-color: #ffff;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
@@ -20,17 +20,21 @@
   font-size: 17px;
 }
 
+.Btn-Container{
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+}
 
 .Form-Btn {
-  position: absolute;
-  display: flex;
-  right: 25px;
-  margin-top: 15px;
+  margin: 7px 0 15px 0;
 }
 
 
 .Description{
   width: 100%;
+  min-height: 47px;
+  resize: vertical;
 }
 
 .Package-Name-Input{

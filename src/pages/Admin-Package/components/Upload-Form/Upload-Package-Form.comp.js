@@ -14,7 +14,10 @@ export const UploadPackageForm = () => {
                     <label htmlFor="file"> Choose a file: </label>
                     <p><input id="file" type="file" ></input></p>
                     <hr></hr>
+                    <div className={styles['Btn-Container']}>
                     <button className={styles['Form-Btn']} type="submit">Upload</button>
+                    </div>
+                   
                 </div>
 
             </form>
