@@ -9,33 +9,36 @@ export const UploadPackageForm = () => {
     const [isValid, setValidName] = useState('')
     const checkNameDebounce =
         _.debounce(async (val) => {
-            if (lastSearch !== val && val !== "") {
-                setSearch(val)
+            if (lastSearch !== val && val !== "" && val.length >= 3) {
+
+                setValidName(<span style={{ color: 'green', fontWeight: '500', fontSize: '13px' }}>Checking Name...</span>);
                 lastSearch = val;
                 const isValidName = await handleSearchNameExists(val);
                 console.log(isValidName)
                 if (isValidName) {
-                    setValidName(<span style={{color:'blue', fontWeight:'500',fontSize:'13px'}}>Valid</span>);
+                    setSearch(val)
+                    setValidName(<span style={{ color: 'blue', fontWeight: '500', fontSize: '13px' }}>Valid</span>);
                 } else {
-                    setValidName(<span style={{color:'red', fontWeight:'500',fontSize:'13px'}}>Name already in use</span>);
+                    setSearch('')
+                    setValidName(<span style={{ color: 'red', fontWeight: '500', fontSize: '13px' }}>Name already in use</span>);
                 }
 
             }
 
-        }, 2500);
-
-
+        }, 1500);
 
     const handleOnChangeInputPackageName = (e) => {
         checkNameDebounce(e.target.value)
     }
+
+
     return (
 
         <div>
             <form className={styles['Upload-Package-Form']}>
                 <div className={styles['Upload-Package-Form-Container']}>
                     <label htmlFor="package_name"> Package name: {isValid}</label>
-                    <input onChange={e => handleOnChangeInputPackageName(e)} className={styles['Package-Name-Input']} id="package_name" type="text" placeholder="Package Name"></input>
+                    <input minLength={3} onChange={e => handleOnChangeInputPackageName(e)} className={styles['Package-Name-Input']} id="package_name" type="text" placeholder="Package Name"></input>
                     <label htmlFor="description"> Description: </label>
                     <textarea id="description" className={styles['Description']} cols={1} rows={3}></textarea>
                     <label htmlFor="file"> Choose a file: </label>
@@ -55,15 +58,9 @@ export const UploadPackageForm = () => {
 
 
 const handleSearchNameExists = async (name) => {
-
     const existName = await PackagesHttpService.searchByName(name).then(
         res => {
-            if (res.data.length > 0) {
-                return false;
-            } else {
-                return true;
-            }
-
+            return res.data.length > 0 ? false : true;
         }
     )
     return existName;
