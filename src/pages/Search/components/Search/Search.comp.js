@@ -1,14 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './Search.module.css';
 import { XvbaLogoSharedComp } from '../../../../shared/components/Xvba-Logo.shared.component';
 import { SearchResultBarComp } from '../SearchResultBar/SearchResultBar.comp';
 import { SearchResultListComp } from '../SearchResultList/SearchResultList.comp';
 import PackagesHttpService from '../../../../shared/services/packagesHttp.service';
 import _ from 'lodash';
+let lastSearch = "";
 
 export const SearchComp = () => {
+
     const [packages, setPackages] = useState([]);
     const [search, setSearch] = useState("");
+    const [showSearching, setShowSearching] = useState(false);
 
     const debounceSearch = _.debounce((val) => {
         if (val) {
@@ -17,10 +20,23 @@ export const SearchComp = () => {
     }, 200)
 
     const handleOnChangeSearchText = (e) => {
+
         debounceSearch(e.target.value)
     }
+
+    useEffect(() => {
+        setShowSearching(false);
+    }, [packages])
+
     const handleOnClickSearch = async () => {
-        setPackages(await handlerGetPackages(search))
+
+        if (lastSearch !== search) {
+            lastSearch = search;
+            setShowSearching(!showSearching);
+            setPackages(await handlerGetPackages(search))
+
+
+        }
     }
     const handleKeyPress = (event) => {
         if (event.key === 'Enter') {
@@ -31,13 +47,16 @@ export const SearchComp = () => {
     return (
         <div>
             <div className={styles['Search-Logo']}>
-                <XvbaLogoSharedComp size="7rem"></XvbaLogoSharedComp>
+                <XvbaLogoSharedComp size="7rem">
+
+                </XvbaLogoSharedComp>
             </div>
             <div className={styles['Search-Container']}>
+            
                 <input onKeyPress={e => handleKeyPress(e)} onChange={(e) => handleOnChangeSearchText(e)} placeholder="Search VBA Package" className={styles['Search-Input']}></input>
                 <button onClick={() => handleOnClickSearch()} className={styles['Search-Input-Btn']}>Search</button>
             </div>
-            
+            <div style={{ display: showSearching ? 'flex' : 'none',marginLeft:'17px', fontSize: "21px", color:'green', }}><b>Searching... </b> </div>
             {packages}
         </div>
 
@@ -52,7 +71,7 @@ const handlerGetPackages = async (val) => {
     let response = [];
     let totalPackages = packages.data.length;
     if (totalPackages > 0) {
-         response.push(<SearchResultBarComp key="search_result_bar_key" total={totalPackages}></SearchResultBarComp>);
+        response.push(<SearchResultBarComp key="search_result_bar_key" total={totalPackages}></SearchResultBarComp>);
         packages.data.forEach((item, index) => {
             response.push(
                 <SearchResultListComp key={index}
