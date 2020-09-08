@@ -13,36 +13,30 @@
   bottom: 0;
   right: 0;
   background-color: rgb(0, 0, 0, 0.4);
-  animation-name: onShow ;
-  animation-duration:  350ms ;
+  animation-name: onShow;
+  animation-duration: 350ms;
   animation-timing-function: linear;
-
 }
-
-
 
 .Modal-Container {
   position: relative;
-  z-index: 10;
   border: 1px solid rgb(67, 114, 75);
   box-shadow: 0px 0px 21px -5px;
   top: 25%;
   margin: auto;
   max-width: 450px;
-  height: 210px;
   background-color: #ffff;
 }
 .Modal-Content {
   display: block;
+  height: 350px;
 }
 
 .Modal-Close {
   position: absolute;
   top: 0px;
   right: 0px;
-
   font-weight: 500;
-
   cursor: pointer;
   width: 35px;
 }
@@ -70,15 +64,15 @@
   }
   25% {
     background-color: rgb(0, 0, 0, 0.2);
-    opacity:  0.35;
+    opacity: 0.35;
   }
   50% {
     background-color: rgb(0, 0, 0, 0.3);
-    opacity:  0.55;
+    opacity: 0.55;
   }
   75% {
     background-color: rgb(0, 0, 0, 0.4);
-    opacity:  0.65;
+    opacity: 0.65;
   }
   100% {
     background-color: rgb(0, 0, 0, 0.5);
