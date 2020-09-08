@@ -14,7 +14,7 @@ export const SearchComp = () => {
         if (val) {
             setSearch(val)
         }
-    }, 500)
+    }, 200)
 
     const handleOnChangeSearchText = (e) => {
         debounceSearch(e.target.value)
@@ -22,7 +22,11 @@ export const SearchComp = () => {
     const handleOnClickSearch = async () => {
         setPackages(await handlerGetPackages(search))
     }
-
+    const handleKeyPress = (event) => {
+        if (event.key === 'Enter') {
+            handleOnClickSearch()
+        }
+    }
 
     return (
         <div>
@@ -30,10 +34,10 @@ export const SearchComp = () => {
                 <XvbaLogoSharedComp size="7rem"></XvbaLogoSharedComp>
             </div>
             <div className={styles['Search-Container']}>
-                <input onChange={(e) => handleOnChangeSearchText(e)} placeholder="Search VBA Package" className={styles['Search-Input']}></input>
+                <input onKeyPress={e => handleKeyPress(e)} onChange={(e) => handleOnChangeSearchText(e)} placeholder="Search VBA Package" className={styles['Search-Input']}></input>
                 <button onClick={() => handleOnClickSearch()} className={styles['Search-Input-Btn']}>Search</button>
             </div>
-            <SearchResultBarComp></SearchResultBarComp>
+            
             {packages}
         </div>
 
@@ -46,7 +50,9 @@ const handlerGetPackages = async (val) => {
 
     let packages = await PackagesHttpService.search(val);
     let response = [];
-    if (packages?.data) {
+    let totalPackages = packages.data.length;
+    if (totalPackages > 0) {
+         response.push(<SearchResultBarComp key="search_result_bar_key" total={totalPackages}></SearchResultBarComp>);
         packages.data.forEach((item, index) => {
             response.push(
                 <SearchResultListComp key={index}
@@ -57,7 +63,12 @@ const handlerGetPackages = async (val) => {
                 ></SearchResultListComp>
             )
         });
+    } else {
+
+        response.push(<p key="packagers_not_found" style={{ margin: "15px", color: 'red' }}>Packages not Found for: <b>{val}</b></p>)
     }
+
+
     return response;
 
 }
