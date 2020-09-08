@@ -53,7 +53,7 @@ module.exports = {
     /**
  * @param {Request} req
  */
-    searchPackages: async (req) => {
+    fuseSearchPackages: async (req) => {
         let packages = [];
         const options = {
             includeScore: true,

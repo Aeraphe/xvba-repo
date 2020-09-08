@@ -15,11 +15,10 @@ router
     }).get('/', async (req, res) => {
         const response = await packageController.getPackage();
         res.json(response);
-    }).post('/search', async (req, res) => {
-        const response = await packageController.searchPackages(req);
+    }).post('/fuse-search', async (req, res) => {
+        const response = await packageController.fuseSearchPackages(req);
         res.json(response);
-
-    }).post('/check-name', async (req, res) => {
+    }).post('/search', async (req, res) => {
         const response = await packageController.searchPackageName(req);
         res.json(response, response.meta.code);
 
