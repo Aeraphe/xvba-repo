@@ -8,7 +8,7 @@ export const useFormValidation = (initialState, validate) => {
 
     React.useEffect(() => {
         if (isSubmitting) {
-           
+
             const noErrors = Object.keys(errors).length === 0;
 
             if (noErrors) {
@@ -18,10 +18,9 @@ export const useFormValidation = (initialState, validate) => {
             }
         }
 
-    }, [errors,isSubmitting])
+    }, [errors, isSubmitting])
 
     const handleChange = (event) => {
-        console.log(event.value)
         setValue(
             {
                 ...values,
@@ -30,15 +29,15 @@ export const useFormValidation = (initialState, validate) => {
         )
     }
 
-    useEffect(()=>{
-        validate(values, (errors) => {  
+    useEffect(() => {
+        validate(values, (errors) => {
             setErrors(errors);
-          });
-    },[validate,values])
+        });
+    }, [validate, values])
 
     const handleBlur = () => {
-        validate(values, (errors) => {  
-          setErrors(errors);
+        validate(values, (errors) => {
+            setErrors(errors);
         });
 
     }
@@ -46,12 +45,12 @@ export const useFormValidation = (initialState, validate) => {
         event.preventDefault();
 
         const noErrors = Object.keys(errors).length === 0;
-        if(noErrors){
+        if (noErrors) {
             setSubmitting(!isSubmitting);
-        }else{
+        } else {
             setSubmitting(!isSubmitting);
         }
-      
+
 
     }
 
