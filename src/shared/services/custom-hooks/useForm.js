@@ -1,58 +1,45 @@
-import React, { useEffect } from 'react';
-
+import React from 'react';
 
 export const useFormValidation = (initialState, validate) => {
     const [values, setValue] = React.useState(initialState);
-    const [errors, setErrors] = React.useState({});
-    const [isSubmitting, setSubmitting] = React.useState(false);
+    const [errors, setErrors] = React.useState(validate.required);
 
-    React.useEffect(() => {
-        if (isSubmitting) {
-
-            const noErrors = Object.keys(errors).length === 0;
-
-            if (noErrors) {
-                setSubmitting(false);
-            } else {
-                setSubmitting(true);
-            }
-        }
-
-    }, [errors, isSubmitting])
 
     const handleChange = (event) => {
-        setValue(
+        handleSetData(event);
+        handleValidateData(event);
+    }
+
+    const handleSetData = (data) => {
+        setValue({ ...values, [data.name]: data.value })
+    }
+
+    const handleValidateData = (data) => {
+        validate.checkData(
             {
                 ...values,
-                [event.name]: event.value
-            }
-        )
+                [data.name]: data.value
+            }, (errors) => {
+                setErrors(errors);
+            });
     }
 
-    useEffect(() => {
-        validate(values, (errors) => {
-            setErrors(errors);
-        });
-    }, [validate, values])
-
-    const handleBlur = () => {
-        validate(values, (errors) => {
-            setErrors(errors);
-        });
-
-    }
-    const handleSubmit = (event) => {
-        event.preventDefault();
-
+    const isSubmitting = () => {
         const noErrors = Object.keys(errors).length === 0;
         if (noErrors) {
-            setSubmitting(!isSubmitting);
+            return false
         } else {
-            setSubmitting(!isSubmitting);
+            return true
         }
-
-
     }
 
-    return { handleChange, values, handleSubmit, handleBlur, errors, isSubmitting }
+    /**
+     * Clear all fields
+     */
+    const clearFields = () => {
+        setValue(initialState)
+        setErrors(validate.required)
+    }
+
+    return { handleChange, values, errors, isSubmitting, clearFields }
 }

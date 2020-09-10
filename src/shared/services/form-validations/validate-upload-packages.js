@@ -1,31 +1,39 @@
-import { from, interval } from 'rxjs';
-import { debounce } from 'rxjs/operators';
+import React from 'react';
+import _ from 'lodash';
 
 
 import PackagesHttpService from "../../services/packagesHttp.service";
 
-export const validateUploadPackages = async (values, callback) => {
+const debounce = _.debounce((callback) => {
+    console.log('Time wait')
+    callback();
+}, 700)
 
-    const nameErrors = validatePackageName(values);
-    const validDescription = validatePackageDescription(values);
-    const obs$ = checkNameDebounce(values.name);
-    callback({ ...nameErrors, ...validDescription })
-    if (obs$) {
-        obs$.subscribe(checkedName => {
+export const validateUploadPackages = {
+
+    required: () => {
+        return {
+            name: "Required",
+            description: 'Required',
+            valid_name: 'Required'
+        }
+    },
+
+    checkData: async (values, callback) => {
+        let errors;
+        debounce(async () => {
+            const nameErrors = validatePackageName(values);
+            const validDescription = validatePackageDescription(values);
+            const checkedName = await handleCheckValidName(values.name);
             if (checkedName) {
-                callback({ ...nameErrors })
+                errors = { ...nameErrors, ...validDescription };
             } else {
-                callback({ ...nameErrors, valid_name: "Package Name Already in use" })
+                errors = { ...nameErrors, ...validDescription, valid_name: "Package Name Already in use" };
             }
-
+            callback(errors)
         })
     }
-
-
 }
-
-
-
 
 /**
  * Validate Package name 
@@ -61,23 +69,32 @@ const validatePackageDescription = (values) => {
 }
 
 
-let lastSearch = null;
 
-const checkNameDebounce = (val) => {
-
-
-
-    if (lastSearch !== val && val !== "" && val.length >= 3) {
-        lastSearch = val;
-        let observer = from(PackagesHttpService.searchByName(val).then(
-            res => {
-
-                return res.data.length > 0 ? false : true;
-            }
-        ))
-        return observer.pipe(debounce(() => interval(1000)));
-
+const handleCheckValidName = async (val) => {
+    console.log(val)
+    if (val !== "" && val.length >= 3) {
+        return await PackagesHttpService.searchByName(val).then(
+            res => res.data.length > 0 ? false : true
+        )
     }
-
 }
 
+
+
+export const validPackageNameAlert = (errors) => {
+
+    if (errors.name) {
+        return <span style={{ fontSize: '11px', color: 'red' }}>{errors.name}</span>
+    } else if (errors.valid_name) {
+        return <span style={{ fontSize: '11px', color: 'red' }}>{errors.valid_name}</span>
+    }
+    return <span style={{ fontSize: '13px', color: 'green' }}>Valid</span>;
+}
+
+
+export const validPackageDescriptionAlert = (errors) => {
+    if (errors.description) {
+        return errors.description && <span style={{ fontSize: '11px', color: 'red' }}>{errors.description}</span>
+    }
+    return <span style={{ fontSize: '13px', color: 'green' }}>Valid</span>;
+}
