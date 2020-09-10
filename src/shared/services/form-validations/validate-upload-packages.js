@@ -1,8 +1,8 @@
 import React from 'react';
 import _ from 'lodash';
-
-
 import PackagesHttpService from "../../services/packagesHttp.service";
+
+
 
 const debounce = _.debounce((callback) => {
     callback();
@@ -68,13 +68,29 @@ const validatePackageDescription = (values) => {
 }
 
 
+let lastSearchText;
+let lastSearchResult;
 
+/**
+ * 
+ * @param {string} val 
+ */
 const handleCheckValidName = async (val) => {
-    if (val !== "" && val.length >= 3) {
-        return await PackagesHttpService.searchByName(val).then(
-            res => res.data.length > 0 ? false : true
-        )
+    //Check if search text change
+    if (lastSearchText !== val) {
+        if (val !== "" && val.length >= 3) {
+            lastSearchText = val;
+            return await PackagesHttpService.searchByName(val).then(
+                res => {
+                    lastSearchResult = res.data.length > 0 ? false : true
+                    return lastSearchResult
+                }
+
+            )
+        }
     }
+    return lastSearchResult;
+
 }
 
 
