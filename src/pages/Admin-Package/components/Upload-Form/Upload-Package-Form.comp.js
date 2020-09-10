@@ -1,51 +1,71 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styles from "./Upload-Package-Form.module.css";
-import PackagesHttpService from "../../../../shared/services/packagesHttp.service";
-import _ from 'lodash';
-let lastSearch = null;
+import { debounce } from 'lodash';
+
+
+import { useFormValidation } from '../../../../shared/services/custom-hooks/useForm';
+import { validateUploadPackages } from '../../../../shared/services/form-validations/validate-upload-packages'
+
+
+
 export const UploadPackageForm = () => {
 
-    const [search, setSearch] = useState('');
-    const [isValid, setValidName] = useState('')
-    const checkNameDebounce =
-        _.debounce(async (val) => {
-            if (lastSearch !== val && val !== "" && val.length >= 3) {
 
-                setValidName(<span style={{ color: 'green', fontWeight: '500', fontSize: '13px' }}>Checking Name...</span>);
-                lastSearch = val;
-                const isValidName = await handleSearchNameExists(val);
-                console.log(isValidName)
-                if (isValidName) {
-                    setSearch(val)
-                    setValidName(<span style={{ color: 'blue', fontWeight: '500', fontSize: '13px' }}>Valid</span>);
-                } else {
-                    setSearch('')
-                    setValidName(<span style={{ color: 'red', fontWeight: '500', fontSize: '13px' }}>Name already in use</span>);
-                }
+    const INITIAL_VALUES = {
+        name: "",
+        description: ''
+    }
+    const {
+        handleChange,
+        values,
+        handleSubmit,
+        handleBlur,
+        errors,
+        isSubmitting } = useFormValidation(INITIAL_VALUES, validateUploadPackages)
 
-            }
 
-        }, 1500);
+    const handleInputThrottled = debounce((e) => handleChange(e), 700)
 
-    const handleOnChangeInputPackageName = (e) => {
-        checkNameDebounce(e.target.value)
+
+    const validAlerts = {
+        name: validPackageName(errors),
+        description: validPackageDescription(errors)
     }
 
 
     return (
 
         <div>
-            <form className={styles['Upload-Package-Form']}>
+            <form onSubmit={handleSubmit} className={styles['Upload-Package-Form']}>
                 <div className={styles['Upload-Package-Form-Container']}>
-                    <label htmlFor="package_name"> Package name: {isValid}</label>
-                    <input minLength={3} onChange={e => handleOnChangeInputPackageName(e)} className={styles['Package-Name-Input']} id="package_name" type="text" placeholder="Package Name"></input>
-                    <label htmlFor="description"> Description: </label>
-                    <textarea id="description" className={styles['Description']} cols={1} rows={3}></textarea>
+                    <label htmlFor="package_name"> Package name: {validAlerts.name} </label>
+                    <input
+
+                        name="name"
+                        minLength={3}
+                        onChange={e => handleInputThrottled(e.target)}
+                        onBlur={handleBlur}
+                        className={styles['Package-Name-Input']}
+                        id="package_name"
+                        type="text"
+                        placeholder="Package Name" />
+
+
+                    <label htmlFor="description"> Description: {validAlerts.description}</label>
+                    <textarea
+                        value={values.description}
+                        name="description"
+                        onChange={e => handleChange(e.target)}
+                        onBlur={handleBlur}
+                        id="description"
+                        className={styles['Description']}
+                        cols={1} rows={3}
+                    ></textarea>
                     <label htmlFor="file"> Choose a file: </label>
                     <p><input id="file" type="file" ></input></p>
                     <hr></hr>
                     <div className={styles['Btn-Container']}>
-                        <button className={styles['Form-Btn']} type="submit">Upload</button>
+                        <button disabled={isSubmitting} className={styles['Form-Btn']} type="submit">Upload</button>
                     </div>
 
                 </div>
@@ -57,11 +77,21 @@ export const UploadPackageForm = () => {
 }
 
 
-const handleSearchNameExists = async (name) => {
-    const existName = await PackagesHttpService.searchByName(name).then(
-        res => {
-            return res.data.length > 0 ? false : true;
-        }
-    )
-    return existName;
+const validPackageName = (errors) => {
+
+    if (errors.name) {
+        return <span style={{ fontSize: '11px', color: 'red' }}>{errors.name}</span>
+    } else if (errors.valid_name) {
+        return <span style={{ fontSize: '11px', color: 'red' }}>{errors.valid_name}</span>
+    }
+    return <span style={{ fontSize: '13px', color: 'green' }}>Valid</span>;
+}
+
+
+const validPackageDescription = (errors) => {
+
+    if (errors.description) {
+        return errors.description && <span style={{ fontSize: '11px', color: 'red' }}>{errors.description}</span>
+    } 
+    return <span style={{ fontSize: '13px', color: 'green' }}>Valid</span>;
 }
