@@ -5,7 +5,6 @@ import _ from 'lodash';
 import PackagesHttpService from "../../services/packagesHttp.service";
 
 const debounce = _.debounce((callback) => {
-    console.log('Time wait')
     callback();
 }, 700)
 
@@ -71,7 +70,6 @@ const validatePackageDescription = (values) => {
 
 
 const handleCheckValidName = async (val) => {
-    console.log(val)
     if (val !== "" && val.length >= 3) {
         return await PackagesHttpService.searchByName(val).then(
             res => res.data.length > 0 ? false : true
