@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from "./Upload-Package-Form.module.css";
 import { useFormValidation } from '../../../../shared/services/custom-hooks/useForm';
 import { validateUploadPackages, validPackageDescriptionAlert, validPackageNameAlert } from '../../../../shared/services/form-validations/validate-upload-packages'
-
+import PackagesHttpService from "../../../../shared/services/packagesHttp.service";
 
 
 export const UploadPackageForm = () => {
 
+    const [formData, setFormData] = useState();
 
     const INITIAL_VALUES = {
         name: "",
@@ -24,11 +25,20 @@ export const UploadPackageForm = () => {
         description: validPackageDescriptionAlert(errors),
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
+        let postData = new FormData();
+        postData.append('package', formData)
+        postData.append('data', JSON.stringify(values))
+        await PackagesHttpService.uploadNewPackage(postData);
         clearFields();
     }
 
+    const handleInputFileChange = (e) => {
+        setFormData(e.target.files[0]);
+      
+
+    }
     return (
 
         <div>
@@ -55,7 +65,7 @@ export const UploadPackageForm = () => {
                         cols={1} rows={3}
                     ></textarea>
                     <label htmlFor="file"> Choose a file: </label>
-                    <p><input value={values.file} id="file" type="file" /></p>
+                    <p><input onChange={e => handleInputFileChange(e)} id="file" type="file" /></p>
                     <hr></hr>
                     <div className={styles['Btn-Container']}>
                         <button disabled={isSubmitting()} className={styles['Form-Btn']} type="submit">Upload</button>
