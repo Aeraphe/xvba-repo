@@ -12,8 +12,8 @@
       "firebase.json",
       "**/.*",
       "**/node_modules/**",
-      "src",
-      "public"
+      "public",
+      "src"
     ]
   },
   "storage": {
@@ -22,6 +22,18 @@
   "emulators": {
     "firestore": {
       "port": "5002"
+    },
+    "functions": {
+      "port": 5001
+    },
+    "database": {
+      "port": 9000
+    },
+    "hosting": {
+      "port": 5000
+    },
+    "ui": {
+      "enabled": true
     }
   }
 }
