@@ -17,8 +17,19 @@ class PackagesHttpService {
 
     };
 
-    add = async (data) => {
-        return await axios.post(endpoints.packages.url, data, config).then(
+    uploadNewPackage = async (data) => {
+        let uploadConf = {
+
+            headers: {
+                ...config.headers,
+                'Content-Type': `multipart/form-data;boundary=${data._boundary}`,
+                'Access-Control-Allow-Origin': '*',
+                
+            }
+        }
+
+
+        return await axios.post(endpoints.packages.url, data, uploadConf).then(
             res => {
                 return res.data
             }
@@ -38,8 +49,8 @@ class PackagesHttpService {
         )
     }
 
-    searchByName =  async (search) =>{
-        let data ={name:search};
+    searchByName = async (search) => {
+        let data = { name: search };
         return await axios.post(endpoints.packages.url + '/search-name', data, config).then(
             res => {
                 return res.data
