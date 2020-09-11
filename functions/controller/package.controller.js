@@ -7,15 +7,6 @@ const db = admin.firestore();
 const Response = require('../response/response_api');
 const Fuse = require('fuse.js')
 const uploadFiles = require('../upload/uploadService');
-const {Storage} = require('@google-cloud/storage');
-
-
-// Instantiate a storage client
-const storage = new Storage();
-
-// A bucket is a container for objects (files).
-const bucket = storage.bucket("bucket1");
-
 
 
 
@@ -67,6 +58,7 @@ module.exports = {
  * @param {Request} req
  */
     fuseSearchPackages: async (req) => {
+
         let packages = [];
         const options = {
             includeScore: true,
