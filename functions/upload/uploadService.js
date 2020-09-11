@@ -2,6 +2,12 @@ const path = require('path');
 const os = require('os');
 const fs = require('fs');
 const Busboy = require('busboy');
+const admin = require('firebase-admin');
+
+let bucketName ="xvba-691e3.appspot.com";
+const bucked = admin.storage().bucket(bucketName)
+
+
 
 
 
@@ -90,15 +96,23 @@ async function processPostedFiles(req) {
 
 
 async function saveFiles(req) {
+    
     const busboy = new Busboy({ headers: req.headers });
     const [fileWrites, uploads] = await processPostedFiles(req);
     // Triggered once all uploaded files are processed by Busboy.
     // We still need to wait for the disk writes (saves) to complete.
     busboy.on('finish', async () => {
         Promise.all(fileWrites);
-        // TODO(developer): Process saved files here
+      
+       
         for (const file in uploads) {
-            fs.unlinkSync(uploads[file]);
+            let fileName = "xvba-files/" + Date.now() + '_package.xvba' ;
+            bucked.upload(uploads[file], {
+                destination: fileName
+              }).then(()=>{
+                fs.unlinkSync(uploads[file]);
+              })
+           
         }
 
     });
