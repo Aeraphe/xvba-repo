@@ -26,3 +26,4 @@ functions/firebase-debug.log
 functions/database-debug.log
 functions/firestore-debug.log
 functions/ui-debug.log
+functions/upload/uiploadtoFireStore.js
