@@ -6,6 +6,18 @@ const admin = require('../firestore.init');
 const db = admin.firestore();
 const Response = require('../response/response_api');
 const Fuse = require('fuse.js')
+const uploadFiles = require('../upload/uploadService');
+const {Storage} = require('@google-cloud/storage');
+
+
+// Instantiate a storage client
+const storage = new Storage();
+
+// A bucket is a container for objects (files).
+const bucket = storage.bucket("bucket1");
+
+
+
 
 module.exports = {
     getPackage: async () => {
@@ -24,9 +36,10 @@ module.exports = {
      * @param {Request} req
      */
     addPackage: async (req) => {
-        //upload file
-        const response = await db.collection('packages').add(req);
-        return response
+        const {getPostValues,saveFiles} = uploadFiles;
+        const data = await getPostValues(req);
+        saveFiles(req);
+        return data;
     },
 
 
