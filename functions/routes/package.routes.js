@@ -5,11 +5,11 @@
 const express = require('express');
 const packageController = require('../controller/package.controller');
 const router = express.Router();
-
+const authRoute = require('../services/middleware/auth_route')
 
 
 router
-    .post('/', async (req, res) => {
+    .post('/',authRoute, async (req, res) => {
         const response = await packageController.addPackage(req)
         res.json(response);
     }).get('/', async (req, res) => {
