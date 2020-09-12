@@ -5,6 +5,7 @@ const path = require('path');
 let bucketName = "xvba-691e3.appspot.com";
 const bucked = admin.storage().bucket(bucketName)
 
+
 /**
  * 
  * @param {Array} files  [{file}]  - file path
@@ -45,6 +46,20 @@ const storePackage = async (files, options) => {
 }
 
 
+const deletePackageFile = async (name) => {
+    const file = bucked.file(name);
+    await file.delete().then(
+        val => {
+            return val;
+        }
+    ).catch(
+        err => {
+            return err;
+        }
+    )
+}
 
 
-module.exports = { storePackage }
+
+
+module.exports = { storePackage, deletePackageFile }
