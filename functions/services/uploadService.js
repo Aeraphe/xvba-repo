@@ -2,22 +2,6 @@ const path = require('path');
 const os = require('os');
 const fs = require('fs');
 const Busboy = require('busboy');
-const admin = require('firebase-admin');
-
-let bucketName ="xvba-691e3.appspot.com";
-const bucked = admin.storage().bucket(bucketName)
-
-
-
-
-
-const uploadFiles = {
-    getPostValues: getPostValues,
-    saveFiles: saveFiles
-
-};
-
-
 
 
 async function getPostValues(req) {
@@ -27,11 +11,9 @@ async function getPostValues(req) {
     let fields = {};
     // This code will process each non-file field in the form.
     busboy.on('field', (fieldname, val) => {
-        // TODO(developer): Process submitted field values here
-        console.log(`Processed field ${fieldname}: ${val}.`);
         fields[fieldname] = JSON.parse(val);
-
     });
+
     const dataPromise = new Promise(
         (resolve, reject) => {
             busboy.on('finish', () => {
@@ -95,32 +77,30 @@ async function processPostedFiles(req) {
 }
 
 
-async function saveFiles(req) {
-    
+async function getFiles(req, success) {
+
     const busboy = new Busboy({ headers: req.headers });
     const [fileWrites, uploads] = await processPostedFiles(req);
     // Triggered once all uploaded files are processed by Busboy.
     // We still need to wait for the disk writes (saves) to complete.
-    busboy.on('finish', async () => {
-        Promise.all(fileWrites);
-      
-       
-        for (const file in uploads) {
-            let fileName = "xvba-files/" + Date.now() + '_package.xvba' ;
-            bucked.upload(uploads[file], {
-                destination: fileName
-              }).then(()=>{
-                fs.unlinkSync(uploads[file]);
-              })
-           
+    const files = new Promise(
+
+        (resolve, reject) => {
+            busboy.on('finish', async () => {
+                await Promise.all(fileWrites);
+                resolve(uploads)
+            });
+
         }
-
-    });
-
+    )
 
     busboy.end(req.rawBody);
-
+    return files
 }
 
-module.exports = uploadFiles
+
+
+
+
+module.exports =  {getPostValues,getFiles};
 
