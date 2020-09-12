@@ -5,10 +5,10 @@
 const admin = require('../firestore.init');
 const db = admin.firestore();
 const Response = require('../response/response_api');
-const Fuse = require('fuse.js')
 const FileUploadServices = require('../services/file_upload.service');
 const StorageService = require('../services/storage.service');
-const PackageRepository = require('../repository/package.repository')
+const PackageRepository = require('../repository/package.repository');
+
 
 
 module.exports = {
@@ -59,6 +59,29 @@ module.exports = {
 
     },
 
+
+    deletePackage: async (req) => {
+        try {
+
+            const { deletePackage, getUserPackages } = PackageRepository;
+            const { deletePackageFile } = StorageService;
+            const userPackages = await getUserPackages(req);
+            //Check if the user is the package owner 
+            const pack = userPackages.filter(item => item.id === req.param.id);
+            console.log(pack)
+            if (pack) {
+                const dbDelete = await deletePackageFile(pack.name)
+                if (dbDelete.length === 0) { await deletePackage(req) }
+
+            }
+
+            return Response.format([], req, { code: 200, message: 'Package Delete Successfully' });
+        } catch (error) {
+            return Response.format([], req, { code: error.code, message: error.message });
+        }
+
+    },
+
     getUserAuthPackages: async (req) => {
         try {
             const { getUserPackages } = PackageRepository;
@@ -93,24 +116,9 @@ module.exports = {
  * @param {Request} req
  */
     fuseSearchPackages: async (req) => {
-
-        let packages = [];
-        const options = {
-            includeScore: true,
-            keys: ['name']
-        }
+        const { fuseSearchPackages } = PackageRepository;
         try {
-            await db.collection('packages').get().then(
-                (querySnapshot) => {
-
-                    querySnapshot.forEach(doc => {
-                        const fuse = new Fuse([doc.data()], options)
-                        const find = fuse.search(req.body.name)
-                        if (find.length > 0 && find[0].score <= 0.2) { packages.push({ package: find[0].item, id: doc.id }) }
-                    })
-                }
-
-            );
+            const packages = await fuseSearchPackages(req)
             return Response.format(packages, req, { code: 200, message: 'Data Found' });
 
         } catch (error) {

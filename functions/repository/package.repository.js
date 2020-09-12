@@ -1,6 +1,6 @@
 const admin = require('../firestore.init');
 const db = admin.firestore();
-
+const Fuse = require('fuse.js')
 const packagesRef = db.collection('packages');
 
 const savePackage = async (data) => {
@@ -16,7 +16,7 @@ const getUserPackages = async (req) => {
     let docs = [];
     return await query.get().then(function (querySnapshot) {
         querySnapshot.forEach(function (doc) {
-            docs.push(doc.data())
+            docs.push({ ...doc.data(), id: doc.id })
         });
         return docs;
     });
@@ -24,4 +24,43 @@ const getUserPackages = async (req) => {
 
 }
 
-module.exports = { savePackage, getUserPackages }
+
+const deletePackage = async (req) => {
+    console.log(req.params.id)
+    let docRef = packagesRef.doc(req.params.id);
+    return await docRef.delete().then(function () {
+        console.log("Document successfully deleted!");
+        return [];
+    }).catch(function (error) {
+        console.error("Error removing document: ", error);
+        return error;
+    });
+
+}
+
+
+const fuseSearchPackages = async (req) => {
+    const db = admin.firestore();
+
+
+    const options = {
+        includeScore: true,
+        keys: ['name']
+    }
+
+    return await db.collection('packages').get().then(
+        (querySnapshot) => {
+            let packages = [];
+            querySnapshot.forEach(doc => {
+                const fuse = new Fuse([doc.data()], options)
+                const find = fuse.search(req.body.name)
+                if (find.length > 0 && find[0].score <= 0.2) { packages.push({ package: find[0].item, id: doc.id }) }
+            })
+            return packages
+        }
+
+    );
+
+}
+
+module.exports = { savePackage, getUserPackages, deletePackage,fuseSearchPackages }
