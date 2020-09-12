@@ -38,7 +38,7 @@ module.exports = {
         //Check file size
         const filesStorage = await storePackage(files, { destination: "xvba-files",append_name:'_xvba_package' });
         console.log('---->', filesStorage)
-        return data;
+        return Response.format(data.data, req, { code: 200, message: 'Package Upload Successfully' });
     },
 
 
