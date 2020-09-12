@@ -6,9 +6,9 @@ const admin = require('../firestore.init');
 const db = admin.firestore();
 const Response = require('../response/response_api');
 const Fuse = require('fuse.js')
-const fileUploadServices = require('../services/file_upload.service');
-const storageService = require('../services/storage.service');
-
+const FileUploadServices = require('../services/file_upload.service');
+const StorageService = require('../services/storage.service');
+const PackageRepository = require('../repository/package.repository')
 
 
 module.exports = {
@@ -28,19 +28,46 @@ module.exports = {
      * @param {Request} req
      */
     addPackage: async (req) => {
-        const { getPostValues, getFiles } = fileUploadServices;
-        const data = await getPostValues(req);
-        const files = await getFiles(req);
-        const { storePackage } = storageService;
-        //Developer
-        //Unzip file for separate Readme.md
-        //Check file extension
-        //Check file size
-        const filesStorage = await storePackage(files, { destination: "xvba-files",append_name:'_xvba_package' });
-        console.log('---->', filesStorage)
-        return Response.format(data.data, req, { code: 200, message: 'Package Upload Successfully' });
+        try {
+            const { getPostValues, getFiles } = FileUploadServices;
+            const data = await getPostValues(req);
+            //Check package name again
+            const files = await getFiles(req);
+            const { storePackage } = StorageService;
+            //Developer
+            //Unzip file for separate Readme.md
+            //Check file extension
+            //Check file size
+            const userId = req.user.user_id;
+            console.log(req.user)
+            const filesStorage = await storePackage(files, { destination: "xvba-files/" + userId, append_name: '_xvba_package' });
+            const { savePackage } = PackageRepository;
+            await savePackage(
+                {
+                    user_id: userId,
+                    ...data.data,
+                    file: filesStorage[0].rename,
+                    rating: 0,
+                    downloads: 0,
+                    create_at: Date(),
+                    public: true
+                })
+            return Response.format(data.data, req, { code: 200, message: 'Package Upload Successfully' });
+        } catch (error) {
+            return Response.format([], req, { code: error.code, message: error.message });
+        }
+
     },
 
+    getUserAuthPackages: async (req) => {
+        try {
+            const { getUserPackages } = PackageRepository;
+            const response = await getUserPackages(req);
+            return Response.format(response, req, { code: 200, message: 'Package Finned Successfully' })
+        } catch (error) {
+            return Response.format([], req, { code: error.code, message: error.message });
+        }
+    },
 
     searchPackageName: async (req) => {
 
