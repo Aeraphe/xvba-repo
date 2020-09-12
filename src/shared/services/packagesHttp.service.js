@@ -17,6 +17,12 @@ class PackagesHttpService {
 
     };
 
+    getUserAuthPackages = async () => {
+        return await axios.get(endpoints.packages.user_auth_packages, config).then(
+            res => res.data
+        );
+    }
+
     uploadNewPackage = async (data) => {
         let uploadConf = {
 
@@ -24,7 +30,7 @@ class PackagesHttpService {
                 ...config.headers,
                 'Content-Type': `multipart/form-data;boundary=${data._boundary}`,
                 'Access-Control-Allow-Origin': '*',
-                
+
             }
         }
 
