@@ -9,12 +9,17 @@ const authRoute = require('../services/middleware/auth_route')
 
 
 router
-    .post('/',authRoute, async (req, res) => {
+    .post('/', authRoute, async (req, res) => {
         const response = await packageController.addPackage(req)
         res.json(response);
     }).get('/', async (req, res) => {
         const response = await packageController.getPackage();
         res.json(response);
+
+    }).get('/user-auth', authRoute, async (req, res) => {
+        const response = await packageController.getUserAuthPackages();
+        res.json(response);
+
     }).post('/fuse-search', async (req, res) => {
         const response = await packageController.fuseSearchPackages(req);
         res.json(response);
