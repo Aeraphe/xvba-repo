@@ -28,12 +28,16 @@ module.exports = {
      * @param {Request} req
      */
     addPackage: async (req) => {
-        const {getPostValues,getFiles} = uploadFiles;
+        const { getPostValues, getFiles } = uploadFiles;
         const data = await getPostValues(req);
         const files = await getFiles(req);
-        const {storePackage} = storageService;
-        await storePackage(files)
-        
+        const { storePackage } = storageService;
+        //Developer
+        //Unzip file for separate Readme.md
+        //Check file extension
+        //Check file size
+        const filesStorage = await storePackage(files, { destination: "xvba-files",append_name:'_xvba_package' });
+        console.log('---->', filesStorage)
         return data;
     },
 
