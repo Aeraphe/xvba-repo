@@ -35,14 +35,14 @@ async function processPostedFiles(req) {
     const fileWrites = [];
     const tmpdir = os.tmpdir();
     // This object will accumulate all the uploaded files, keyed by their name.
-    const uploads = {};
+    const uploads = [];
     // This code will process each file uploaded.
     busboy.on('file', (fieldname, file, filename) => {
         // Note: os.tmpdir() points to an in-memory file system on GCF
         // Thus, any files in it must fit in the instance's memory.
 
         const filepath = path.join(tmpdir, filename);
-        uploads[fieldname] = filepath;
+        uploads.push({file:filepath,name:fieldname});
 
         const writeStream = fs.createWriteStream(filepath);
         file.pipe(writeStream);
