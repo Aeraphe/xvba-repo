@@ -27,6 +27,10 @@ router
         const response = await packageController.searchPackageName(req);
         res.json(response, response.meta.code);
 
+    }).delete('/:id', async (req, res) => {
+        const response = await packageController.deletePackage(req);
+        res.json(response, response.meta.code);
+
     })
 
 module.exports = router
