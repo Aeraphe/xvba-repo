@@ -13,7 +13,15 @@ const savePackage = async (data) => {
 const getUserPackages = async (req) => {
     const userId = req.user.user_id;
     let query = packagesRef.where('user_id', '==', userId);
-    return await query.get();
+    let docs = [];
+    return await query.get().then(function (querySnapshot) {
+        querySnapshot.forEach(function (doc) {
+            docs.push(doc.data())
+        });
+        return docs;
+    });
+
+
 }
 
 module.exports = { savePackage, getUserPackages }

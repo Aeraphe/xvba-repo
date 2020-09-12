@@ -13,11 +13,11 @@ router
         const response = await packageController.addPackage(req)
         res.json(response);
     }).get('/', async (req, res) => {
-        const response = await packageController.getPackage();
+        const response = await packageController.getPackage(req);
         res.json(response);
 
     }).get('/user-auth', authRoute, async (req, res) => {
-        const response = await packageController.getUserAuthPackages();
+        const response = await packageController.getUserAuthPackages(req);
         res.json(response);
 
     }).post('/fuse-search', async (req, res) => {
