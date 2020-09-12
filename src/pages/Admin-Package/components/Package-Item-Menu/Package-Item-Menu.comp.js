@@ -1,18 +1,29 @@
 import React, { useState } from "react";
 import styles from './Package-Item-Menu.module.css'
 
+import { Alert } from '../../../../shared/components/Alert/Alert.shared';
 
 
-export const PackageItemMenuComp = ({ children }) => {
+export const PackageItemMenuComp = ({ children, id }) => {
 
     const [show, setShow] = useState(false)
+
 
 
     const handleClick = () => {
         setShow(!show)
 
     }
-
+    const handleAlert = (action) => {
+        switch (action) {
+            case 'delete':
+                
+                break;
+        
+            default:
+                break;
+        }
+    }
 
     return (
         <div style={{ border: '0px' }} className={styles['Container']}>
@@ -25,11 +36,12 @@ export const PackageItemMenuComp = ({ children }) => {
                     <li >
                         Update
                     </li>
-                    <li>
+                    <li onClick={() => handleAlert('delete')}>
                         Delete
                     </li>
                 </ul>
             </div>
+            <Alert onToggle={()=>handleAlert} onAccept={handleAlert}  ></Alert>
         </div>
     )
 
