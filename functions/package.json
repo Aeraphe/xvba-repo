@@ -20,7 +20,8 @@
     "express": "^4.17.1",
     "firebase-admin": "^8.10.0",
     "firebase-functions": "^3.6.1",
-    "fuse.js": "^6.4.1"
+    "fuse.js": "^6.4.1",
+    "unzipper": "^0.10.11"
   },
   "devDependencies": {
     "firebase-functions-test": "^0.2.0"
