@@ -1,27 +1,40 @@
 const admin = require('firebase-admin');
 const fs = require('fs');
+const fsAsync = require("fs").promises;
+const path = require('path');
 let bucketName = "xvba-691e3.appspot.com";
 const bucked = admin.storage().bucket(bucketName)
 
-
-const storePackage = async (uploads) => {
-    let resp;
+/**
+ * 
+ * @param {Array} files  [{file}]  - file path
+ * @param {Object} options { destination,append_name}
+ */
+const storePackage = async (files, options) => {
+    let resp = [];
 
     const store = new Promise(
         (resolve, reject) => {
             try {
-                uploads.forEach(async element => {
-                    let fileName = "xvba-files/" + Date.now() + '_package.xvba';
-                    resp = await bucked.upload(
+
+                files.forEach(async element => {
+                    let ext = path.extname(element.file);
+                    const last_name = options.append_name ? options.append_name : "";
+                    let fileName = Date.now() +last_name + ext;
+                    //Get the file size
+                    const stat = await fsAsync.stat(element.file)
+                    let fileRenamed = await bucked.upload(
                         element.file, {
-                        destination: fileName
-                    }).then( (result) => {
+                        destination: path.join(options.destination, "/", fileName)
+                    }).then(() => {
                         fs.unlinkSync(element.file);
-                  
-                        return  result
+                        resp.push({ file: element.file, rename: fileName, destination: options.destination, size: stat.size });
+                        return resp
                     })
+                    resolve(fileRenamed)
                 });
-                resolve(resp)
+
+
             } catch (error) {
                 reject(error)
             }
