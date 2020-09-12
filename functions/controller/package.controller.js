@@ -6,7 +6,7 @@ const admin = require('../firestore.init');
 const db = admin.firestore();
 const Response = require('../response/response_api');
 const Fuse = require('fuse.js')
-const uploadFiles = require('../services/uploadService');
+const fileUploadServices = require('../services/file_upload.service');
 const storageService = require('../services/storage.service');
 
 
@@ -28,7 +28,7 @@ module.exports = {
      * @param {Request} req
      */
     addPackage: async (req) => {
-        const { getPostValues, getFiles } = uploadFiles;
+        const { getPostValues, getFiles } = fileUploadServices;
         const data = await getPostValues(req);
         const files = await getFiles(req);
         const { storePackage } = storageService;
