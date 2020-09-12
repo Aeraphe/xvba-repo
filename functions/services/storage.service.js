@@ -20,12 +20,12 @@ const storePackage = async (files, options) => {
                 files.forEach(async element => {
                     let ext = path.extname(element.file);
                     const last_name = options.append_name ? options.append_name : "";
-                    let fileName = Date.now() +last_name + ext;
+                    let fileName = Date.now() + last_name + ext;
                     //Get the file size
                     const stat = await fsAsync.stat(element.file)
                     let fileRenamed = await bucked.upload(
                         element.file, {
-                        destination: path.join(options.destination, "/", fileName)
+                        destination: options.destination + "/" + fileName
                     }).then(() => {
                         fs.unlinkSync(element.file);
                         resp.push({ file: element.file, rename: fileName, destination: options.destination, size: stat.size });
