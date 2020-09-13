@@ -24,7 +24,7 @@ export const AdminPackagePage = () => {
             </div>
 
             <Modal height="210px" show={uploadPackageModalShow} showModal={() => handleShowPackageModal}>
-                <UploadPackageForm></UploadPackageForm>
+                <UploadPackageForm toggleModal={handleShowPackageModal} ></UploadPackageForm>
             </Modal>
         </div>
     )

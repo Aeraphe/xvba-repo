@@ -5,7 +5,7 @@ import { validateUploadPackages, validPackageDescriptionAlert, validPackageNameA
 import PackagesHttpService from "../../../../shared/services/packagesHttp.service";
 
 
-export const UploadPackageForm = () => {
+export const UploadPackageForm = ({toggleModal}) => {
 
     const [formData, setFormData] = useState();
 
@@ -26,12 +26,19 @@ export const UploadPackageForm = () => {
     }
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
-        let postData = new FormData();
-        postData.append('package', formData)
-        postData.append('data', JSON.stringify(values))
-        await PackagesHttpService.uploadNewPackage(postData);
-        clearFields();
+        try {
+            e.preventDefault();
+            let postData = new FormData();
+            postData.append('package', formData)
+            postData.append('data', JSON.stringify(values))
+            await PackagesHttpService.uploadNewPackage(postData);
+            clearFields();
+            toggleModal();
+        } catch (error) {
+            
+        }
+       
+        
     }
 
     const handleInputFileChange = (e) => {
