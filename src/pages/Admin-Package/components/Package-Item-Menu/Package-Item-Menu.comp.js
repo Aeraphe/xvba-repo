@@ -1,48 +1,62 @@
 import React, { useState } from "react";
 import styles from './Package-Item-Menu.module.css'
-
 import { Alert } from '../../../../shared/components/Alert/Alert.shared';
-
+import PackageHttpService from "../../../../shared/services/packagesHttp.service";
 
 export const PackageItemMenuComp = ({ children, id }) => {
 
     const [show, setShow] = useState(false)
-
-
+    const [alertMsg, setAlertMsg] = useState('')
+    const [alertTitle, setAlertTitle] = useState('')
+    const [showAlert, setToggle] = useState(false)
 
     const handleClick = () => {
         setShow(!show)
 
     }
+
     const handleAlert = (action) => {
         switch (action) {
             case 'delete':
-                
+                console.log('sss')
+                setAlertTitle('Do you rely want to delete the package?')
+
+                setToggle(!showAlert)
                 break;
-        
             default:
+                setAlertMsg('')
+                setToggle(false)
                 break;
         }
     }
 
-    return (
-        <div style={{ border: '0px' }} className={styles['Container']}>
-            <div style={{ border: '0px' }} className={styles['List-Item']}>
-                {children} <span onClick={() => handleClick()} className={styles['Btn-Show']}>::</span>
-            </div>
+    const handleAccept = () => {
+        (async () => { await PackageHttpService.delete(id) })()
 
-            <div onMouseLeave={() => setShow(false)} style={{ display: show ? 'block' : 'none' }} className={styles['Menu']}>
-                <ul>
-                    <li >
-                        Update
+        setToggle(false);
+    }
+
+    return (
+        <>
+            <div style={{ border: '0px' }} className={styles['Container']}>
+                <div style={{ border: '0px' }} className={styles['List-Item']}>
+                    {children} <span onClick={() => handleClick()} className={styles['Btn-Show']}>::</span>
+                </div>
+
+                <div onMouseLeave={() => setShow(false)} style={{ display: show ? 'block' : 'none' }} className={styles['Menu']}>
+                    <ul>
+                        <li >
+                            Update
                     </li>
-                    <li onClick={() => handleAlert('delete')}>
-                        Delete
+                        <li onClick={() => handleAlert('delete')}>
+                            Delete
                     </li>
-                </ul>
+                    </ul>
+                </div>
+
             </div>
-            <Alert onToggle={()=>handleAlert} onAccept={handleAlert}  ></Alert>
-        </div>
+            <Alert show={showAlert} onToggle={() => setToggle(!showAlert)} onAccept={() => handleAccept()} message={alertMsg} title={alertTitle} ></Alert>
+        </>
     )
 
 
