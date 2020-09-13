@@ -23,7 +23,7 @@ class PackagesHttpService {
         );
     }
 
-    uploadNewPackage = async (data) => {
+    uploadNewPackage = async (data,callback) => {
         let uploadConf = {
 
             headers: {
@@ -31,6 +31,10 @@ class PackagesHttpService {
                 'Content-Type': `multipart/form-data;boundary=${data._boundary}`,
                 'Access-Control-Allow-Origin': '*',
 
+            },
+            onUploadProgress: function (progressEvent) {
+                var percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total)
+                console.log(percentCompleted)
             }
         }
 
