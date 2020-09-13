@@ -3,10 +3,10 @@ import styles from "./Upload-Package-Form.module.css";
 import { useFormValidation } from '../../../../shared/services/custom-hooks/useForm';
 import { validateUploadPackages, validPackageDescriptionAlert, validPackageNameAlert } from '../../../../shared/services/form-validations/validate-upload-packages'
 import PackagesHttpService from "../../../../shared/services/packagesHttp.service";
-
-
+import { fetchPackagesByUserId } from "../../../../shared/reducers/user-packages.slice";
+import {  useDispatch } from "react-redux";
 export const UploadPackageForm = ({toggleModal}) => {
-
+    const dispatch = useDispatch();
     const [formData, setFormData] = useState();
 
     const INITIAL_VALUES = {
@@ -34,6 +34,7 @@ export const UploadPackageForm = ({toggleModal}) => {
             await PackagesHttpService.uploadNewPackage(postData);
             clearFields();
             toggleModal();
+            dispatch(fetchPackagesByUserId())
         } catch (error) {
             
         }
@@ -44,7 +45,6 @@ export const UploadPackageForm = ({toggleModal}) => {
     const handleInputFileChange = (e) => {
         setFormData(e.target.files[0]);
       
-
     }
     return (
 
