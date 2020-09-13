@@ -19,7 +19,7 @@
 
 .Header{
     display: grid;
-    grid-template-columns: 57px 1fr 10% 10% 45px 61px;
+    grid-template-columns: 57px 1fr 10% 10% 45px;
     text-align: center;
     width: 100%;
     font-size: 12px;
@@ -47,9 +47,9 @@
     margin: 0px 7px 0px 7px;
 }
 
-.Body-Item{
+.Body-Content{
     display: grid;
-    grid-template-columns: 57px 1fr 10% 10% 45px 61px;
+    grid-template-columns: 57px 1fr 10% 10% 45px ;
     text-align: center;
     width: 100%;
     font-size: 14px;
@@ -62,7 +62,7 @@
     transition-duration: 300ms;
 }
 
-.Body-Item div{
+.Body-Item {
     border: 1px solid rgba(255, 255, 255, 0.8);
 }
 
