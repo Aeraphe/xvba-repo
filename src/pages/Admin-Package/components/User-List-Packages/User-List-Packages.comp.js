@@ -1,19 +1,24 @@
 import React, { useEffect, useState } from "react";
 import styles from './User-List-Packages.module.css'
 import { PackageItemMenuComp } from "../Package-Item-Menu/Package-Item-Menu.comp";
-import PackagesHttpService from "../../../../shared/services/packagesHttp.service";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchPackagesByUserId } from "../../../../shared/reducers/user-packages.slice";
+
 
 
 export const UserListPackagesComp = () => {
-    const [packages, setPackages] = useState();
+    let [packages, setPackages] = useState([]);
+    const dispatch = useDispatch();
+    const userPackages = useSelector(state => state.user_packages.entities);
 
     useEffect(() => {
-        (async () => {
-            let data = await handleGetUserPackages();
-            setPackages(data)
+        const data = handleGetUserPackages(userPackages);
+        setPackages(data)
+    }, [userPackages])
 
-        })()
-
+    useEffect(() => {
+        dispatch(fetchPackagesByUserId())
+        // eslint-disable-next-line
     }, [])
 
 
@@ -27,18 +32,16 @@ export const UserListPackagesComp = () => {
                     <div>Version</div>
                     <div>Stars</div>
                     <div>Installs</div>
-                    
                 </div>
             </div>
             <div>{packages}</div>
-        
         </div>
 
     )
 }
 
-const handleGetUserPackages = async () => {
-    const { data } = await PackagesHttpService.getUserAuthPackages();
+
+const handleGetUserPackages = (data) => {
 
     let components = [];
     if (data) {
@@ -57,11 +60,9 @@ const PackageListItem = (props) => {
         <div className={styles['Body-Container']}>
             <div className={styles['Body-Content']}>
                 <div className={styles['Body-Item']}>{props.item}</div>
-
                 <div className={styles['Body-Item']}>
                     <PackageItemMenuComp id={id} >{name}</PackageItemMenuComp>
                 </div>
-
                 <div className={styles['Body-Item']}>{version}</div>
                 <div className={styles['Body-Item']}>{rating}</div>
                 <div className={styles['Body-Item']}>{downloads}</div>
