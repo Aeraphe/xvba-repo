@@ -63,6 +63,14 @@ class PackagesHttpService {
             }
         )
     }
+
+    delete = async (id) => {
+        return await axios.delete(endpoints.packages.url + "/" + id, config).then(
+            res => res.data
+        );
+
+    };
+
 }
 
 
