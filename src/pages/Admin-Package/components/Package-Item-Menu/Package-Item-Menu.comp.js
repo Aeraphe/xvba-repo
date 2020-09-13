@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import styles from './Package-Item-Menu.module.css'
 import { Alert } from '../../../../shared/components/Alert/Alert.shared';
-import PackageHttpService from "../../../../shared/services/packagesHttp.service";
+import { useDispatch } from "react-redux";
+import { deleteUserPackage ,fetchPackagesByUserId } from "../../../../shared/reducers/user-packages.slice";
+
 
 export const PackageItemMenuComp = ({ children, id }) => {
-
+    const dispatch = useDispatch();
     const [show, setShow] = useState(false)
     const [alertMsg, setAlertMsg] = useState('')
     const [alertTitle, setAlertTitle] = useState('')
@@ -30,9 +32,9 @@ export const PackageItemMenuComp = ({ children, id }) => {
         }
     }
 
-    const handleAccept = () => {
-        (async () => { await PackageHttpService.delete(id) })()
-
+    const handleAccept = async () => {
+        await dispatch(deleteUserPackage(id))
+        await dispatch(fetchPackagesByUserId())
         setToggle(false);
     }
 
