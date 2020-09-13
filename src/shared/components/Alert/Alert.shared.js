@@ -2,23 +2,26 @@ import React from 'react'
 import styles from './Alert.module.css'
 
 
-export const Alert = ({ show, onToggle, onAccept, title, content, btnAccept, btnCancel }) => {
+export const Alert = ({ show, onToggle, onAccept, title, message, btnAccept, btnCancel }) => {
+
 
 
     return (
         <div style={{ display: show ? 'block' : 'none' }} className={styles['Container']}>
-            <div onClick={() => onToggle()} className={styles['Background']}>
+            <div onClick={() => onToggle()} className={styles['Background']}>  </div>
+            <div className={styles['Alert']}>
                 <div className={styles['Header']}>
                     {title}
                 </div>
                 <div className={styles['Content']}>
-                    {content}
+                    {message}
                 </div>
                 <div className={styles['Footer']}>
-                    <button onClick={() => onAccept()}>{btnAccept && 'Cancel'}</button>
-                    <button onClick={() => onToggle()}>{btnCancel && 'Ok'}</button>
+                    <button className={styles['Footer-btn-cancel']} onClick={() => onToggle()}>{btnAccept || 'Cancel'}</button>
+                    <button className={styles['Footer-btn-accept']} onClick={() => onAccept()}><span >{btnCancel || 'Ok'}</span></button>
                 </div>
             </div>
+
         </div>
     )
 }
