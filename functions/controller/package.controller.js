@@ -39,7 +39,6 @@ module.exports = {
             //Check file extension
             //Check file size
             const userId = req.user.user_id;
-            console.log(req.user)
             const filesStorage = await storePackage(files, { destination: "xvba-files/" + userId, append_name: '_xvba_package' });
             const { savePackage } = PackageRepository;
             await savePackage(
@@ -66,12 +65,12 @@ module.exports = {
             const { deletePackage, getUserPackages } = PackageRepository;
             const { deletePackageFile } = StorageService;
             const userPackages = await getUserPackages(req);
+            const user_id = req.user.user_id;
             //Check if the user is the package owner 
-            const pack = userPackages.filter(item => item.id === req.param.id);
-            console.log(pack)
+            const pack = userPackages.filter(item => item.id === req.params.id);
             if (pack) {
-                const dbDelete = await deletePackageFile(pack.name)
-                if (dbDelete.length === 0) { await deletePackage(req) }
+               await deletePackageFile(user_id,pack[0].file)
+               await deletePackage(req)
 
             }
 
