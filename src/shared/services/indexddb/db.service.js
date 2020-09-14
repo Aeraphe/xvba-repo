@@ -22,16 +22,11 @@ const create = async () => {
 const open = async () => {
     const request = indexedDB.open('xvba', 1);
     return new Promise(
-
         (resolve, reject) => {
-
             request.onsuccess = () => {
                 db = request.result;
-                console.log('db onsuccess')
                 resolve(db)
             }
-
-
         }
     )
 
@@ -40,6 +35,29 @@ const open = async () => {
 
 }
 
+const getAll = async (store, db) => {
+    let response = [];
+    return new Promise(
+        (resolve, reject) => {
+
+            let packagesStore = db.transaction(store, 'readonly').objectStore(store)
+            packagesStore.openCursor().onsuccess = function (event) {
+                var cursor = event.target.result;
+                if (cursor) {
+                    response.push(cursor.value);
+                    cursor.continue();
+                }
+                else {
+                    if (response) {
+                        resolve(response);
+                    }
+
+                }
+            };
+        })
+
+
+}
 
 const update = async (data, store, db) => {
 
@@ -47,7 +65,7 @@ const update = async (data, store, db) => {
         (resolve, reject) => {
             let packagesStore = db.transaction(store, 'readwrite').objectStore(store)
             data.forEach(pack => {
-                packagesStore.put(pack.package);
+                packagesStore.put(pack);
             })
 
         })
@@ -80,4 +98,4 @@ const clear = async (name, db) => {
 }
 
 
-export const DBServices = { create, open, update, clear } 
+export const DBServices = { create, open, update, clear, getAll } 
