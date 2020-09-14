@@ -2,11 +2,13 @@ import React from 'react';
 import { useSelector } from "react-redux";
 import styles from './Header.module.css'
 import { Link } from 'react-router-dom';
-let isLogged;
+
+
 
 export const Header = () => {
 
-    isLogged = useSelector(state => state.auth.isLogged);
+
+
 
     return (
         <div className={styles['Container']} >
@@ -30,22 +32,31 @@ const LINKS =
         <li><Link to="/donate">Donate</Link></li>,
         <li><Link to="/tutorial">Tutorial</Link></li>,
         <li protected="true" > <Link to="/upload-package">Publish</Link></li>,
-        <li><Link to="login">{isLogged ? 'Logout' : 'Login'}</Link></li>
+
     ];
 
 
 const HeaderLinkGuard = () => {
+
+    let isLogged = useSelector(state => state.auth.isLogged);
+
     let linksChecked = LINKS.reduce((prev, next, index) => {
         if (isLogged) {
+
             prev.push({ ...next, key: index })
         } else if (next.props.protected === undefined) {
+
             prev.push({ ...next, key: index })
         }
         return prev
     }, [])
 
 
-
+    if (isLogged) {
+        linksChecked.push(<li key="logout"><Link to="login">Logout</Link></li>)
+    } else {
+        linksChecked.push(<li key="login"><Link to="login">Login</Link></li>)
+    }
 
     return (linksChecked)
 }
