@@ -54,7 +54,7 @@ const fuseSearchPackages = async (req) => {
             querySnapshot.forEach(doc => {
                 const fuse = new Fuse([doc.data()], options)
                 const find = fuse.search(req.body.name)
-                if (find.length > 0 && find[0].score <= 0.2) { packages.push({ package: { ...find[0].item, id: doc.id } }) }
+                if (find.length > 0 && find[0].score <= 0.2) { packages.push( { ...find[0].item, id: doc.id } ) }
             })
             return packages
         }
