@@ -1,42 +1,28 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './Search.module.css';
 import { XvbaLogoSharedComp } from '../../../../shared/components/Xvba-Logo.shared.component';
 import { SearchResultBarComp } from '../SearchResultBar/SearchResultBar.comp';
 import { SearchResultListComp } from '../SearchResultList/SearchResultList.comp';
-import PackagesHttpService from '../../../../shared/services/packagesHttp.service';
-import { DBServices } from "../../../../shared/services/indexddb/db.service";
-import _ from 'lodash';
+import { useDispatch, useSelector } from "react-redux";
+import { searchPackagesThunk, getSearchPackagesThunk, getSearchTextThunk } from "../../../../shared/reducers/search-packages.slice";
+
 let lastSearch = "";
 
 export const SearchComp = () => {
-
-    const [packages, setPackages] = useState([]);
-    const [search, setSearch] = useState("");
-    const [showSearching, setShowSearching] = useState(false);
-
-    const debounceSearch = _.debounce((val) => {
-        if (val) {
-            setSearch(val)
-        }
-    }, 200)
-
-    const handleOnChangeSearchText = (e) => {
-
-        debounceSearch(e.target.value)
-    }
+    let dispatch = useDispatch();
+    const [search, setSearch] = useState();
+    let dbSearch = useSelector(state => state.search_packages.search);
 
     useEffect(() => {
-        setShowSearching(false);
-    }, [packages])
+        dispatch(getSearchTextThunk())
+        setSearch(dbSearch);
+    }, [dispatch, dbSearch])
 
     const handleOnClickSearch = async () => {
-
+        console.log(search);
         if (lastSearch !== search) {
             lastSearch = search;
-            setShowSearching(!showSearching);
-            setPackages(await handlerGetPackages(search))
-
-
+            dispatch(searchPackagesThunk(search));
         }
     }
     const handleKeyPress = (event) => {
@@ -48,17 +34,13 @@ export const SearchComp = () => {
     return (
         <div>
             <div className={styles['Search-Logo']}>
-                <XvbaLogoSharedComp size="7rem">
-
-                </XvbaLogoSharedComp>
+                <XvbaLogoSharedComp size="7rem" />
             </div>
             <div className={styles['Search-Container']}>
-
-                <input onKeyPress={e => handleKeyPress(e)} onChange={(e) => handleOnChangeSearchText(e)} placeholder="Search VBA Package" className={styles['Search-Input']}></input>
+                <input value={search ? search : ''} onKeyPress={e => handleKeyPress(e)} onChange={(e) => { setSearch(e.target.value) }} placeholder="Search VBA Package" className={styles['Search-Input']}></input>
                 <button onClick={() => handleOnClickSearch()} className={styles['Search-Input-Btn']}>Search</button>
             </div>
-            <div style={{ display: showSearching ? 'flex' : 'none', marginLeft: '17px', fontSize: "21px", color: 'green', }}><b>Searching... </b> </div>
-            {packages}
+            <ListPackages></ListPackages>
         </div>
 
     )
@@ -66,30 +48,30 @@ export const SearchComp = () => {
 
 
 
-const handlerGetPackages = async (val) => {
-
-    let packages = await PackagesHttpService.fuseSearch(val);
-    const { open, update, clear } = DBServices;
-    let db = await open();
-    await clear('packages',db)
-    await update(packages.data,'packages', db)
+const ListPackages = () => {
+    let dispatch = useDispatch();
+    const packages = useSelector(state => state.search_packages.entities);
     let response = [];
-    let totalPackages = packages.data.length;
-    if (totalPackages > 0) {
+
+    useEffect(() => {
+        dispatch(getSearchPackagesThunk())
+        dispatch(getSearchTextThunk())
+
+    }, [dispatch])
+
+    if (packages && packages.length > 0) {
+        let totalPackages = packages.length;
         response.push(<SearchResultBarComp key="search_result_bar_key" total={totalPackages}></SearchResultBarComp>);
-        packages.data.forEach((item, index) => {
+        packages.forEach((item, index) => {
             response.push(
                 <SearchResultListComp key={index}
-                    package={item.package.name}
+                    package={item.name}
                     user="Beto"
                     description="Function for calc Gauss Curves"
                     publish_date="14/08/1980"
-                ></SearchResultListComp>
+                />
             )
         });
-    } else {
-
-        response.push(<p key="packagers_not_found" style={{ margin: "15px", color: 'red' }}>Packages not Found for: <b>{val}</b></p>)
     }
 
 
