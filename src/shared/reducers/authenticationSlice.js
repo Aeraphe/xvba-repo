@@ -14,23 +14,35 @@ export const authenticationSlice = createSlice({
                 localStorage.setItem('expirationTime', expirationTime);
                 state.isLogged = true
             }
-
         },
         checkUserLogged: (state) => {
-            let token = localStorage.getItem('token');
-            if (token) {
-                state.isLogged = true;
-                state.token = token;
-            } else {
-                state.isLogged = false;
-                state.token = undefined;
-            }
+            handleCheckTokenExpiration(state);
         },
         logout: state => {
-            state.isLogged = false
+            localStorage.removeItem('token');
+            localStorage.removeItem('expirationTime');
+            state.isLogged = false;
+            state.token = undefined;
         }
     }
 })
 
-export const { login, logout,checkUserLogged } = authenticationSlice.actions;
+
+const handleCheckTokenExpiration = (state) => {
+    let token = localStorage.getItem('token');
+    let expirationTime = new Date(localStorage.getItem('expirationTime')).getTime();
+
+    let timeNow = Date.now();
+    if (expirationTime > timeNow) {
+        state.isLogged = true;
+        state.token = token;
+    } else {
+        localStorage.removeItem('token');
+        localStorage.removeItem('expirationTime');
+        state.isLogged = false;
+        state.token = undefined;
+    }
+}
+
+export const { login, logout, checkUserLogged } = authenticationSlice.actions;
 export default authenticationSlice.reducer
