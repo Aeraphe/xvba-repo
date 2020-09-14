@@ -4,6 +4,7 @@ import { XvbaLogoSharedComp } from '../../../../shared/components/Xvba-Logo.shar
 import { SearchResultBarComp } from '../SearchResultBar/SearchResultBar.comp';
 import { SearchResultListComp } from '../SearchResultList/SearchResultList.comp';
 import PackagesHttpService from '../../../../shared/services/packagesHttp.service';
+import { DBServices } from "../../../../shared/services/indexddb/db.service";
 import _ from 'lodash';
 let lastSearch = "";
 
@@ -52,11 +53,11 @@ export const SearchComp = () => {
                 </XvbaLogoSharedComp>
             </div>
             <div className={styles['Search-Container']}>
-            
+
                 <input onKeyPress={e => handleKeyPress(e)} onChange={(e) => handleOnChangeSearchText(e)} placeholder="Search VBA Package" className={styles['Search-Input']}></input>
                 <button onClick={() => handleOnClickSearch()} className={styles['Search-Input-Btn']}>Search</button>
             </div>
-            <div style={{ display: showSearching ? 'flex' : 'none',marginLeft:'17px', fontSize: "21px", color:'green', }}><b>Searching... </b> </div>
+            <div style={{ display: showSearching ? 'flex' : 'none', marginLeft: '17px', fontSize: "21px", color: 'green', }}><b>Searching... </b> </div>
             {packages}
         </div>
 
@@ -68,6 +69,10 @@ export const SearchComp = () => {
 const handlerGetPackages = async (val) => {
 
     let packages = await PackagesHttpService.fuseSearch(val);
+    const { open, update, clear } = DBServices;
+    let db = await open();
+    await clear('packages',db)
+    await update(packages.data,'packages', db)
     let response = [];
     let totalPackages = packages.data.length;
     if (totalPackages > 0) {

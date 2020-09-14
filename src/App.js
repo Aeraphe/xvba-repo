@@ -8,7 +8,7 @@ import { Provider, useDispatch, useSelector } from "react-redux";
 import store from "./store";
 import { checkUserLogged } from "./shared/reducers/authenticationSlice";
 import { routes } from "./app.routes";
-import { DBServices } from "./shared/services/indexddb/db";
+import { DBServices } from "./shared/services/indexddb/db.service";
 
 // Initialize Firebase
 fb.initializeApp(firebaseConfig);
