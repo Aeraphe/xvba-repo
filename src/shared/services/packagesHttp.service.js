@@ -1,16 +1,21 @@
 import axios from 'axios';
 import * as endpoints from './endpoints';
 
-let token = localStorage.getItem('token');
-const config = {
-    headers: {
-        Authorization: 'Bearer ' + token
+
+const getAuthHeaderToken = () => {
+    let token = localStorage.getItem('token');
+    return {
+        headers: {
+            Authorization: 'Bearer ' + token
+        }
     }
 }
+
 
 class PackagesHttpService {
 
     get = async () => {
+        const config = getAuthHeaderToken();
         return await axios.get(endpoints.packages.url, config).then(
             res => res.data
         );
@@ -18,12 +23,14 @@ class PackagesHttpService {
     };
 
     getUserAuthPackages = async () => {
+        const config = getAuthHeaderToken();
         return await axios.get(endpoints.packages.user_auth_packages, config).then(
             res => res.data
         );
     }
 
-    uploadNewPackage = async (data,callback) => {
+    uploadNewPackage = async (data, callback) => {
+        const config = getAuthHeaderToken();
         let uploadConf = {
 
             headers: {
@@ -51,6 +58,7 @@ class PackagesHttpService {
      * @param {string} search 
      */
     fuseSearch = async (search) => {
+        const config = getAuthHeaderToken();
         let data = { name: search }
         return await axios.post(endpoints.packages.url + '/fuse-search', data, config).then(
             res => {
@@ -60,6 +68,7 @@ class PackagesHttpService {
     }
 
     searchByName = async (search) => {
+        const config = getAuthHeaderToken();
         let data = { name: search };
         return await axios.post(endpoints.packages.url + '/search-name', data, config).then(
             res => {
@@ -69,6 +78,7 @@ class PackagesHttpService {
     }
 
     delete = async (id) => {
+        const config = getAuthHeaderToken();
         return await axios.delete(endpoints.packages.url + "/" + id, config).then(
             res => res.data
         );
