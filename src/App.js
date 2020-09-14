@@ -8,11 +8,14 @@ import { Provider, useDispatch, useSelector } from "react-redux";
 import store from "./store";
 import { checkUserLogged } from "./shared/reducers/authenticationSlice";
 import { routes } from "./app.routes";
+import { DBServices } from "./shared/services/indexddb/db";
+
 // Initialize Firebase
 fb.initializeApp(firebaseConfig);
 
 
 function App() {
+  (async () => { await DBServices.create() })()
 
   return (
     <Provider store={store}>
