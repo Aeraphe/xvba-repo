@@ -1,4 +1,5 @@
-const baseUrl = 'http://localhost:5001/xvba-691e3/us-central1';
+//const baseUrl = 'http://localhost:5001/xvba-691e3/us-central1';
+const baseUrl = 'https://us-central1-xvba-691e3.cloudfunctions.net/api';
 const apiVersion = '/api/v1/';
 const url = baseUrl + apiVersion;
 /**
