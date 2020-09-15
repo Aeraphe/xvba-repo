@@ -26,7 +26,7 @@ export const SearchResultListComp = (prop) => {
                 <li>
                     <div className={styles['Package-Name']}><Link to={'show-package/' + prop.package} >{prop.package}</Link></div>
                     <div className={styles['Description']}>{prop.description}</div>
-                    <div className={styles['User']}><a href="/">{prop.user}</a> <span>published</span> <span>{prop.publishdate}</span></div>
+                    <div className={styles['User']}><a href="/">{prop.user}</a> <span>published</span> <span>{prop.create_ate}</span></div>
                 </li>
             </ul>
             <div className={styles.Classification}>
@@ -35,13 +35,13 @@ export const SearchResultListComp = (prop) => {
                         <input className={styles['Input-Clipboard']} id={prop.package} onClick={(e) => handleCopy(prop.package)} readOnly type="text" value={clipboardText} />
                     </li>
                     <li>
-                        Version 1
+                        Version {prop.version}
                    </li>
                     <li>
-                        Download: 5 mil
+                        Download: {prop.downloads}
                    </li>
                     <li>
-                        Range: 5
+                        Range: {prop.rating}
                    </li>
                 </ul>
             </div>

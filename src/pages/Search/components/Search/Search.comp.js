@@ -66,9 +66,12 @@ const ListPackages = () => {
             response.push(
                 <SearchResultListComp key={index}
                     package={item.name}
-                    user="Beto"
-                    description="Function for calc Gauss Curves"
-                    publish_date="14/08/1980"
+                    user={item.username}
+                    description={item.description}
+                    create_ate={item.create_ate}
+                    download = {item.downloads}
+                    version={item.version}
+                    rating={item.rating}
                 />
             )
         });
