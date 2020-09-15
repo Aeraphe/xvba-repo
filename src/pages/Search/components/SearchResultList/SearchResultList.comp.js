@@ -1,10 +1,25 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './SearchResultList.module.css';
 import { Link } from 'react-router-dom';
 
 
 
 export const SearchResultListComp = (prop) => {
+
+    const [clipboardText, setClipboardText] = useState('npx xvba install ')
+    const handleCopy = (input) => {
+        let copyText = document.querySelector("#" + input);
+        copyText.select();
+        document.execCommand("copy");
+        setClipboardText('copied')
+        setTimeout(() => {
+            setClipboardText('npx xvba install ' + prop.package)
+        }, 700)
+    };
+    useEffect(() => {
+        setClipboardText('npx xvba install ' + prop.package)
+    }, [prop.package])
+
     return (
         <div className={styles.SearchResultList} >
             <ul>
@@ -15,17 +30,20 @@ export const SearchResultListComp = (prop) => {
                 </li>
             </ul>
             <div className={styles.Classification}>
-               <ul>
-                   <li>
-                       Version 1
+                <ul>
+                    <li>
+                        <input className={styles['Input-Clipboard']} id={prop.package} onClick={(e) => handleCopy(prop.package)} readOnly type="text" value={clipboardText} />
+                    </li>
+                    <li>
+                        Version 1
                    </li>
-                   <li>
-                      Download: 5 mil
+                    <li>
+                        Download: 5 mil
                    </li>
-                   <li>
-                       Range: 5
+                    <li>
+                        Range: 5
                    </li>
-               </ul>
+                </ul>
             </div>
         </div>
     )
