@@ -11,9 +11,10 @@ export const LoginFormComponent = (props) => {
     const dispatch = useDispatch();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    useEffect(()=>{
+    useEffect(() => {
         props.showLoading(false)
-    },[isLogged])
+        // eslint-disable-next-line
+    }, [isLogged])
     return (
         <div>
             <div style={{ display: !isLogged ? "block" : "none" }}>
@@ -28,16 +29,16 @@ export const LoginFormComponent = (props) => {
                         <button className={styles['Form-Btn']} type="button" onClick={e => authentication(e)}>Login</button>
                     </div>
                 </form>
-                
+
             </div>
             <div style={{ display: isLogged ? "block" : "none" }}>
                 <CardShared height="180px" width="250px">
                     {props.children}
                     <button className={styles['Form-Logout-Btn']} type="submit" onClick={e => signout(e)}>Logout</button>
                 </CardShared>
-                
+
             </div>
-            
+
         </div>
 
     )
@@ -46,7 +47,7 @@ export const LoginFormComponent = (props) => {
         props.showLoading(true)
         e.preventDefault();
         await loginFirebase(email, password, dispatch);
-     
+
     }
 
     async function signout(e) {
