@@ -8,7 +8,7 @@ const Response = require('../response/response_api');
 const FileUploadServices = require('../services/file_upload.service');
 const StorageService = require('../services/storage.service');
 const PackageRepository = require('../repository/package.repository');
-
+const moment = require('moment')
 
 
 module.exports = {
@@ -48,7 +48,7 @@ module.exports = {
                     file: filesStorage[0].rename,
                     rating: 0,
                     downloads: 0,
-                    create_at: Date(),
+                    create_ate: moment(Date()).format('MM/DD/YYYY'),
                     public: true
                 })
             return Response.format(data.data, req, { code: 200, message: 'Package Upload Successfully' });
