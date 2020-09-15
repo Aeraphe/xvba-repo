@@ -4,3 +4,10 @@
     margin-top: 100px;
 
 }
+
+.Loading{
+    position: absolute;
+    top:200px;
+    margin: auto;
+    padding-left: 190px;
+}

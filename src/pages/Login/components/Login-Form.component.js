@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { loginFirebase, logoutFirebase } from "../../../shared/services/logging";
 import styles from "./Login-Form.module.css";
-import { CardShared } from '../../../shared/components/Card/Card.shared'
+import { CardShared } from '../../../shared/components/Card/Card.shared';
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 
@@ -11,6 +11,9 @@ export const LoginFormComponent = (props) => {
     const dispatch = useDispatch();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    useEffect(()=>{
+        props.showLoading(false)
+    },[isLogged])
     return (
         <div>
             <div style={{ display: !isLogged ? "block" : "none" }}>
@@ -25,21 +28,25 @@ export const LoginFormComponent = (props) => {
                         <button className={styles['Form-Btn']} type="button" onClick={e => authentication(e)}>Login</button>
                     </div>
                 </form>
+                
             </div>
             <div style={{ display: isLogged ? "block" : "none" }}>
                 <CardShared height="180px" width="250px">
                     {props.children}
                     <button className={styles['Form-Logout-Btn']} type="submit" onClick={e => signout(e)}>Logout</button>
                 </CardShared>
-
+                
             </div>
+            
         </div>
 
     )
 
     async function authentication(e) {
+        props.showLoading(true)
         e.preventDefault();
         await loginFirebase(email, password, dispatch);
+     
     }
 
     async function signout(e) {
