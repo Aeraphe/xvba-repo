@@ -12,8 +12,13 @@ router
     .post('/', authRoute, async (req, res) => {
         const response = await packageController.addPackage(req)
         res.json(response);
+        
     }).get('/', async (req, res) => {
         const response = await packageController.getPackage(req);
+        res.json(response);
+
+    }).get('/download/:name', async (req, res) => {
+        const response = await packageController.getPackageFileForDownload(req);
         res.json(response);
 
     }).get('/user-auth', authRoute, async (req, res) => {
