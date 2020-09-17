@@ -11,14 +11,23 @@ export const ShowPackagePage = (props) => {
                 <SearchShareComp></SearchShareComp>
             </div>
             <div className={styles['Content']}>
-            <div className={styles['Logo']}>
-                Readme div
+                <div className={styles['Content-Grid']}>
+                    <div className={styles['Package-Title-Bar']}>
+                        <div className={styles['Package-Title']}>Gauss-Curve</div>
+                        <div className={styles['Package-Version']}>1.1.2  Public  Published 2 months ago</div>
+                    </div>
+                    <div className={styles['Package-Info']}>
+
+                        <div className={styles['Package-Info-Readme']}>Readme</div>
+                        <div className={styles['Package-Info-Statistics']}>
+                            <div>
+                                <div className={styles['Install-Title']}>Install</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
-            <div className={styles}>
-                Package download info
-            </div>
-            </div>
-          
         </div>
     )
 }

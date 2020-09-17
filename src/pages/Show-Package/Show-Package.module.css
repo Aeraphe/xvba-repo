@@ -2,9 +2,11 @@
   position: relative;
   display: grid;
   grid-template-areas: "Search" "Content";
-  grid-template-rows: 1fr 1fr;
+  grid-template-rows: 72px 1fr;
   grid-template-columns: 1fr;
   height: 100%;
+  width: 100%;
+
 }
 
 .Search {
@@ -12,5 +14,60 @@
 }
 
 .Content {
-  grid-area: "Header";
+  grid-area: "Content";
+  background-color: cadetblue;
+}
+
+.Content-Grid{
+  display: grid;
+  grid-template-rows: 95px 1fr;
+  grid-template-columns: auto;
+  height: 100%;
+}
+
+.Package-Title-Bar {
+  background-color: rgb(255, 255, 255);
+
+}
+
+.Package-Title {
+  display: flex;
+  font-size: 17px;
+  padding: 23px 7px 0px 11px;
+  font-weight: 700;
+  color: rgb(0, 0, 0);
+}
+
+.Package-Version {
+
+  padding: 7px 11px;
+  font-size: 13px;
+  color: #222222;
+}
+
+.Package-Info {
+
+  position: relative;
+  display: grid;
+  background-color: rgb(240, 240, 240);
+  grid-template-rows: 1fr;
+  grid-template-columns: 4fr 1fr;
+  grid-template-areas: "Readme" "Statistics";
+  justify-items: center;
+
+}
+
+.Package-Info-Readme {
+  grid-area: "Readme";
+  margin: 7px;
+
+}
+
+.Package-Info-Statistics {
+  grid-area: "Statistics";
+  font-size: 13px;
+  margin:11px;
+  width: 100%;
+
+  color: #333333;
 }
