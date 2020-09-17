@@ -2,7 +2,7 @@
   position: relative;
   display: grid;
   grid-template-areas: "Search" "Content";
-  grid-template-rows: 72px 1fr;
+  grid-template-rows: 57px 1fr;
   grid-template-columns: 1fr;
   height: 100%;
   width: 100%;
@@ -10,7 +10,7 @@
 }
 
 .Search {
-  grid-area: "Search";
+  grid-area: "Search";  
 }
 
 .Content {
