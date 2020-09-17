@@ -8,10 +8,41 @@ const Response = require('../response/response_api');
 const FileUploadServices = require('../services/file_upload.service');
 const StorageService = require('../services/storage.service');
 const PackageRepository = require('../repository/package.repository');
+const DownloadGuardService = require('../services/download.guard')
 const moment = require('moment')
 
 
 module.exports = {
+
+    getPackageFileForDownload: async (req) => {
+        try {
+            //Get packages by name
+            const { getPackageByName } = PackageRepository
+            const packageName = req.params.name;
+            const pack = await getPackageByName(packageName);
+            //Package not found 
+            if (pack.length === 0) {
+                return Response.format([], req, { code: 404, message: 'Package not found' });
+            }
+            //Check if the package is public
+            const userId = '' // req.user.user_id;
+            const downloadGuard = DownloadGuardService(pack, userId);
+            if (downloadGuard) {
+                let fileName = pack[0].file;
+                let storage = admin.storage()
+                let bucked = storage.bucket("xvba-691e3.appspot.com");
+                const stream = bucked.file('xvba-files/' + fileName).createReadStream();
+
+                return { stream, result: { ...Response.format([], req, { code: 200, message: 'Download package' + packageName + " Successfully" }) } };
+            } else {
+                return Response.format([], req, { code: 403, message: 'Permission Denied' });
+            }
+        } catch (error) {
+            return Response.format([], req, { code: error.code, message: error.message });
+        }
+
+
+    },
     getPackage: async () => {
         let packages = [];
         await db.collection('packages').get().then(function (querySnapshot) {
@@ -39,7 +70,7 @@ module.exports = {
             //Check file extension
             //Check file size
             const userId = req.user.user_id;
-            const filesStorage = await storePackage(files, { destination: "xvba-files/" + userId, append_name: '_xvba_package' });
+            const filesStorage = await storePackage(files, { destination: "xvba-files", append_name: '_xvba_package' });
             const { savePackage } = PackageRepository;
             await savePackage(
                 {
@@ -65,12 +96,12 @@ module.exports = {
             const { deletePackage, getUserPackages } = PackageRepository;
             const { deletePackageFile } = StorageService;
             const userPackages = await getUserPackages(req);
-            const user_id = req.user.user_id;
+         
             //Check if the user is the package owner 
             const pack = userPackages.filter(item => item.id === req.params.id);
             if (pack) {
-               await deletePackageFile(user_id,pack[0].file)
-               await deletePackage(req)
+                await deletePackageFile(pack[0].file)
+                await deletePackage(req)
 
             }
 
