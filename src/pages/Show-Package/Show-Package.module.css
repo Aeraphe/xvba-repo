@@ -1,4 +1,16 @@
-.Show-Package{
-    display: flex;
-    justify-content: space-between;
+.Container {
+  position: relative;
+  display: grid;
+  grid-template-areas: "Search" "Content";
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 1fr;
+  height: 100%;
+}
+
+.Search {
+  grid-area: "Search";
+}
+
+.Content {
+  grid-area: "Header";
 }
