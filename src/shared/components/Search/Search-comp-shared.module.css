@@ -1,42 +1,28 @@
 .Container {
-  position: absolute;
   display: flex;
   margin: 0;
-  padding-top: 15px;
   height: 57px;
-  width: 100vw;
   background-color: rgb(28, 141, 56);
 }
 
 .Form-Container {
-  position: relative;
-
-  width: 100%;
+  margin: auto;
+  width: 95%;
 }
 
 .Form-Group {
-  position: absolute;
   display: flex;
-  margin: auto;
-  padding-top: 8px;
-
 
   width: 100%;
 }
 .Search-Input {
-
-  position: relative;
   margin-left: 25px;
   width: 100%;
   height: 20px;
 }
 
-
 .Search-Btn {
-
-    position: relative;
-    margin-right: 25px;
-    width: 75px;
-    height: 26px;
-  }
-  
+  margin-right: 25px;
+  width: 75px;
+  height: 26px;
+}
