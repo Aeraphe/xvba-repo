@@ -4,10 +4,7 @@ const Fuse = require('fuse.js')
 const packagesRef = db.collection('packages');
 
 const savePackage = async (data) => {
-
-
     return await packagesRef.add(data)
-
 }
 
 const getUserPackages = async (req) => {
@@ -20,6 +17,22 @@ const getUserPackages = async (req) => {
         });
         return docs;
     });
+
+}
+
+
+const getPackageByName = async (req) => {
+    const packageName = req.params.name;
+    let query = packagesRef.where('name', '==', packageName).limit(1);
+    let docs = [];
+    return await query.get().then(
+        (querySnapshot) => {
+            querySnapshot.forEach(doc => {
+                docs.push({ ...doc.data(), id: doc.id })
+            })
+            return docs;
+        }
+    )
 
 
 }
@@ -54,7 +67,7 @@ const fuseSearchPackages = async (req) => {
             querySnapshot.forEach(doc => {
                 const fuse = new Fuse([doc.data()], options)
                 const find = fuse.search(req.body.name)
-                if (find.length > 0 && find[0].score <= 0.2) { packages.push( { ...find[0].item, id: doc.id } ) }
+                if (find.length > 0 && find[0].score <= 0.2) { packages.push({ ...find[0].item, id: doc.id }) }
             })
             return packages
         }
@@ -63,4 +76,4 @@ const fuseSearchPackages = async (req) => {
 
 }
 
-module.exports = { savePackage, getUserPackages, deletePackage, fuseSearchPackages }
+module.exports = { savePackage, getUserPackages, deletePackage, fuseSearchPackages, getPackageByName }
