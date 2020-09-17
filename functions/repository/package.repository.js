@@ -21,8 +21,8 @@ const getUserPackages = async (req) => {
 }
 
 
-const getPackageByName = async (req) => {
-    const packageName = req.params.name;
+const getPackageByName = async (name) => {
+    const packageName =name;
     let query = packagesRef.where('name', '==', packageName).limit(1);
     let docs = [];
     return await query.get().then(
