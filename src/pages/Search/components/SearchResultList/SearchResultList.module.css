@@ -58,13 +58,3 @@
     font-weight: 500;
 }
 
-.Input-Clipboard{
-    cursor: pointer;
-    transition-property: background-color;
-    transition-duration: 780ms
-}
-
-.Input-Clipboard:hover{
-   background-color: rgb(83, 177, 95);
-   color: #fff;
-}

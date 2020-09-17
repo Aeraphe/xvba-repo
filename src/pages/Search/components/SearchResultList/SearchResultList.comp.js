@@ -1,24 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styles from './SearchResultList.module.css';
 import { Link } from 'react-router-dom';
+import { CopyToClipboard } from "../../../../shared/components/CopyToClipboard/CopyToClipboard-shared";
 
 
 
 export const SearchResultListComp = (prop) => {
 
-    const [clipboardText, setClipboardText] = useState('npx xvba install ')
-    const handleCopy = (input) => {
-        let copyText = document.querySelector("#" + input);
-        copyText.select();
-        document.execCommand("copy");
-        setClipboardText('copied')
-        setTimeout(() => {
-            setClipboardText('npx xvba install ' + prop.package)
-        }, 700)
-    };
-    useEffect(() => {
-        setClipboardText('npx xvba install ' + prop.package)
-    }, [prop.package])
+
 
     return (
         <div className={styles.SearchResultList} >
@@ -32,17 +21,17 @@ export const SearchResultListComp = (prop) => {
             <div className={styles.Classification}>
                 <ul>
                     <li>
-                        <input className={styles['Input-Clipboard']} id={prop.package} onClick={(e) => handleCopy(prop.package)} readOnly type="text" value={clipboardText} />
+                        <CopyToClipboard package={prop.package} />
                     </li>
                     <li>
                         Version {prop.version}
-                   </li>
+                    </li>
                     <li>
                         Download: {prop.downloads}
-                   </li>
+                    </li>
                     <li>
                         Range: {prop.rating}
-                   </li>
+                    </li>
                 </ul>
             </div>
         </div>
