@@ -46,8 +46,8 @@ const storePackage = async (files, options) => {
 }
 
 
-const deletePackageFile = async (user_id, name) => {
-    const filePath = "xvba-files/" + user_id + "/" + name;
+const deletePackageFile = async ( name) => {
+    const filePath = "xvba-files/" + name;
     const file = bucked.file(filePath);
     return await file.delete().then(
         val => {
