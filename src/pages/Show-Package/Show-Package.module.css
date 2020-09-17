@@ -53,21 +53,23 @@
   grid-template-rows: 1fr;
   grid-template-columns: 4fr 1fr;
   grid-template-areas: "Readme" "Statistics";
-  justify-items: center;
-
+  justify-items: stretch;
+  width: 100%;
 }
 
 .Package-Info-Readme {
   grid-area: "Readme";
   margin: 7px;
-
 }
 
 .Package-Info-Statistics {
   grid-area: "Statistics";
-  font-size: 13px;
-  margin:11px;
-  width: 100%;
-
-  color: #333333;
+  font-size: 15px;
+  margin: 7px;
+  padding-top: 5px;
+  padding-left: 10px;
+  color: #127c4a;
+  border-left: 1px solid #e0e0e0;
 }
+
+
