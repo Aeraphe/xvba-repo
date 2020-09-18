@@ -4,14 +4,16 @@ import { useFormValidation } from '../../../../shared/services/custom-hooks/useF
 import { validateUploadPackages, validPackageDescriptionAlert, validPackageNameAlert } from '../../../../shared/services/form-validations/validate-upload-packages'
 import PackagesHttpService from "../../../../shared/services/packagesHttp.service";
 import { fetchPackagesByUserId } from "../../../../shared/reducers/user-packages.slice";
-import {  useDispatch } from "react-redux";
-export const UploadPackageForm = ({toggleModal}) => {
+import { useDispatch } from "react-redux";
+export const UploadPackageForm = ({ toggleModal }) => {
     const dispatch = useDispatch();
     const [formData, setFormData] = useState();
 
     const INITIAL_VALUES = {
         name: "",
-        description: ''
+        description: '',
+        file: ''
+
     }
     const {
         handleChange,
@@ -36,15 +38,18 @@ export const UploadPackageForm = ({toggleModal}) => {
             toggleModal();
             dispatch(fetchPackagesByUserId())
         } catch (error) {
-            
+
         }
-       
-        
+
+
     }
 
     const handleInputFileChange = (e) => {
+
+
+        handleChange({ name:'file',value: e.target.files[0].name })
         setFormData(e.target.files[0]);
-      
+
     }
     return (
 
