@@ -3,7 +3,7 @@ import './App.css';
 import fb from "firebase/app";
 import { firebaseConfig } from "./shared/services/firebase.config";
 import { Template } from './Template/Template';
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Switch } from "react-router-dom";
 import { Provider, useDispatch, useSelector } from "react-redux";
 import store from "./store";
 import { checkUserLogged } from "./shared/reducers/authenticationSlice";
@@ -21,7 +21,9 @@ function App() {
     <Provider store={store}>
       <BrowserRouter>
         <Template>
-          <RouteGuard />
+          <Switch>
+            <RouteGuard />
+          </Switch>
         </Template>
       </BrowserRouter>
     </Provider>
