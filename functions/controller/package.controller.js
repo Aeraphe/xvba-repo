@@ -9,6 +9,7 @@ const FileUploadServices = require('../services/file_upload.service');
 const StorageService = require('../services/storage.service');
 const PackageRepository = require('../repository/package.repository');
 const DownloadGuardService = require('../services/download.guard')
+const { checkPackageFilesService } = require('../services/check-package-files.service');
 const moment = require('moment')
 
 
@@ -60,29 +61,44 @@ module.exports = {
      */
     addPackage: async (req) => {
         try {
+            //Develope
+            //check again if package name exists
+
             const { getPostValues, getFiles } = FileUploadServices;
-            const data = await getPostValues(req);
+            const postData = await getPostValues(req);
             //Check package name again
             const files = await getFiles(req);
+            //Check zip files
+            const packageCheckedData = await checkPackageFilesService(files, postData.data);
             const { storePackage } = StorageService;
-            //Developer
-            //Unzip file for separate Readme.md
-            //Check file extension
-            //Check file size
             const userId = req.user.user_id;
-            const filesStorage = await storePackage(files, { destination: "xvba-files", append_name: '_xvba_package' });
+            const config = packageCheckedData.config;
+            //Store package zip file
+            const filesStoragePackage = await storePackage(files, { destination: "xvba-files", append_name: '_xvba_package' });
+            //Storage Readme file 
+            const filesStorageReadme = await storePackage([{ ...packageCheckedData.fileReadme }], { destination: "xvba-files", append_name: '_xvba_readme' });
+
             const { savePackage } = PackageRepository;
             await savePackage(
                 {
                     user_id: userId,
-                    ...data.data,
-                    file: filesStorage[0].rename,
-                    rating: 0,
-                    downloads: 0,
-                    create_ate: moment(Date()).format('MM/DD/YYYY'),
-                    public: true
+                    name: postData.data.name,
+                    description: postData.data.description,
+                    repository: config.repository || "",
+                    homepage: config.homepage || "",
+                    packages: [{
+                        file: filesStoragePackage[0].rename,
+                        size: filesStoragePackage[0].size,
+                        readme_file: filesStorageReadme[0].rename,
+                        version: config.version || '1.0',
+                        rating: 0,
+                        downloads: 0,
+                        create_ate: moment(new Date()).format('MM/DD/YYYY'),
+                    }],
+                    public: true,
+                    create_ate: moment(new Date()).format('MM/DD/YYYY')
                 })
-            return Response.format(data.data, req, { code: 200, message: 'Package Upload Successfully' });
+            return Response.format(postData.data, req, { code: 200, message: 'Package Upload Successfully' });
         } catch (error) {
             return Response.format([], req, { code: error.code, message: error.message });
         }
@@ -96,11 +112,16 @@ module.exports = {
             const { deletePackage, getUserPackages } = PackageRepository;
             const { deletePackageFile } = StorageService;
             const userPackages = await getUserPackages(req);
-         
+
             //Check if the user is the package owner 
             const pack = userPackages.filter(item => item.id === req.params.id);
             if (pack) {
-                await deletePackageFile(pack[0].file)
+
+                pack[0].packages.forEach(async element => {
+                    await deletePackageFile(element.file)
+                    await deletePackageFile(element.readme_file)
+                });
+
                 await deletePackage(req)
 
             }
