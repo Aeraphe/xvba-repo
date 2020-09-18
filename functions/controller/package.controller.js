@@ -30,7 +30,7 @@ module.exports = {
             if (downloadGuard) {
                 let fileName = pack[0].file;
                 let storage = admin.storage()
-                let bucked = storage.bucket("xvba-691e3.appspot.com");
+                let bucked = storage.bucket("xvba-repository.appspot.com");
                 const stream = bucked.file('xvba-files/' + fileName).createReadStream();
 
                 return { stream, result: { ...Response.format([], req, { code: 200, message: 'Download package' + packageName + " Successfully" }) } };

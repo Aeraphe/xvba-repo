@@ -24,6 +24,7 @@ export const validateUploadPackages = {
             const nameErrors = validatePackageName(values);
             const validDescription = validatePackageDescription(values);
             const checkedName = await handleCheckValidName(values.name);
+            validateFileExtension(values)
             if (checkedName) {
                 errors = { ...nameErrors, ...validDescription };
             } else {
@@ -33,6 +34,16 @@ export const validateUploadPackages = {
         })
     }
 }
+
+
+const validateFileExtension = (values) => {
+    console.log(values.file)
+}
+
+function getFileExtension3(filename) {
+    return filename.slice((filename.lastIndexOf(".") - 1 >>> 0) + 2);
+  }
+  
 
 /**
  * Validate Package name 
@@ -47,20 +58,25 @@ const validatePackageName = (values) => {
         error.name = "Mini length is 3 characters"
     } else if (regexEspecialChar.test(values.name)) {
         error.name = "Especial Characters a Denied !#$%^&*(),.?:{}"
+    } else if (hasWhiteSpace(values.name)) {
+        error.name = "Package name can't have withe space"
     }
 
 
     return error
 }
 
+function hasWhiteSpace(s) {
+    return /\s/g.test(s);
+}
 
 const validatePackageDescription = (values) => {
 
     let error = {}
     if (!values.description) {
         error.description = "Required"
-    } else if (values.description.length < 15) {
-        error.description = "Mini length is 15 characters"
+    } else if (values.description.length < 10) {
+        error.description = "Mini length is 10 characters"
     }
 
 

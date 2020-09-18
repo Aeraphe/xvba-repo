@@ -2,7 +2,7 @@ const admin = require('firebase-admin');
 const fs = require('fs');
 const fsAsync = require("fs").promises;
 const path = require('path');
-let bucketName = "xvba-691e3.appspot.com";
+let bucketName = "xvba-repository.appspot.com";
 const bucked = admin.storage().bucket(bucketName)
 
 
