@@ -24,11 +24,11 @@ export const validateUploadPackages = {
             const nameErrors = validatePackageName(values);
             const validDescription = validatePackageDescription(values);
             const checkedName = await handleCheckValidName(values.name);
-            validateFileExtension(values)
+           const validFileType = validateFileExtension(values)
             if (checkedName) {
-                errors = { ...nameErrors, ...validDescription };
+                errors = { ...nameErrors, ...validDescription,...validFileType };
             } else {
-                errors = { ...nameErrors, ...validDescription, valid_name: "Package Name Already in use" };
+                errors = { ...nameErrors, ...validDescription, valid_name: "Package Name Already in use",...validFileType };
             }
             callback(errors)
         })
@@ -37,13 +37,21 @@ export const validateUploadPackages = {
 
 
 const validateFileExtension = (values) => {
-    console.log(values.file)
+    const extension = getFileExtension(values.file)
+    let error = {}
+    if (!values.file) {
+        error.file = "Required"
+    }else if ('xvba' !== extension) {
+        error.file = "File not allowed"
+    }
+    console.log(error);
+    return error
 }
 
-function getFileExtension3(filename) {
+function getFileExtension(filename) {
     return filename.slice((filename.lastIndexOf(".") - 1 >>> 0) + 2);
-  }
-  
+}
+
 
 /**
  * Validate Package name 
