@@ -14,7 +14,8 @@ export const validateUploadPackages = {
         return {
             name: "Required",
             description: 'Required',
-            valid_name: 'Required'
+            valid_name: 'Required',
+            file:"Required"
         }
     },
 
@@ -40,11 +41,10 @@ const validateFileExtension = (values) => {
     const extension = getFileExtension(values.file)
     let error = {}
     if (!values.file) {
-        error.file = "Required"
+        error.file = "Required xvba file"
     }else if ('xvba' !== extension) {
-        error.file = "File not allowed"
+        error.file = "File (." + extension + ") not allowed!!! Just xvba modules"
     }
-    console.log(error);
     return error
 }
 
@@ -133,6 +133,14 @@ export const validPackageNameAlert = (errors) => {
 export const validPackageDescriptionAlert = (errors) => {
     if (errors.description) {
         return errors.description && <span style={{ fontSize: '11px', color: 'red' }}>{errors.description}</span>
+    }
+    return <span style={{ fontSize: '13px', color: 'green' }}>Valid</span>;
+}
+
+
+export const validFileTypeAlert = (errors) => {
+    if (errors.file) {
+        return errors.file && <span style={{ fontSize: '11px', color: 'red' }}>{errors.file}</span>
     }
     return <span style={{ fontSize: '13px', color: 'green' }}>Valid</span>;
 }
