@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from "./Upload-Package-Form.module.css";
 import { useFormValidation } from '../../../../shared/services/custom-hooks/useForm';
-import { validateUploadPackages, validPackageDescriptionAlert, validPackageNameAlert } from '../../../../shared/services/form-validations/validate-upload-packages'
+import { validateUploadPackages, validPackageDescriptionAlert, validPackageNameAlert,validFileTypeAlert } from '../../../../shared/services/form-validations/validate-upload-packages'
 import PackagesHttpService from "../../../../shared/services/packagesHttp.service";
 import { fetchPackagesByUserId } from "../../../../shared/reducers/user-packages.slice";
 import { useDispatch } from "react-redux";
@@ -25,6 +25,7 @@ export const UploadPackageForm = ({ toggleModal }) => {
     const validAlerts = {
         name: validPackageNameAlert(errors),
         description: validPackageDescriptionAlert(errors),
+        file: validFileTypeAlert(errors),
     }
 
     const handleSubmit = async (e) => {
@@ -76,7 +77,7 @@ export const UploadPackageForm = ({ toggleModal }) => {
                         className={styles['Description']}
                         cols={1} rows={3}
                     ></textarea>
-                    <label htmlFor="file"> Choose a file: </label>
+                    <label htmlFor="file"> Choose a file:  {validAlerts.file}</label>
                     <p><input onChange={e => handleInputFileChange(e)} id="file" type="file" /></p>
                     <hr></hr>
                     <div className={styles['Btn-Container']}>
