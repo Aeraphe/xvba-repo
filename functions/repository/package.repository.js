@@ -3,9 +3,13 @@ const db = admin.firestore();
 const Fuse = require('fuse.js')
 const packagesRef = db.collection('packages');
 
-const savePackage = async (data) => {
-    return await packagesRef.add(data)
+const savePackage = async (data, version, packageVersionData) => {
+    await packagesRef.doc(data.name).set(data)
+    const packRef = packagesRef.doc(data.name).collection('versions').doc(version);
+    return await packRef.set(packageVersionData)
 }
+
+
 
 const getUserPackages = async (req) => {
     const userId = req.user.user_id;
@@ -22,7 +26,7 @@ const getUserPackages = async (req) => {
 
 
 const getPackageByName = async (name) => {
-    const packageName =name;
+    const packageName = name;
     let query = packagesRef.where('name', '==', packageName).limit(1);
     let docs = [];
     return await query.get().then(

@@ -79,25 +79,28 @@ module.exports = {
             const filesStorageReadme = await storePackage([{ ...packageCheckedData.fileReadme }], { destination: "xvba-files", append_name: '_xvba_readme' });
 
             const { savePackage } = PackageRepository;
-            await savePackage(
-                {
-                    user_id: userId,
-                    name: postData.data.name,
-                    description: postData.data.description,
-                    repository: config.repository || "",
-                    homepage: config.homepage || "",
-                    packages: [{
-                        file: filesStoragePackage[0].rename,
-                        size: filesStoragePackage[0].size,
-                        readme_file: filesStorageReadme[0].rename,
-                        version: config.version || '1.0',
-                        rating: 0,
-                        downloads: 0,
-                        create_ate: moment(new Date()).format('MM/DD/YYYY'),
-                    }],
-                    public: true,
-                    create_ate: moment(new Date()).format('MM/DD/YYYY')
-                })
+
+            const packageData = {
+                user_id: userId,
+                name: postData.data.name,
+                description: postData.data.description,
+                repository: config.repository || "",
+                homepage: config.homepage || "",
+                public: true,
+                create_ate: moment(new Date()).format('MM/DD/YYYY')
+            };
+            const packageVersion = {
+                version: config.version,
+                file: filesStoragePackage[0].rename,
+                size: filesStoragePackage[0].size,
+                readme_file: filesStorageReadme[0].rename,
+                rating: 0,
+                downloads: 0,
+                create_ate: moment(new Date()).format('MM/DD/YYYY'),
+            };
+
+            await savePackage(packageData, config.version, packageVersion);
+
             return Response.format(postData.data, req, { code: 200, message: 'Package Upload Successfully' });
         } catch (error) {
             return Response.format([], req, { code: error.code, message: error.message });
