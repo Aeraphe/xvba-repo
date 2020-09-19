@@ -1,13 +1,12 @@
-const extract = require('extract-zip')
+//const extract = require('extract-zip')
 const { promisify } = require('util');
 const os = require('os');
 const path = require('path');
 const fs = require('fs');
 const { toLower } = require('lodash');
-const { response } = require('express');
 const readFileAsync = promisify(fs.readFile);
 const statAsync = promisify(fs.stat);
-
+const decompress = require('decompress');
 
 //Unzip file for separate Readme.md
 //Check file extension
@@ -18,7 +17,7 @@ const checkPackageFilesService = async (files, packageData) => {
         const tmpFolderName = Date.now() + '_xvba';
         const packageTempfolderPath = path.join(os.tmpdir(), tmpFolderName);
         //Extract filet to temp folder
-        await extract(files[0].file, { dir: packageTempfolderPath });
+         await decompress(files[0].file,  packageTempfolderPath );
         //Check config file (xvba.package.json)
         const xvbaConfigFile = await checkConfigFile(packageData, packageTempfolderPath)
         //Develope
