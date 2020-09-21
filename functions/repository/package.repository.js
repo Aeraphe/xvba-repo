@@ -4,8 +4,8 @@ const Fuse = require('fuse.js')
 const packagesRef = db.collection('packages');
 
 const savePackage = async (data, version, packageVersionData) => {
-    await packagesRef.doc(data.name).set(data)
-    const packRef = packagesRef.doc(data.name).collection('versions').doc(version);
+   const packageDoc =  await packagesRef.add(data)
+    const packRef = packagesRef.doc(packageDoc.id).collection('versions').doc(version);
     return await packRef.set(packageVersionData)
 }
 
