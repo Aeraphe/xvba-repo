@@ -10,7 +10,7 @@ const StorageService = require('../services/storage.service');
 const PackageRepository = require('../repository/package.repository');
 const DownloadGuardService = require('../services/download.guard')
 const { checkPackageFilesService } = require('../services/check-package-files.service');
-const moment = require('moment')
+
 
 
 module.exports = {
@@ -18,9 +18,10 @@ module.exports = {
     getPackageFileForDownload: async (req) => {
         try {
             //Get packages by name
-            const { getPackageByName } = PackageRepository
+            const { getPackageByNameAndVersion } = PackageRepository
             const packageName = req.params.name;
-            const pack = await getPackageByName(packageName);
+            const pack = await getPackageByNameAndVersion(packageName);
+      
             //Package not found 
             if (pack.length === 0) {
                 return Response.format([], req, { code: 404, message: 'Package not found' });
@@ -29,17 +30,19 @@ module.exports = {
             const userId = '' // req.user.user_id;
             const downloadGuard = DownloadGuardService(pack, userId);
             if (downloadGuard) {
-                let fileName = pack[0].file;
+                let fileName = pack[0].version.file;
+                console.log(fileName)
                 let storage = admin.storage()
                 let bucked = storage.bucket("xvba-repository.appspot.com");
                 const stream = bucked.file('xvba-files/' + fileName).createReadStream();
-
                 return { stream, result: { ...Response.format([], req, { code: 200, message: 'Download package' + packageName + " Successfully" }) } };
             } else {
                 return Response.format([], req, { code: 403, message: 'Permission Denied' });
             }
         } catch (error) {
+            console.error(error)
             return Response.format([], req, { code: error.code, message: error.message });
+
         }
 
 
@@ -79,6 +82,7 @@ module.exports = {
             const filesStorageReadme = await storePackage([{ ...packageCheckedData.fileReadme }], { destination: "xvba-files", append_name: '_xvba_readme' });
 
             const { savePackage } = PackageRepository;
+            const createAt = Date.now();
 
             const packageData = {
                 user_id: userId,
@@ -87,7 +91,7 @@ module.exports = {
                 repository: config.repository || "",
                 homepage: config.homepage || "",
                 public: true,
-                create_ate: moment(new Date()).format('MM/DD/YYYY')
+                create_ate: createAt
             };
             const packageVersion = {
                 version: config.version,
@@ -96,7 +100,7 @@ module.exports = {
                 readme_file: filesStorageReadme[0].rename,
                 rating: 0,
                 downloads: 0,
-                create_ate: moment(new Date()).format('MM/DD/YYYY'),
+                create_ate: createAt,
             };
 
             await savePackage(packageData, config.version, packageVersion);
