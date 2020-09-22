@@ -4,7 +4,7 @@ const Fuse = require('fuse.js')
 const packagesRef = db.collection('packages');
 
 const savePackage = async (data, version, packageVersionData) => {
-   const packageDoc =  await packagesRef.add(data)
+    const packageDoc = await packagesRef.add(data)
     const packRef = packagesRef.doc(packageDoc.id).collection('versions').doc(version);
     return await packRef.set(packageVersionData)
 }
@@ -24,20 +24,74 @@ const getUserPackages = async (req) => {
 
 }
 
+/**
+ * Get package by name and version
+ * 
+ * @param {String} name 
+ */
+const getPackageByNameAndVersion = async (packageNameVersion) => {
 
-const getPackageByName = async (name) => {
-    const packageName = name;
-    let query = packagesRef.where('name', '==', packageName).limit(1);
+
+    const { version, name } = splitPackageNameVersion(packageNameVersion);
+
     let docs = [];
-    return await query.get().then(
-        (querySnapshot) => {
-            querySnapshot.forEach(doc => {
-                docs.push({ ...doc.data(), id: doc.id })
-            })
-            return docs;
-        }
-    )
+    if (version !== null) {
 
+        const packagesRef = db.collection('packages');
+        let query = packagesRef.where('name', '==', name)
+
+        return new Promise(
+            async (resolve, reject) => {
+                await query.get().then(
+                    async (querySnapshot) => {
+                        querySnapshot.forEach(async doc => {
+
+                            if (version !== 'latest') {
+
+                                await db.collection('packages').doc(doc.id).collection('versions').where('version', '==', version).get().then(
+                                    d => {
+
+                                        d.forEach(f => {
+                                            docs.push({ ...doc.data(), id: doc.id, version: f.data() })
+                                        })
+                                        resolve(docs);
+                                    }
+                                );
+
+                            } else {
+                                //Get latest version
+                                await db.collection('packages').doc(doc.id).collection('versions').orderBy('create_ate', 'desc').limit(1).get().then(
+                                    d => {
+                                        d.forEach(f => {
+                                            docs.push({ ...doc.data(), id: doc.id, version: f.data() });
+                                        })
+                                        resolve(docs);
+                                    }
+                                );
+                            }
+
+                        })
+                    }
+                )
+
+            }
+        )
+
+    }
+
+}
+
+
+//Check Package version string request
+const splitPackageNameVersion = (nameVersion) => {
+    const nameVersionSplit = nameVersion.split('@');
+    const reg = new RegExp('@');
+    if (reg.test(nameVersion)) {
+        const version = nameVersionSplit[1].match(/^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$/gm);
+        return { version: version!==null?version[0]:'Not found', name: nameVersionSplit[0] }
+    } else {
+        return { version: 'latest', name: nameVersionSplit[0] }
+    }
 
 }
 
@@ -80,4 +134,4 @@ const fuseSearchPackages = async (req) => {
 
 }
 
-module.exports = { savePackage, getUserPackages, deletePackage, fuseSearchPackages, getPackageByName }
+module.exports = { savePackage, getUserPackages, deletePackage, fuseSearchPackages, getPackageByNameAndVersion }
