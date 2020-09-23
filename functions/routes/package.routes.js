@@ -13,6 +13,10 @@ router
         const response = await packageController.addPackage(req)
         res.json(response);
 
+    }).post('/update/:id', authRoute, async (req, res) => {
+        const response = await packageController.addNewPackageVersion(req)
+        res.json(response);
+
     }).get('/', async (req, res) => {
         const response = await packageController.getPackage(req);
         res.json(response);
@@ -48,7 +52,7 @@ const handleTextFileStream = async (res, response) => {
             const stream = response.stream;
 
             stream.on('data', function (data) {
-               const dataText = data.toString()
+                const dataText = data.toString()
                 res.send(dataText);
             });
 
