@@ -16,13 +16,12 @@ router
     }).get('/', async (req, res) => {
         const response = await packageController.getPackage(req);
         res.json(response);
-
     }).get('/download/:name', async (req, res) => {
         const data = await packageController.getPackageFileForDownload(req);
         handleDownloadFileStream(res, data)
     }).get('/readme/:name', async (req, res) => {
         const data = await packageController.getPackageReadme(req);
-        handleDownloadFileStream(res, data)
+        handleTextFileStream(res, data)
     }).get('/user-auth', authRoute, async (req, res) => {
         const response = await packageController.getUserAuthPackages(req);
         res.json(response);
@@ -40,6 +39,34 @@ router
 
     })
 
+
+
+const handleTextFileStream = async (res, response) => {
+
+    try {
+        if (response.result.meta.code === 200) {
+            const stream = response.stream;
+
+            stream.on('data', function (data) {
+               const dataText = data.toString()
+                res.send(dataText);
+            });
+
+            stream.on('error', function (err) {
+                console.log('error reading stream', err);
+            });
+
+            stream.on('end', function (data) {
+                //Develope Set download count 
+                res.end();
+            });
+        } else {
+            res.status(response.meta.code).json(response);
+        }
+    } catch (error) {
+        res.send(error)
+    }
+}
 
 const handleDownloadFileStream = async (res, response) => {
 
