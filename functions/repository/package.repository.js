@@ -26,6 +26,14 @@ const getAllUserPackages = async (req) => {
 
 
 
+const addPackageVersion = async (req, data) => {
+    const packageId = req.params.id;
+    let versionRef = db.collection('packages').doc(packageId).collection('versions').doc(data.version);
+    return await versionRef.set(data).then(resp => resp);
+}
+
+
+
 /**
  * Get package by name and version
  * 
@@ -155,4 +163,4 @@ const fuseSearchPackages = async (req) => {
 
 }
 
-module.exports = { savePackage, getAllUserPackages, deletePackage, fuseSearchPackages, getPackageByNameAndVersion, getPackageLastVersionDetails }
+module.exports = { savePackage, getAllUserPackages, deletePackage, fuseSearchPackages, getPackageByNameAndVersion, getPackageLastVersionDetails, addPackageVersion }
