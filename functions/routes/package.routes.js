@@ -17,9 +17,10 @@ router
         const response = await packageController.getPackage(req);
         res.json(response);
 
-    }).get('/download/:name', (req, res) => handleDownloadPackageRoute(req, res))
-
-    .get('/user-auth', authRoute, async (req, res) => {
+    }).get('/download/:name', async (req, res) => {
+        const data = await packageController.getPackageFileForDownload(req);
+        handleDownloadFileStream(res, data)
+    }).get('/user-auth', authRoute, async (req, res) => {
         const response = await packageController.getUserAuthPackages(req);
         res.json(response);
 
@@ -37,8 +38,8 @@ router
     })
 
 
-const handleDownloadPackageRoute = async (req, res) => {
-    const response = await packageController.getPackageFileForDownload(req);
+const handleDownloadFileStream = async (res, response) => {
+
     try {
         if (response.result.meta.code === 200) {
             const stream = response.stream;
