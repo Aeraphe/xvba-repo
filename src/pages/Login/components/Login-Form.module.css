@@ -99,6 +99,18 @@ cursor: pointer;
     color: rgb(36, 182, 0);
 }
 
+.register-back {
+    margin-top: -13px;
+    font-size: 12px;
+    font-weight: 800;
+    color: rgb(245, 118, 0);
+
+}
+
+.register-back:hover{
+ 
+    color: rgb(36, 182, 0);
+}
 
 .login-or-container{
 display: flex;
