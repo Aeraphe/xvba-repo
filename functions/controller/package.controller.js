@@ -21,7 +21,7 @@ module.exports = {
             const { getPackageByNameAndVersion } = PackageRepository
             const packageName = req.params.name;
             const pack = await getPackageByNameAndVersion(packageName);
-      
+
             //Package not found 
             if (pack.length === 0) {
                 return Response.format([], req, { code: 404, message: 'Package not found' });
@@ -91,6 +91,8 @@ module.exports = {
                 repository: config.repository || "",
                 homepage: config.homepage || "",
                 public: true,
+                rating: 0,
+                downloads: 0,
                 create_ate: createAt
             };
             const packageVersion = {
@@ -98,8 +100,6 @@ module.exports = {
                 file: filesStoragePackage[0].rename,
                 size: filesStoragePackage[0].size,
                 readme_file: filesStorageReadme[0].rename,
-                rating: 0,
-                downloads: 0,
                 create_ate: createAt,
             };
 
@@ -177,7 +177,12 @@ module.exports = {
         const { fuseSearchPackages } = PackageRepository;
         try {
             const packages = await fuseSearchPackages(req)
-            return Response.format(packages, req, { code: 200, message: 'Data Found' });
+            const data = packages.reduce((pre, next) => {
+                delete next.user_id;
+                pre.push(next);
+                return pre;
+            }, [])
+            return Response.format(data, req, { code: 200, message: 'Data Found' });
 
         } catch (error) {
             return Response.format([], req, { code: error.code, message: error.message });
