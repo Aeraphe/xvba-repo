@@ -5,18 +5,24 @@ import marked from 'marked';
 import DOMPurify from 'dompurify';
 import { CopyToClipboard } from "../../shared/components/CopyToClipboard/CopyToClipboard-shared";
 import PackageHttpService from '../../shared/services/packagesHttp.service';
-
+import { useSelector, useDispatch } from 'react-redux';
+import { searchPackagesThunk } from "../../shared/reducers/search-packages.slice";
 
 export const ShowPackagePage = (props) => {
+    const dispatch = useDispatch();
 
-    console.log(props);
+    const packages = useSelector(state => state.search_packages.entities);
+    const packageDetails = packages.filter(item => item.name === props.match.params.package)[0]
+
+
     const [readme, setReadme] = useState({ __html: "<p>Loading...</p>" });
     useEffect(() => {
         (async () => {
             const data = await PackageHttpService.getPackageReadme(props.match.params.package);
             setReadme({ __html: DOMPurify.sanitize(marked(data)) })
         })()
-    }, [props.match.params.package])
+        dispatch(searchPackagesThunk(props.match.params.package));
+    }, [dispatch, props.match.params.package])
     return (
 
         <div className={styles['Container']}>
@@ -26,14 +32,14 @@ export const ShowPackagePage = (props) => {
             <div className={styles['Content']}>
                 <div className={styles['Content-Grid']}>
                     <div className={styles['Package-Title-Bar']}>
-                        <div className={styles['Package-Title']}>Gauss-Curve</div>
-                        <div className={styles['Package-Version']}>1.1.2  Public  Published 2 months ago</div>
+                        <div className={styles['Package-Title']}>{packageDetails?.name || ""}</div>
+                        <div className={styles['Package-Version']}>Last Version: {packageDetails?.version.version || ""}  Published:  {(new Date(packageDetails?.version.create_ate).toDateString()) || ""}</div>
                     </div>
                     <div className={styles['Package-Info']}>
                         <div className={styles['Package-Info-Readme']} dangerouslySetInnerHTML={readme} ></div>
                         <div className={styles['Package-Info-Statistics']}>
                             <div className={styles['Install-Title']}>Install</div>
-                            <p><CopyToClipboard package={'test'} /></p>
+                            <p><CopyToClipboard package={packageDetails?.name || ""} /></p>
                         </div>
                     </div>
                 </div>
