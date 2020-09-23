@@ -1,7 +1,6 @@
 const admin = require('../firestore.init');
 const db = admin.firestore();
 const Fuse = require('fuse.js');
-const { response } = require('express');
 const packagesRef = db.collection('packages');
 
 const savePackage = async (data, version, packageVersionData) => {
@@ -84,12 +83,14 @@ const getPackageByNameAndVersion = async (packageNameVersion) => {
 
 
 const getPackageLastVersionDetails = async (docId) => {
+
     return await db.collection('packages').doc(docId).collection('versions').orderBy('create_ate', 'desc').limit(1).get().then(
         querySnapshot => {
+            let response;
             querySnapshot.forEach(f => {
-                return { id: docId, version: f.data() }
+                response = { id: docId, version: f.data() }
             })
-
+            return response;
         }
     );
 }
@@ -132,14 +133,19 @@ const fuseSearchPackages = async (req) => {
         keys: ['name']
     }
 
-    return await db.collection('packages').get().then(
-        (querySnapshot) => {
+    return db.collection('packages').get().then(
+        async (querySnapshot) => {
             let packages = [];
-            querySnapshot.forEach(doc => {
+            for (const doc of querySnapshot.docs) {
                 const fuse = new Fuse([doc.data()], options)
                 const find = fuse.search(req.body.name)
-                if (find.length > 0 && find[0].score <= 0.2) { packages.push({ ...find[0].item, id: doc.id }) }
-            })
+                if (find.length > 0 && find[0].score <= 0.2) {
+                    const details = await getPackageLastVersionDetails(doc.id)
+                    packages.push({ ...find[0].item, ...details })
+
+                }
+            }
+
             return packages
         }
 
