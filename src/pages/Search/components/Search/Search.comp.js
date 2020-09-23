@@ -63,14 +63,15 @@ const ListPackages = () => {
         let totalPackages = packages.length;
         response.push(<SearchResultBarComp key="search_result_bar_key" total={totalPackages}></SearchResultBarComp>);
         packages.forEach((item, index) => {
+           const createAte = new Date(item.create_ate).toDateString()
             response.push(
                 <SearchResultListComp key={index}
                     package={item.name}
                     user={item.username}
                     description={item.description}
-                    create_ate={item.create_ate}
+                    create_ate={createAte}
                     download = {item.downloads}
-                    version={item.version}
+                    version={item.version.version}
                     rating={item.rating}
                 />
             )
