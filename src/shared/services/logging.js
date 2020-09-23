@@ -24,11 +24,20 @@ export const logoutFirebase = async (dispatch) => {
     }
 }
 
-export const register = async (name, email, password) => {
-    await auth().createUserWithEmailAndPassword(email, password);
-    return auth().currentUser.updateProfile({
-        displayName: name
-    })
+export const createAccount = async (data, dispatch) => {
+    try {
+        const response = await auth().createUserWithEmailAndPassword(data.email, data.password);
+        await auth().currentUser.updateProfile({
+            displayName: data.name
+        })
+        const token = (await response.user.getIdTokenResult()).token;
+        const expirationTime = (await response.user.getIdTokenResult()).expirationTime;
+        dispatch(login({ token, expirationTime }))
+        return response
+    } catch (error) {
+        console.error(error)
+    }
+
 }
 
 export const getCurrentUser = () => {
