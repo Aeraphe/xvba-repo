@@ -1,6 +1,7 @@
 const admin = require('../firestore.init');
 const db = admin.firestore();
-const Fuse = require('fuse.js')
+const Fuse = require('fuse.js');
+const { response } = require('express');
 const packagesRef = db.collection('packages');
 
 const savePackage = async (data, version, packageVersionData) => {
@@ -44,7 +45,7 @@ const getPackageByNameAndVersion = async (packageNameVersion) => {
             async (resolve, reject) => {
                 await query.get().then(
                     async (querySnapshot) => {
-                        querySnapshot.forEach(async doc => {
+                        querySnapshot.forEach(async (doc) => {
 
                             if (version !== 'latest') {
 
@@ -82,13 +83,25 @@ const getPackageByNameAndVersion = async (packageNameVersion) => {
 }
 
 
+const getPackageLastVersionDetails = async (docId) => {
+    return await db.collection('packages').doc(docId).collection('versions').orderBy('create_ate', 'desc').limit(1).get().then(
+        querySnapshot => {
+            querySnapshot.forEach(f => {
+                return { id: docId, version: f.data() }
+            })
+
+        }
+    );
+}
+
+
 //Check Package version string request
 const splitPackageNameVersion = (nameVersion) => {
     const nameVersionSplit = nameVersion.split('@');
     const reg = new RegExp('@');
     if (reg.test(nameVersion)) {
         const version = nameVersionSplit[1].match(/^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$/gm);
-        return { version: version!==null?version[0]:'Not found', name: nameVersionSplit[0] }
+        return { version: version !== null ? version[0] : 'Not found', name: nameVersionSplit[0] }
     } else {
         return { version: 'latest', name: nameVersionSplit[0] }
     }
@@ -134,4 +147,4 @@ const fuseSearchPackages = async (req) => {
 
 }
 
-module.exports = { savePackage, getUserPackages, deletePackage, fuseSearchPackages, getPackageByNameAndVersion }
+module.exports = { savePackage, getUserPackages, deletePackage, fuseSearchPackages, getPackageByNameAndVersion, getPackageLastVersionDetails }
