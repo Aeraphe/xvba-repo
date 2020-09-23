@@ -22,6 +22,15 @@ class PackagesHttpService {
 
     };
 
+
+    getPackageReadme = async (packageName) => {
+
+        return await axios.get(endpoints.packages.file_readme + "/" + packageName).then(
+            res => res.data
+        );
+
+    };
+
     getUserAuthPackages = async () => {
         const config = getAuthHeaderToken();
         return await axios.get(endpoints.packages.user_auth_packages, config).then(
