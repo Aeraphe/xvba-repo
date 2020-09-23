@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { loginFirebase, logoutFirebase } from "../../../shared/services/logging";
+import { loginFirebase, logoutFirebase, createAccount } from "../../../shared/services/logging";
 import styles from "./Login-Form.module.css";
 import { CardShared } from '../../../shared/components/Card/Card.shared';
 import { useSelector } from "react-redux";
@@ -49,7 +49,7 @@ export const LoginFormComponent = (props) => {
 
                         </div>
                     </div>
-                    <CreateAccountForm display={displayRegister} toggleLogin={e => handleDisplayRegister(e)}>
+                    <CreateAccountForm showLoading={props.showLoading} display={displayRegister} toggleLogin={e => handleDisplayRegister(e)}>
                         {props.children}
                     </CreateAccountForm>
                 </form>
@@ -88,29 +88,34 @@ const CreateAccountForm = (props) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [repassword, setRePassword] = useState('');
+    const [nickname, setNickname] = useState('');
 
     return (
-        <form style={{ display: props.display ? "block" : "none" }} className={styles['Login-Form']}>
+        <div style={{ display: props.display ? "block" : "none" }} className={styles['Login-Form']}>
             <div className={styles['Login-Form-Content']} >
                 {props.children}
                 <p>Create Account</p>
+
                 <label htmlFor='user-email'>Email Address: </label>
                 <input id='user-email' type='email' name="email" value={email} onChange={e => setEmail(e.target.value)} ></input>
+                <label htmlFor='user-nickname'>NickName: </label>
+                <input id='user-nickname' type='text' name="nickname" value={nickname} onChange={e => setNickname(e.target.value)} ></input>
                 <label htmlFor='user-pass'>Password: </label>
                 <input id='user-pass' type='password' name="password" value={password} onChange={e => setPassword(e.target.value)}></input>
                 <label htmlFor='user-pass'>Confirm password: </label>
                 <input id='user-pass' type='password' name="password" value={repassword} onChange={e => setRePassword(e.target.value)}></input>
-                <button className={styles['Form-Btn']} type="button" onClick={e => register(e)}>Create Account</button>
-                <div className={styles['register-container']} onClick={e => props.toggleLogin(e)}><div className={styles['register']}>Back to logging</div></div>
+                <button className={styles['Form-Btn']} type="button" onClick={e => register()}>Create Account</button>
+                <div className={styles['register-container']} onClick={e => props.toggleLogin()}><div className={styles['register-back']}>Back to logging</div></div>
 
             </div>
 
-        </form>)
+        </div>)
 
-    async function register(e) {
+    async function register() {
         props.showLoading(true)
-        e.preventDefault();
-        await loginFirebase(email, password, dispatch);
+        const postData = { email: email, nickname: nickname, password: password, repassword: repassword };
+        await createAccount(postData, dispatch);
+        props.showLoading(false)
 
     }
 }
