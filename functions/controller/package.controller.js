@@ -78,6 +78,50 @@ module.exports = {
 
 
     },
+    addNewPackageVersion:  async (req) => {
+        try {
+ 
+            const { getPostValues, getFiles } = FileUploadServices;
+            const postData = await getPostValues(req);
+            //Check package name again
+            const files = await getFiles(req);
+            //Check zip files
+            const packageCheckedData = await checkPackageFilesService(files, postData.data);
+            const { storePackage } = StorageService;
+            const userId = req.user.user_id;
+            const { updatePackage,getPackageById } = PackageRepository;
+            const pack = await getPackageById(req.params.id)
+            //Check if the user is the owner off the package
+            const downloadGuard = DownloadGuardService(pack, userId);
+            //For (Develop) Check if the version is exist and the version format is correct
+            if(downloadGuard){
+                const config = packageCheckedData.config;
+                //Store package zip file
+                const filesStoragePackage = await storePackage(files, { destination: "xvba-files", append_name: '_xvba_package' });
+                //Storage Readme file 
+                const filesStorageReadme = await storePackage([{ ...packageCheckedData.fileReadme }], { destination: "xvba-files", append_name: '_xvba_readme' });
+    
+               
+                const createAt = Date.now();
+    
+                const packageVersion = {
+                    version: config.version,
+                    file: filesStoragePackage[0].rename,
+                    size: filesStoragePackage[0].size,
+                    readme_file: filesStorageReadme[0].rename,
+                    create_ate: createAt,
+                };
+    
+                await updatePackage( req, packageVersion);
+    
+                return Response.format(postData.data, req, { code: 200, message: 'Package Upload Successfully' });
+            }
+
+        } catch (error) {
+            return Response.format([], req, { code: error.code, message: error.message });
+        }
+
+    },
 
     getPackage: async () => {
         let packages = [];
