@@ -47,6 +47,38 @@ module.exports = {
 
 
     },
+    getPackageReadme: async (req) => {
+        try {
+            //Get packages by name
+            const { getPackageByNameAndVersion } = PackageRepository
+            const packageName = req.params.name;
+            const pack = await getPackageByNameAndVersion(packageName);
+
+            //Package not found 
+            if (pack.length === 0) {
+                return Response.format([], req, { code: 404, message: 'Package not found' });
+            }
+            //Check if the package is public
+            const userId = '' // req.user.user_id;
+            const downloadGuard = DownloadGuardService(pack, userId);
+            if (downloadGuard) {
+                let fileName = pack[0].version.readme_file;
+                console.log(fileName)
+                let storage = admin.storage()
+                let bucked = storage.bucket("xvba-repository.appspot.com");
+                const stream = bucked.file('xvba-files/' + fileName).createReadStream();
+                return { stream, result: { ...Response.format([], req, { code: 200, message: 'Download readme' + packageName + " Successfully" }) } };
+            } else {
+                return Response.format([], req, { code: 403, message: 'Permission Denied' });
+            }
+        } catch (error) {
+            console.error(error)
+            return Response.format([], req, { code: error.code, message: error.message });
+
+        }
+
+
+    },
     getPackage: async () => {
         let packages = [];
         await db.collection('packages').get().then(function (querySnapshot) {
