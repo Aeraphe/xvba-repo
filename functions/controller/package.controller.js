@@ -63,7 +63,6 @@ module.exports = {
             const downloadGuard = DownloadGuardService(pack, userId);
             if (downloadGuard) {
                 let fileName = pack[0].version.readme_file;
-                console.log(fileName)
                 let storage = admin.storage()
                 let bucked = storage.bucket("xvba-repository.appspot.com");
                 const stream = bucked.file('xvba-files/' + fileName).createReadStream();
