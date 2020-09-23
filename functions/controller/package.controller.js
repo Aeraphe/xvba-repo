@@ -78,6 +78,7 @@ module.exports = {
 
 
     },
+
     getPackage: async () => {
         let packages = [];
         await db.collection('packages').get().then(function (querySnapshot) {
@@ -147,9 +148,9 @@ module.exports = {
     deletePackage: async (req) => {
         try {
 
-            const { deletePackage, getUserPackages } = PackageRepository;
+            const { deletePackage, getAllUserPackages } = PackageRepository;
             const { deletePackageFile } = StorageService;
-            const userPackages = await getUserPackages(req);
+            const userPackages = await getAllUserPackages(req);
 
             //Check if the user is the package owner 
             const pack = userPackages.filter(item => item.id === req.params.id);
@@ -173,8 +174,8 @@ module.exports = {
 
     getUserAuthPackages: async (req) => {
         try {
-            const { getUserPackages } = PackageRepository;
-            const response = await getUserPackages(req);
+            const { getAllUserPackages } = PackageRepository;
+            const response = await getAllUserPackages(req);
             return Response.format(response, req, { code: 200, message: 'Package Finned Successfully' })
         } catch (error) {
             return Response.format([], req, { code: error.code, message: error.message });

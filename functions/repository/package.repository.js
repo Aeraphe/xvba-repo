@@ -11,7 +11,7 @@ const savePackage = async (data, version, packageVersionData) => {
 
 
 
-const getUserPackages = async (req) => {
+const getAllUserPackages = async (req) => {
     const userId = req.user.user_id;
     let query = packagesRef.where('user_id', '==', userId);
     let docs = [];
@@ -23,6 +23,8 @@ const getUserPackages = async (req) => {
     });
 
 }
+
+
 
 /**
  * Get package by name and version
@@ -153,4 +155,4 @@ const fuseSearchPackages = async (req) => {
 
 }
 
-module.exports = { savePackage, getUserPackages, deletePackage, fuseSearchPackages, getPackageByNameAndVersion, getPackageLastVersionDetails }
+module.exports = { savePackage, getAllUserPackages, deletePackage, fuseSearchPackages, getPackageByNameAndVersion, getPackageLastVersionDetails }
