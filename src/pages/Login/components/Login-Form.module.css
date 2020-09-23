@@ -6,7 +6,7 @@
 .Login-Form-Content {
   border: solid 1px black;
   box-shadow: 0px 0px 21px -5px;
-  height: 435px;
+  height: 457px;
   width: 317px;
   padding: 21px;
   background-color: #ffff;
@@ -117,4 +117,11 @@ display: flex;
     text-align: center;
     justify-content: center;
     margin-bottom: 15px;
+}
+
+.error{
+  margin-top: 3px;
+  font-size: 11px;
+  color:red;
+
 }

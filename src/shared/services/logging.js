@@ -9,8 +9,9 @@ export const loginFirebase = async (email, pass, dispatch) => {
         const token = (await logData.user.getIdTokenResult()).token;
         const expirationTime = (await logData.user.getIdTokenResult()).expirationTime;
         dispatch(login({ token, expirationTime }))
+        return { status: true, data: logData }
     } catch (error) {
-        console.error(error.message);
+        return { status: false, error: error }
     }
 
 }

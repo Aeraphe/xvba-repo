@@ -13,6 +13,7 @@ export const LoginFormComponent = (props) => {
     const [password, setPassword] = useState('');
     const [displayRegister, setDisplayRegister] = useState(false)
     const [hideLogging, setHideLogging] = useState(false)
+    const [loggingStatus, setLoggingStatus] = useState({});
     const handleDisplayRegister = () => {
         setDisplayRegister(!displayRegister);
         setHideLogging(!hideLogging)
@@ -34,7 +35,7 @@ export const LoginFormComponent = (props) => {
                     <div style={{ display: !hideLogging ? "block" : "none" }}>
                         <div className={styles['Login-Form-Content']} >
                             {props.children}
-                            <p>Login</p>
+    <p>Login<small className={styles['error']} style={{ display: loggingStatus?.status === false ? "block" : "none" }}>{loggingStatus?.error?.message||""}</small></p>
                             <label htmlFor='user-email'>Email Address: </label>
                             <input id='user-email' type='email' name="email" value={email} onChange={e => setEmail(e.target.value)} ></input>
                             <label htmlFor='user-pass'>Password: </label>
@@ -68,9 +69,12 @@ export const LoginFormComponent = (props) => {
     )
 
     async function authentication(e) {
+        setLoggingStatus({})
         props.showLoading(true)
         e.preventDefault();
-        await loginFirebase(email, password, dispatch);
+        const response = await loginFirebase(email, password, dispatch);
+        setLoggingStatus(response)
+        props.showLoading(false)
 
     }
 
