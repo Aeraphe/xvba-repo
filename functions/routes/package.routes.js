@@ -20,6 +20,9 @@ router
     }).get('/download/:name', async (req, res) => {
         const data = await packageController.getPackageFileForDownload(req);
         handleDownloadFileStream(res, data)
+    }).get('/readme/:name', async (req, res) => {
+        const data = await packageController.getPackageReadme(req);
+        handleDownloadFileStream(res, data)
     }).get('/user-auth', authRoute, async (req, res) => {
         const response = await packageController.getUserAuthPackages(req);
         res.json(response);
