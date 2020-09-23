@@ -69,7 +69,6 @@ const update = async (data, store, db) => {
             })
 
         })
-    console.log(data)
 
 }
 
@@ -85,7 +84,6 @@ const clear = async (name, db) => {
             var store = getObjectStore(name, 'readwrite');
             var req = store.clear();
             req.onsuccess = function (evt) {
-                console.log()
                 resolve('clear')
             };
             req.onerror = function (evt) {
