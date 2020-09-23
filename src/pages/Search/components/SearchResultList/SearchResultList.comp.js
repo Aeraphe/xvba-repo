@@ -13,7 +13,7 @@ export const SearchResultListComp = (prop) => {
         <div className={styles.SearchResultList} >
             <ul>
                 <li>
-                    <div className={styles['Package-Name']}><Link to={'show-package/' + prop.package} >{prop.package}</Link></div>
+                    <div className={styles['Package-Name']}><Link to={'show-package/' + prop.package} >{prop.package}<small style={{fontSize:'10px'}}>  (Click to see details)</small></Link></div>
                     <div className={styles['Description']}>{prop.description}</div>
                     <div className={styles['User']}><a href="/">{prop.user}</a> <span>Published: </span> <span>{prop.create_ate}</span></div>
                 </li>
@@ -27,10 +27,10 @@ export const SearchResultListComp = (prop) => {
                         Version {prop.version}
                     </li>
                     <li>
-                        Download: {prop.downloads}
+                        Downloads: {prop.downloads}
                     </li>
                     <li>
-                        Rating: {prop.rating}
+                        Ratings: {prop.rating}
                     </li>
                 </ul>
             </div>
