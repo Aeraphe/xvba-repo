@@ -24,6 +24,17 @@ const getAllUserPackages = async (req) => {
 
 }
 
+const getPackageById = async (packageId) => {
+    let query = db.collection('packages').doc(packageId);
+    let docs = [];
+    return await query.get().then(function (querySnapshot) {
+        querySnapshot.forEach(function (doc) {
+            docs.push({ ...doc.data(), id: doc.id })
+        });
+        return docs;
+    });
+
+}
 
 
 const addPackageVersion = async (req, data) => {
@@ -163,4 +174,13 @@ const fuseSearchPackages = async (req) => {
 
 }
 
-module.exports = { savePackage, getAllUserPackages, deletePackage, fuseSearchPackages, getPackageByNameAndVersion, getPackageLastVersionDetails, addPackageVersion }
+module.exports = {
+    savePackage,
+    getAllUserPackages,
+    deletePackage,
+    fuseSearchPackages,
+    getPackageByNameAndVersion,
+    getPackageLastVersionDetails,
+    addPackageVersion,
+    getPackageById
+}
