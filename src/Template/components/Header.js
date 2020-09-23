@@ -53,9 +53,9 @@ const HeaderLinkGuard = () => {
 
 
     if (isLogged) {
-        linksChecked.push(<li key="logout"><Link to="login">Logout</Link></li>)
+        linksChecked.push(<li key="logout"><Link to="/login">Logout</Link></li>)
     } else {
-        linksChecked.push(<li key="login"><Link to="login">Login</Link></li>)
+        linksChecked.push(<li key="login"><Link to="/login">Login</Link></li>)
     }
 
     return (linksChecked)
