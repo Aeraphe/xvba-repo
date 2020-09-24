@@ -54,8 +54,31 @@ class PackagesHttpService {
             }
         }
 
-
         return await axios.post(endpoints.packages.url, data, uploadConf).then(
+            res => {
+                return res.data
+            }
+        )
+    }
+
+
+    uploadPackageFileUpdate = async (data, packageId) => {
+        const config = getAuthHeaderToken();
+        let uploadConf = {
+
+            headers: {
+                ...config.headers,
+                'Content-Type': `multipart/form-data;boundary=${data._boundary}`,
+                'Access-Control-Allow-Origin': '*',
+
+            },
+            onUploadProgress: function (progressEvent) {
+                var percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total)
+                console.log(percentCompleted)
+            }
+        }
+
+        return await axios.post(endpoints.packages.update + packageId, data, uploadConf).then(
             res => {
                 return res.data
             }
