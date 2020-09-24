@@ -2,7 +2,7 @@ import React from 'react'
 import styles from './Alert.module.css'
 
 
-export const Alert = ({ show, onToggle, onAccept, title, message, btnAccept, btnCancel }) => {
+export const Alert = ({ show, onToggle, onAccept, title, message, btnAccept, btnCancel,children }) => {
 
 
 
@@ -15,6 +15,7 @@ export const Alert = ({ show, onToggle, onAccept, title, message, btnAccept, btn
                 </div>
                 <div className={styles['Content']}>
                     {message}
+                    {children}
                 </div>
                 <div className={styles['Footer']}>
                     <button className={styles['Footer-btn-cancel']} onClick={() => onToggle()}>{btnAccept || 'Cancel'}</button>
