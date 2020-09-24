@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styles from './User-List-Packages.module.css'
 import { PackageItemMenuComp } from "../Package-Item-Menu/Package-Item-Menu.comp";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchPackagesByUserId } from "../../../../shared/reducers/user-packages.slice";
+import { fetchPackagesByUserId,selectPackage } from "../../../../shared/reducers/user-packages.slice";
 
 
 
@@ -30,7 +30,7 @@ export const UserListPackagesComp = () => {
                     <div>Item</div>
                     <div>Name</div>
                     <div>Version</div>
-                    <div>Stars</div>
+                    <div>Rating</div>
                     <div>Installs</div>
                 </div>
             </div>
@@ -53,12 +53,15 @@ const handleGetUserPackages = (data) => {
 }
 
 const PackageListItem = (props) => {
+   const dispatch = useDispatch();
+   const selectedPackage = useSelector((state)=>state.user_packages.packageSelectedId)
+console.log(selectedPackage)
     const { name, rating, version, downloads, id } = props.data
     return (
 
 
-        <div className={styles['Body-Container']}>
-            <div className={styles['Body-Content']}>
+        <div  className={styles['Body-Container']} onClick={()=>dispatch(selectPackage({name,id}))}>
+            <div  style={{backgroundColor:selectedPackage===id?"  rgb(107, 160, 131)":""}}  className={styles['Body-Content']}>
                 <div className={styles['Body-Item']}>{props.item}</div>
                 <div className={styles['Body-Item']}>
                     <PackageItemMenuComp id={id} >{name}</PackageItemMenuComp>
