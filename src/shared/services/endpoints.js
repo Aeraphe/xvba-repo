@@ -7,7 +7,9 @@ const url = baseUrl + apiVersion;
  */
 export const packages = {
     url: url + 'packages',
-    user_auth_packages: url + 'packages/user-auth'
+    user_auth_packages: url + 'packages/user-auth',
+    file_readme: url + 'packages/readme',
+    update:url + 'packages/update/'
 }
 
 export const users = {
