@@ -3,7 +3,7 @@ import styles from './Package-Item-Menu.module.css'
 import { Alert } from '../../../../shared/components/Alert/Alert.shared';
 import { useDispatch, useSelector } from "react-redux";
 import { deleteUserPackage, fetchPackagesByUserId } from "../../../../shared/reducers/user-packages.slice";
-
+import PackageHttpServices from "../../../../shared/services/packagesHttp.service";
 
 let fileSelected = undefined;
 let alertTitle = ""
@@ -45,8 +45,11 @@ export const PackageItemMenuComp = ({ children, id }) => {
         setShowUpdatePackage(!showUpdatePackage);
     }
 
-    const handlerUpdatePackage = () => {
-        console.log(fileSelected);
+    const handlerUpdatePackage = async () => {
+        let postData = new FormData();
+        postData.append('package', fileSelected)
+        await PackageHttpServices.uploadPackageFileUpdate(postData, id)
+        setShowUpdatePackage(!showUpdatePackage);
     }
 
 
@@ -73,7 +76,7 @@ export const PackageItemMenuComp = ({ children, id }) => {
             <Alert show={showAlert} onToggle={() => setToggle(!showAlert)} onAccept={() => handleAccept()} message={alertMsg} title={alertTitle} ></Alert>
             <Alert
                 show={showUpdatePackage}
-                onToggle={() => handlerShowModal(!showAlert)}
+                onToggle={() => handlerShowModal(!showUpdatePackage)}
                 onAccept={() => handlerUpdatePackage()}
                 message={''}
                 title={`Do you want to update the package ${selectedPackageName} ?`} >
