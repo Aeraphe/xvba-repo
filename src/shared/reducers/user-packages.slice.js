@@ -26,11 +26,17 @@ export const userPackagesSlice = createSlice({
     initialState: {
         entities: [],
         loading: 'idle',
-        currentRequestId: undefined,
+        packageSelectedId: undefined,
+        packageSelectedName: '',
         deleted: null,
         error: null
     },
-    reducers: {},
+    reducers: {
+        selectPackage: (state, action) => {
+            state = { ...state, packageSelectedId: action.payload.id, packageSelectedName: action.payload.name }
+            return state;
+        }
+    },
     extraReducers: {
 
         [fetchPackagesByUserId.fulfilled]: (state, action) => {
@@ -45,5 +51,5 @@ export const userPackagesSlice = createSlice({
 })
 
 
-
+export const { selectPackage } = userPackagesSlice.actions;
 export default userPackagesSlice.reducer
