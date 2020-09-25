@@ -10,7 +10,7 @@ const StorageService = require('../services/storage.service');
 const PackageRepository = require('../repository/package.repository');
 const DownloadGuardService = require('../services/download.guard')
 const { checkPackageFilesService } = require('../services/check-package-files.service');
-
+const { checkVersion } = require('../services/check-version-validation')
 
 
 module.exports = {
@@ -78,32 +78,36 @@ module.exports = {
 
 
     },
-    addNewPackageVersion:  async (req) => {
+    addNewPackageVersion: async (req) => {
         try {
- 
+
             const { getPostValues, getFiles } = FileUploadServices;
+            const { storePackage } = StorageService;
+            const { addPackageVersion, getPackageById } = PackageRepository;
             const postData = await getPostValues(req);
-            //Check package name again
+            //Get upload file
             const files = await getFiles(req);
             //Check zip files
             const packageCheckedData = await checkPackageFilesService(files, postData.data);
-            const { storePackage } = StorageService;
             const userId = req.user.user_id;
-            const { updatePackage,getPackageById } = PackageRepository;
-            const pack = await getPackageById(req.params.id)
+            const pack = await getPackageById(postData.data.id);
             //Check if the user is the owner off the package
             const downloadGuard = DownloadGuardService(pack, userId);
-            //For (Develop) Check if the version is exist and the version format is correct
-            if(downloadGuard){
+            //Get new package Version
+            const newPackageVersion = packageCheckedData.config.version;
+            //Check if the version is valid
+            const isValidVersion = await checkVersion(newPackageVersion, postData.data.id)
+            
+            if (downloadGuard && isValidVersion) {
                 const config = packageCheckedData.config;
                 //Store package zip file
                 const filesStoragePackage = await storePackage(files, { destination: "xvba-files", append_name: '_xvba_package' });
                 //Storage Readme file 
                 const filesStorageReadme = await storePackage([{ ...packageCheckedData.fileReadme }], { destination: "xvba-files", append_name: '_xvba_readme' });
-    
-               
+
+
                 const createAt = Date.now();
-    
+
                 const packageVersion = {
                     version: config.version,
                     file: filesStoragePackage[0].rename,
@@ -111,9 +115,9 @@ module.exports = {
                     readme_file: filesStorageReadme[0].rename,
                     create_ate: createAt,
                 };
-    
-                await updatePackage( req, packageVersion);
-    
+
+                await addPackageVersion(req, packageVersion);
+
                 return Response.format(postData.data, req, { code: 200, message: 'Package Upload Successfully' });
             }
 
