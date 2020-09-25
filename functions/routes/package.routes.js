@@ -13,7 +13,7 @@ router
         const response = await packageController.addPackage(req)
         res.json(response);
 
-    }).post('/update/:id', authRoute, async (req, res) => {
+    }).put('/update', authRoute, async (req, res) => {
         const response = await packageController.addNewPackageVersion(req)
         res.json(response);
 
