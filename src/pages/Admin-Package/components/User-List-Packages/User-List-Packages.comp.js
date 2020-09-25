@@ -55,8 +55,9 @@ const handleGetUserPackages = (data) => {
 const PackageListItem = (props) => {
    const dispatch = useDispatch();
    const selectedPackage = useSelector((state)=>state.user_packages.packageSelectedId)
-console.log(selectedPackage)
-    const { name, rating, version, downloads, id } = props.data
+console.log(props.data)
+    const { name, rating,  downloads, id } = props.data
+    const { vn } = props.data.version
     return (
 
 
@@ -66,7 +67,7 @@ console.log(selectedPackage)
                 <div className={styles['Body-Item']}>
                     <PackageItemMenuComp id={id} >{name}</PackageItemMenuComp>
                 </div>
-                <div className={styles['Body-Item']}>{version}</div>
+                <div className={styles['Body-Item']}>{vn}</div>
                 <div className={styles['Body-Item']}>{rating}</div>
                 <div className={styles['Body-Item']}>{downloads}</div>
             </div>
