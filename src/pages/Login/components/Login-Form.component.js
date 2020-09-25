@@ -35,16 +35,16 @@ export const LoginFormComponent = (props) => {
                     <div style={{ display: !hideLogging ? "block" : "none" }}>
                         <div className={styles['Login-Form-Content']} >
                             {props.children}
-    <p>Login<small className={styles['error']} style={{ display: loggingStatus?.status === false ? "block" : "none" }}>{loggingStatus?.error?.message||""}</small></p>
+                            <p>Sign in<small className={styles['error']} style={{ display: loggingStatus?.status === false ? "block" : "none" }}>{loggingStatus?.error?.message || ""}</small></p>
                             <label htmlFor='user-email'>Email Address: </label>
                             <input id='user-email' type='email' name="email" value={email} onChange={e => setEmail(e.target.value)} ></input>
                             <label htmlFor='user-pass'>Password: </label>
                             <input id='user-pass' type='password' name="password" value={password} onChange={e => setPassword(e.target.value)}></input>
-                            <button className={styles['Form-Btn']} type="button" onClick={e => authentication(e)}>Logging</button>
+                            <button className={styles['Form-Btn']} type="button" onClick={e => authentication(e)}>Sign in</button>
                             <div className={styles['login-or-container']}><span className={styles['login-or']}>Or..</span></div>
                             <div className={styles['login-ext-container']}>
-                                <div className={styles['login-btn']}>Logging with your Google </div><img alt="" className={styles['login-btn-logo']} src="./images/google_logo.png" height="20px" ></img > </div>
-                            <div className={styles['login-ext-container']}> <div className={styles['login-btn']}>Logging with your Github </div><img alt="" className={styles['login-btn-logo-github']} src="./images/github.png" height="27px" ></img > </div>
+                                <div className={styles['login-btn']}>Sign in with your Google </div><img alt="" className={styles['login-btn-logo']} src="./images/google_logo.png" height="20px" ></img > </div>
+                            <div className={styles['login-ext-container']}> <div className={styles['login-btn']}>Sign in with your Github </div><img alt="" className={styles['login-btn-logo-github']} src="./images/github.png" height="27px" ></img > </div>
                             <div className={styles['register-container']} onClick={e => handleDisplayRegister(e)}><div className={styles['register']}>Create account</div></div>
 
 
