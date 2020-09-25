@@ -1,7 +1,8 @@
 .Footer{
     background-color: rgb(0, 0, 0);
-    height: 63px;
+    height: 85px;
     width: 100%;
+   
 }
 
 
@@ -9,8 +10,8 @@
 
     display: flex;
     justify-content: center;
-
- 
+padding-left: 41px;
+    text-align: center;
  
 }
 
@@ -18,17 +19,24 @@
 .Footer-Content a{
     color: #ffff;
     font-size: 12px;
-    padding-top: 12px;
+    padding-top: 7px;
 }
 
 .Footer-Created-By {
+    text-align: center;
     color: #ffff;
     display: flex;
     justify-content: center;
+    font-size: 10px;
 
 }
 
-.Footer-Created-By p{
+.Footer-Created-By li{
+    list-style: none;
  
-    font-size: 10px;
+    margin: 0px;
+    padding: 0px;
+}
+.Footer-Created-By a{
+    color: #ffff;
 }

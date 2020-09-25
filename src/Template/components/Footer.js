@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './Footer.module.css';
-
+import { Link } from 'react-router-dom';
 export const FooterComp = () => {
 
     return (
@@ -12,8 +12,16 @@ export const FooterComp = () => {
                 </a>
             </div>
             <div className={styles['Footer-Created-By']}>
-                <p>Created by: Alberto Eduardo</p>
+                <ul>
+                    
+                    <li> <Link to="/privacy">Privacy Policy</Link></li>
+                    <li> <Link to="/terms">Terms and conditions</Link></li>
+                    <li> Created by: Alberto Eduardo</li>
+                </ul>
+
+
             </div>
+
         </div>
     )
 }
