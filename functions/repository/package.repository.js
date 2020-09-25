@@ -25,14 +25,13 @@ const getAllUserPackages = async (req) => {
 }
 
 const getPackageById = async (packageId) => {
+
     let query = db.collection('packages').doc(packageId);
-    let docs = [];
-    return await query.get().then(function (querySnapshot) {
-        querySnapshot.forEach(function (doc) {
-            docs.push({ ...doc.data(), id: doc.id })
-        });
-        return docs;
-    });
+    let doc = [];
+    return await query.get().then(docRef => {
+        doc.push({ ...docRef.data(), id: packageId })
+        return doc
+    })
 
 }
 
@@ -109,6 +108,7 @@ const getPackageLastVersionDetails = async (docId) => {
         querySnapshot => {
             let response;
             querySnapshot.forEach(f => {
+                
                 response = { id: docId, version: f.data() }
             })
             return response;
