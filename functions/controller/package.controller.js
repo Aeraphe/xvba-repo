@@ -174,10 +174,17 @@ module.exports = {
                 public: true,
                 rating: 0,
                 downloads: 0,
+                version:{
+                    vn: config.version,
+                    file: filesStoragePackage[0].rename,
+                    size: filesStoragePackage[0].size,
+                    readme_file: filesStorageReadme[0].rename,
+                    create_ate: createAt,
+                },
                 create_ate: createAt
             };
             const packageVersion = {
-                version: config.version,
+                vn: config.version,
                 file: filesStoragePackage[0].rename,
                 size: filesStoragePackage[0].size,
                 readme_file: filesStorageReadme[0].rename,
