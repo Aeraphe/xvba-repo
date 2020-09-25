@@ -90,13 +90,14 @@ module.exports = {
             //Check zip files
             const packageCheckedData = await checkPackageFilesService(files, postData.data);
             const userId = req.user.user_id;
-            const pack = await getPackageById(postData.data.id);
+            const packageId = postData.data.id;
+            const pack = await getPackageById(packageId);
             //Check if the user is the owner off the package
             const downloadGuard = DownloadGuardService(pack, userId);
             //Get new package Version
             const newPackageVersion = packageCheckedData.config.version;
             //Check if the version is valid
-            const isValidVersion = await checkVersion(newPackageVersion, postData.data.id)
+            const isValidVersion = await checkVersion(newPackageVersion, packageId)
             
             if (downloadGuard && isValidVersion) {
                 const config = packageCheckedData.config;
@@ -116,7 +117,7 @@ module.exports = {
                     create_ate: createAt,
                 };
 
-                await addPackageVersion(req, packageVersion);
+                await addPackageVersion(packageId, packageVersion);
 
                 return Response.format(postData.data, req, { code: 200, message: 'Package Upload Successfully' });
             }
