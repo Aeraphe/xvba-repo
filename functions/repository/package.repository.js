@@ -40,7 +40,7 @@ const addPackageVersion = async (packageId, data) => {
     let packageRef = db.collection('packages').doc(packageId);
     let versionRef = packageRef.collection('versions').doc(data.vn);
     await versionRef.set(data).then(resp => resp);
-    return await packageRef.update({version:data}).then(resp => resp)
+    return await packageRef.update({ version: data }).then(resp => resp)
 
 }
 
@@ -149,8 +149,6 @@ const deletePackage = async (req) => {
 
 const fuseSearchPackages = async (req) => {
     const db = admin.firestore();
-
-
     const options = {
         includeScore: true,
         keys: ['name']
@@ -163,8 +161,8 @@ const fuseSearchPackages = async (req) => {
                 const fuse = new Fuse([doc.data()], options)
                 const find = fuse.search(req.body.name)
                 if (find.length > 0 && find[0].score <= 0.2) {
-                    const details = await getPackageLastVersionDetails(doc.id)
-                    packages.push({ ...find[0].item, ...details })
+
+                    packages.push({ ...find[0].item, id: doc.id })
 
                 }
             }
