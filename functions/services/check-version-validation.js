@@ -1,20 +1,18 @@
 const semver = require('semver')
-const PackageRepository = require('../repository/package.repository');
 
 
-const checkVersion = async (newPackageVersion,packageCompareId)=>{
-    const {  getPackageLastVersionDetails } = PackageRepository;
+const checkVersion = async (newPackageVersion,lastVersion)=>{
+
 
     if (semver.valid(newPackageVersion) !== null) {
        
-        const packageVersionDetails =await  getPackageLastVersionDetails(packageCompareId)
-   
+       
 
-        if (semver.gt(newPackageVersion, packageVersionDetails.version.version)) {
+        if (semver.gt(newPackageVersion, lastVersion)) {
 
             return true;
         } else {
-            const error = new Error(`The new Package version ( ${newPackageVersion} ) is lower or equal than the last ( ${packageVersionDetails.version.version} )  Valid`)
+            const error = new Error(`The new Package version ( ${newPackageVersion} ) is lower or equal than the last ( ${lastVersion} )  Valid`)
             error.code = "404";
             throw error
         }
