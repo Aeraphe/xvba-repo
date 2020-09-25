@@ -3,25 +3,33 @@
   height: 100%;
   width: 100%;
 
+  
 }
 .header{
   display: flex;
+  height: 100%;
+  padding-left: 15px;
+  padding-right: 15px;
   justify-content: space-between;
-  flex-wrap: wrap;
   align-items: center;
   background-color: #262626;
-  padding: 7px;
+
   
 }
 .header  a{
     color: #ffff;
+
 }
 .header-menu {
   display: flex;
+  margin: 0px;
 }
 
+
 .header-menu li {
+  list-style: none;
   margin-left: 7px;
+
 }
 
 .header-menu li a{
