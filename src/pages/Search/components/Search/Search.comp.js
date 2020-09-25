@@ -71,7 +71,7 @@ const ListPackages = () => {
                     description={item.description}
                     create_ate={createAte}
                     downloads = {item.downloads}
-                    version={item.version.version}
+                    version={item.version.vn}
                     rating={item.rating}
                 />
             )
