@@ -70,11 +70,13 @@ const getPackageByNameAndVersion = async (packageNameVersion) => {
 
                             if (version !== 'latest') {
 
-                                await db.collection('packages').doc(doc.id).collection('versions').where('version', '==', version).get().then(
+                                await db.collection('packages').doc(doc.id).collection('versions').where('vn', '==', version).get().then(
                                     d => {
 
                                         d.forEach(f => {
-                                            docs.push({ ...doc.data(), id: doc.id, version: f.data() })
+                                            const pack = doc.data();
+                                            delete pack.version
+                                            docs.push({ ...pack, id: doc.id, version: f.data() })
                                         })
                                         resolve(docs);
                                     }
@@ -82,14 +84,8 @@ const getPackageByNameAndVersion = async (packageNameVersion) => {
 
                             } else {
                                 //Get latest version
-                                await db.collection('packages').doc(doc.id).collection('versions').orderBy('create_ate', 'desc').limit(1).get().then(
-                                    d => {
-                                        d.forEach(f => {
-                                            docs.push({ ...doc.data(), id: doc.id, version: f.data() });
-                                        })
-                                        resolve(docs);
-                                    }
-                                );
+                                docs.push({ ...doc.data(), id: doc.id });
+                                resolve(docs);
                             }
 
                         })
