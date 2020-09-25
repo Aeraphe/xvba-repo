@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { loginFirebase, logoutFirebase, createAccount } from "../../../shared/services/logging";
 import styles from "./Login-Form.module.css";
 import { CardShared } from '../../../shared/components/Card/Card.shared';
@@ -108,6 +109,10 @@ const CreateAccountForm = (props) => {
                 <input id='user-pass' type='password' name="password" value={password} onChange={e => setPassword(e.target.value)}></input>
                 <label htmlFor='user-pass'>Confirm password: </label>
                 <input id='user-pass' type='password' name="password" value={repassword} onChange={e => setRePassword(e.target.value)}></input>
+                <div className={styles['Terms']}>
+                <span style={{fontSize:"10px"}}>Wen you create an Account you confirm that agree with Terms and conditions for usage this website xvba.dev</span><br/>
+                <span><Link to="/terms">See Terms and Condition</Link></span>
+                </div>
                 <button className={styles['Form-Btn']} type="button" onClick={e => register()}>Create Account</button>
                 <div className={styles['register-container']} onClick={e => props.toggleLogin()}><div className={styles['register-back']}>Back to logging</div></div>
 

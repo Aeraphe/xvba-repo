@@ -6,7 +6,7 @@
 .Login-Form-Content {
   border: solid 1px black;
   box-shadow: 0px 0px 21px -5px;
-  height: 457px;
+  height: 470px;
   width: 317px;
   padding: 21px;
   background-color: #ffff;
@@ -38,7 +38,7 @@
 .Form-Btn {
   position: relative;
   width: 100%;
-  margin-top: 21px;
+  margin-top: 13px;
   height: 35px;
   
   margin-bottom: 15px;
@@ -124,4 +124,14 @@ display: flex;
   font-size: 11px;
   color:red;
 
+}
+
+
+.Terms{
+  font-size: 13px;
+}
+
+.Terms a{
+  font-size: 10px;
+  color: #d80f0f;
 }
