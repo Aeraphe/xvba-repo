@@ -37,8 +37,11 @@ const getPackageById = async (packageId) => {
 
 
 const addPackageVersion = async (packageId, data) => {
-    let versionRef = db.collection('packages').doc(packageId).collection('versions').doc(data.version);
-    return await versionRef.set(data).then(resp => resp);
+    let packageRef = db.collection('packages').doc(packageId);
+    let versionRef = packageRef.collection('versions').doc(data.vn);
+    await versionRef.set(data).then(resp => resp);
+    return await packageRef.update({version:data}).then(resp => resp)
+
 }
 
 
