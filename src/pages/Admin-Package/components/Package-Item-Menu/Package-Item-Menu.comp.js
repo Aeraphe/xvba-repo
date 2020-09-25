@@ -48,7 +48,9 @@ export const PackageItemMenuComp = ({ children, id }) => {
     const handlerUpdatePackage = async () => {
         let postData = new FormData();
         postData.append('package', fileSelected)
-        await PackageHttpServices.uploadPackageFileUpdate(postData, id)
+        const params = { name: selectedPackageName, id: id }
+        postData.append('data', JSON.stringify(params))
+        await PackageHttpServices.uploadPackageFileUpdate(postData)
         setShowUpdatePackage(!showUpdatePackage);
     }
 

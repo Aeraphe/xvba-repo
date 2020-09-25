@@ -62,7 +62,7 @@ class PackagesHttpService {
     }
 
 
-    uploadPackageFileUpdate = async (data, packageId) => {
+    uploadPackageFileUpdate = async (data) => {
         const config = getAuthHeaderToken();
         let uploadConf = {
 
@@ -77,8 +77,8 @@ class PackagesHttpService {
                 console.log(percentCompleted)
             }
         }
-
-        return await axios.post(endpoints.packages.update + packageId, data, uploadConf).then(
+     
+        return await axios.put(endpoints.packages.update, data, uploadConf).then(
             res => {
                 return res.data
             }
