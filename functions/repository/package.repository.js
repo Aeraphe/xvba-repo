@@ -36,8 +36,7 @@ const getPackageById = async (packageId) => {
 }
 
 
-const addPackageVersion = async (req, data) => {
-    const packageId = req.params.id;
+const addPackageVersion = async (packageId, data) => {
     let versionRef = db.collection('packages').doc(packageId).collection('versions').doc(data.version);
     return await versionRef.set(data).then(resp => resp);
 }
@@ -108,7 +107,7 @@ const getPackageLastVersionDetails = async (docId) => {
         querySnapshot => {
             let response;
             querySnapshot.forEach(f => {
-                
+
                 response = { id: docId, version: f.data() }
             })
             return response;
