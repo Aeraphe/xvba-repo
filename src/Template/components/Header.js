@@ -29,7 +29,8 @@ export const Header = () => {
 const LINKS =
     [
         <li><Link to="/">Home</Link></li>,
-        <li><Link to="/donate">Donate</Link></li>,
+        <li><Link to="/xvba-extension">Xvba-Extension</Link></li>,
+        <li><Link to="/xvba-cli">Xvba-Cli</Link></li>,
         <li><Link to="/tutorial">Tutorial</Link></li>,
         <li protected="true" > <Link to="/upload-package">Publish</Link></li>,
 
