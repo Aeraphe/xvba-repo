@@ -32,7 +32,7 @@ export const SearchComp = () => {
     }
 
     return (
-        <div>
+        <div className={styles['Container']}>
             <div className={styles['Search-Logo']}>
                 <XvbaLogoSharedComp size="7rem" />
             </div>

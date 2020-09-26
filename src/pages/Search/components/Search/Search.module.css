@@ -1,7 +1,15 @@
+.Container{
+    position: relative;
+    margin: 7px 0px 0px 0px;
+
+    min-height: 30px;
+    padding-bottom: 35px;
+}
+
 .Search-Logo{
     display: flex;
     justify-content: center;
-    margin-top: 17px;
+
 }
 .Search-Container{
     display: flex;
