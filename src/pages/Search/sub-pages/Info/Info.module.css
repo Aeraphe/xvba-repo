@@ -1,0 +1,57 @@
+.Container{
+ 
+    position: relative;
+    font-family: Roboto,Helvetica Neue Light,Helvetica Neue,Helvetica,Arial,Lucida Grande,sans-serif;
+  
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+
+.Discovery{
+    display: flex;
+    justify-content: space-between;
+    min-height: 33px;
+    line-height: 33px;
+    border-top:1px  rgb(164, 185, 169) solid;
+    border-left:1px  rgb(164, 185, 169) solid;
+    border-right:1px  rgb(164, 185, 169) solid;
+    background-color: rgb(198, 211, 197);
+    padding-left: 15px;
+    padding-right: 15px;
+    font-size: 17px;
+}
+.Content-Grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr ;
+    grid-template-rows: 1rf ;
+    text-align: left;
+    background-color: rgba(255, 255, 255, 0.787);
+    min-height: 230px;
+    border: rgb(164, 185, 169) 1px solid;
+  
+ 
+    
+
+    padding:15px;
+    margin-bottom: 15px;
+
+}
+.Text-Content{
+    text-align: justify;
+    
+    line-height: 1.7rem;
+    font-weight: 400;
+    font-size: .97rem;
+    padding: 0px 37px 0px 37px;
+    color: #444;
+    
+}
+
+.Text-Content-Title{
+    font-size: 1.2rem;
+    color: rgb(48, 49, 48);
+    margin-bottom: 7px;
+    font-weight: 600;
+}
+
