@@ -3,8 +3,10 @@ import { SearchPage } from './pages/Search/Search.page'
 import { LoginPage } from './pages/Login/Login.page';
 import { ShowPackagePage } from "./pages/Show-Package/Show-Package.page";
 import { AdminPackagePage } from './pages/Admin-Package/Admin-Package.page';
-import {PrivacyPolicyPage} from './pages/Privacy-Policy/Privacy-Policy.page'
-import {TermsPage} from './pages/Terms/Terms.page';
+import { PrivacyPolicyPage } from './pages/Privacy-Policy/Privacy-Policy.page'
+import { TermsPage } from './pages/Terms/Terms.page';
+import { VscodeExtensionPage } from './pages/Vscode-Extension/Vscode-Extension-Page';
+import { XvbaCliPage } from './pages/Xvba-Cli/Xvba-Cli-Page';
 
 import { Route } from 'react-router-dom';
 
@@ -19,6 +21,8 @@ export const routes = {
         <Route key="r3" path='/show-package/:package' exact component={ShowPackagePage} ></Route>,
         <Route key="r4" path='/privacy' exact component={PrivacyPolicyPage} ></Route>,
         <Route key="r5" path='/terms' exact component={TermsPage} ></Route>,
+        <Route key="r6" path='/xvba-extension' exact component={VscodeExtensionPage}></Route>,
+        <Route key="r7" path='/xvba-cli' exact component={XvbaCliPage}></Route>
     ]
 }
 
