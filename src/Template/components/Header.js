@@ -32,6 +32,7 @@ const LINKS =
         <li><NavLink activeClassName={styles.active} exact to="/xvba-extension">Xvba-Extension</NavLink></li>,
         <li><NavLink activeClassName={styles.active} exact to="/xvba-cli">Xvba-Cli</NavLink></li>,
         <li><NavLink activeClassName={styles.active} exact to="/tutorial">Tutorial</NavLink></li>,
+        <li><NavLink activeClassName={styles.active} exact to="/about">About</NavLink></li>,
         <li protected="true" > <NavLink activeClassName={styles.active} to="/upload-package">Publish</NavLink></li>,
 
     ];
