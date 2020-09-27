@@ -4,6 +4,7 @@ import { Alert } from '../../../../shared/components/Alert/Alert.shared';
 import { useDispatch, useSelector } from "react-redux";
 import { deleteUserPackage, fetchPackagesByUserId } from "../../../../shared/reducers/user-packages.slice";
 import PackageHttpServices from "../../../../shared/services/packagesHttp.service";
+import { LoadingSharedComp } from '../../../../shared/components/Loading/loading';
 
 let fileSelected = undefined;
 let alertTitle = ""
@@ -14,6 +15,7 @@ export const PackageItemMenuComp = ({ children, id }) => {
     const [show, setShow] = useState(false)
     const [showAlert, setToggle] = useState(false)
     const [showUpdatePackage, setShowUpdatePackage] = useState(false);
+    const [showLoading, setShowLoading] = useState(false)
     const selectedPackageName = useSelector(state => state.user_packages.packageSelectedName)
 
 
@@ -36,21 +38,26 @@ export const PackageItemMenuComp = ({ children, id }) => {
     }
 
     const handleAccept = async () => {
+        setShowLoading(true)
         await dispatch(deleteUserPackage(id))
         await dispatch(fetchPackagesByUserId())
+        setShowLoading(false)
         setToggle(false);
     }
 
     const handlerShowModal = () => {
+        
         setShowUpdatePackage(!showUpdatePackage);
     }
 
     const handlerUpdatePackage = async () => {
+        setShowLoading(true)
         let postData = new FormData();
         postData.append('package', fileSelected)
         const params = { name: selectedPackageName, id: id }
         postData.append('data', JSON.stringify(params))
         await PackageHttpServices.uploadPackageFileUpdate(postData)
+        setShowLoading(false);
         setShowUpdatePackage(!showUpdatePackage);
     }
 
@@ -75,7 +82,11 @@ export const PackageItemMenuComp = ({ children, id }) => {
                 </div>
 
             </div>
-            <Alert show={showAlert} onToggle={() => setToggle(!showAlert)} onAccept={() => handleAccept()} message={alertMsg} title={alertTitle} ></Alert>
+            <Alert show={showAlert} onToggle={() => setToggle(!showAlert)} onAccept={() => handleAccept()} message={alertMsg} title={alertTitle} >
+                <div style={{ visibility: showLoading ? 'visible' : 'hidden' }} className={styles['Loading']}>
+                    <LoadingSharedComp />
+                </div>
+            </Alert>
             <Alert
                 show={showUpdatePackage}
                 onToggle={() => handlerShowModal(!showUpdatePackage)}
@@ -86,6 +97,9 @@ export const PackageItemMenuComp = ({ children, id }) => {
                     <form>
                         <input onChange={e => fileSelected = e.target.files[0]} type="file"></input>
                     </form>
+                    <div style={{ visibility: showLoading ? 'visible' : 'hidden' }} className={styles['Loading']}>
+                        <LoadingSharedComp />
+                    </div>
                 </div>
             </Alert>
 
