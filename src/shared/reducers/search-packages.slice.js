@@ -45,6 +45,7 @@ export const searchPackageSlice = createSlice({
     extraReducers: {
         [searchPackagesThunk.fulfilled]: (state, action) => {
             state.entities = action.payload.data
+            state.search = action.payload.search
 
         },
         [getSearchPackagesThunk.fulfilled]: (state, action) => {
