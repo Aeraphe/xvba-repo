@@ -5,12 +5,14 @@ import { SearchResultBarComp } from '../SearchResultBar/SearchResultBar.comp';
 import { SearchResultListComp } from '../SearchResultList/SearchResultList.comp';
 import { useDispatch, useSelector } from "react-redux";
 import { searchPackagesThunk, getSearchPackagesThunk, getSearchTextThunk } from "../../../../shared/reducers/search-packages.slice";
+import { LoadingSharedComp } from '../../../../shared/components/Loading/loading';
 
 let lastSearch = "";
 
 export const SearchComp = () => {
     let dispatch = useDispatch();
     const [search, setSearch] = useState();
+    const [loading, setLoading] = useState(false)
     let dbSearch = useSelector(state => state.search_packages.search);
 
     useEffect(() => {
@@ -19,10 +21,12 @@ export const SearchComp = () => {
     }, [dispatch, dbSearch])
 
     const handleOnClickSearch = async () => {
-        console.log(search);
+
         if (lastSearch !== search) {
             lastSearch = search;
-            dispatch(searchPackagesThunk(search));
+            setLoading(true)
+            await dispatch(searchPackagesThunk(search));
+            setLoading(false)
         }
     }
     const handleKeyPress = (event) => {
@@ -35,12 +39,17 @@ export const SearchComp = () => {
         <div className={styles['Container']}>
             <div className={styles['Search-Logo']}>
                 <XvbaLogoSharedComp size="7rem" >
-              
+
                 </XvbaLogoSharedComp>
-                <small style={{fontSize:"10px" ,position:"relative",right:'0px', top:'110px'}}>Version 1.0.0-b</small>
+                <small style={{ fontSize: "10px", position: "relative", right: '0px', top: '110px' }}>Version 1.0.0-b</small>
+                <div style={{ visibility: loading ? 'visible' : 'hidden' }} className={styles['Loading']}>
+                    <LoadingSharedComp />
+                </div>
+
             </div>
             <div className={styles['Search-Container']}>
                 <input value={search ? search : ''} onKeyPress={e => handleKeyPress(e)} onChange={(e) => { setSearch(e.target.value) }} placeholder="Search VBA Package" className={styles['Search-Input']}></input>
+
                 <button onClick={() => handleOnClickSearch()} className={styles['Search-Input-Btn']}>Search Packages</button>
             </div>
             <ListPackages></ListPackages>
@@ -54,7 +63,10 @@ export const SearchComp = () => {
 const ListPackages = () => {
     let dispatch = useDispatch();
     const packages = useSelector(state => state.search_packages.entities);
+    const search = useSelector(state => state.search_packages.search);
+
     let response = [];
+
 
     useEffect(() => {
         dispatch(getSearchPackagesThunk())
@@ -62,23 +74,37 @@ const ListPackages = () => {
 
     }, [dispatch])
 
-    if (packages && packages.length > 0) {
+    if (packages.length > 0) {
         let totalPackages = packages.length;
         response.push(<SearchResultBarComp key="search_result_bar_key" total={totalPackages}></SearchResultBarComp>);
         packages.forEach((item, index) => {
-           const createAte = new Date(item.create_ate).toDateString()
+            const createAte = new Date(item.create_ate).toDateString()
             response.push(
                 <SearchResultListComp key={index}
                     package={item.name}
                     user={item.username}
                     description={item.description}
                     create_ate={createAte}
-                    downloads = {item.downloads}
+                    downloads={item.downloads}
                     version={item.version.vn}
                     rating={item.rating}
                 />
             )
         });
+    } else {
+
+
+        response =
+            <div style={{ display: search ? 'block' : 'none' }}>
+                <div key="searchNotFound" className={styles['NotFound']} >
+                    <div key="notfound" >Packages Not Found for: <span className={styles['NotFoundSearch']}>{search}</span> </div>
+                </div>
+                <div className={styles['DefaultPackages-Container']} >
+                    <div className={styles['DefaultPackages']}>
+                        <h5>Try  example package : (search for linear)</h5>
+                    </div>
+                </div>
+            </div>
     }
 
 

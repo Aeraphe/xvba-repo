@@ -5,7 +5,10 @@
     min-height: 30px;
     padding-bottom: 35px;
 }
+.Loading{
+    position: relative;
 
+}
 .Search-Logo{
     display: flex;
     justify-content: center;
@@ -32,3 +35,30 @@
     height: 33px;
     margin-left: 7px;
 }
+
+.NotFound{
+
+   
+    color: #df0202;
+    margin-top: 17px;
+    font-weight: 600;
+    padding-left: 13px;
+    font-size: 17px;
+    min-height: 37px;
+    line-height: 37px;
+    text-align: center;
+
+ }
+
+ .NotFoundSearch{
+     color: rgb(18, 156, 41);
+ }
+
+
+ .DefaultPackages h5{
+     margin: 0;
+     padding: 0;
+     text-align: center;
+    position: relative;
+     padding-left: 15px;
+ }
