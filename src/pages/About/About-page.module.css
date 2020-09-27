@@ -1,0 +1,15 @@
+.Container{
+    display: flex;
+    justify-content: left;
+
+
+}
+
+
+.Content{
+    margin: 21px;
+    padding-left: 15px;
+    padding-right: 150px;
+    text-align: justify;
+    font-size: 14px;
+}
