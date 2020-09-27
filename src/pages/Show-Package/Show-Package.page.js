@@ -7,8 +7,17 @@ import { CopyToClipboard } from "../../shared/components/CopyToClipboard/CopyToC
 import PackageHttpService from '../../shared/services/packagesHttp.service';
 import { useSelector, useDispatch } from 'react-redux';
 import { searchPackagesThunk } from "../../shared/reducers/search-packages.slice";
+import ReactGA from 'react-ga';
 
 export const ShowPackagePage = (props) => {
+    useEffect(() => {
+        ReactGA.event({
+            category: 'Search',
+            action: 'Access Package Details',
+            value: props.match.params.package
+        });
+    })
+
     const dispatch = useDispatch();
 
     const packages = useSelector(state => state.search_packages.entities);

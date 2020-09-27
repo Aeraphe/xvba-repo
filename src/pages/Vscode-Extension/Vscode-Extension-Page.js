@@ -1,12 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styles from './Vscode-Extension-Page.module.css'
 import marked from 'marked';
 import DOMPurify from 'dompurify';
+import ReactGA from 'react-ga';
 
 import { readme } from './extension-readme';
 
 export const VscodeExtensionPage = () => {
-
+    useEffect(() => {
+        ReactGA.event({
+            category: 'Extension',
+            action: 'Access Extension Page'
+        });
+    })
     const readmeExtension = { __html: DOMPurify.sanitize(marked(readme())) }
     return (
         <>
@@ -16,7 +22,7 @@ export const VscodeExtensionPage = () => {
                         <div className={styles['Menu-Title']}>Menu</div>
                         <div className={styles['Menu']}>
                             <ul>
-                                <li className={styles['Menu-Btn']}><span>: :</span> About Xvba Extension</li>                               
+                                <li className={styles['Menu-Btn']}><span>: :</span> About Xvba Extension</li>
                             </ul>
                         </div>
                     </div>

@@ -5,6 +5,7 @@ import styles from "./Login-Form.module.css";
 import { CardShared } from '../../../shared/components/Card/Card.shared';
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
+import ReactGA from 'react-ga';
 
 let isLogged;
 export const LoginFormComponent = (props) => {
@@ -76,6 +77,10 @@ export const LoginFormComponent = (props) => {
         const response = await loginFirebase(email, password, dispatch);
         setLoggingStatus(response)
         props.showLoading(false)
+        ReactGA.event({
+            category: 'User',
+            action: 'Login'
+          });
 
     }
 
@@ -125,6 +130,10 @@ const CreateAccountForm = (props) => {
         const postData = { email: email, nickname: nickname, password: password, repassword: repassword };
         await createAccount(postData, dispatch);
         props.showLoading(false)
+        ReactGA.event({
+            category: 'User',
+            action: 'Created an Account'
+          });
 
     }
 }

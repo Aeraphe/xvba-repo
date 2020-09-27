@@ -1,8 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styles from './About-page.module.css'
-
+import ReactGA from 'react-ga';
 
 export const AboutPage = () => {
+    useEffect(() => {
+        ReactGA.event({
+            category: 'About',
+            action: 'Access About Page'
+        });
+    })
     return (
         <div className={styles['Container']}>
             <div className={styles['Content']}>
@@ -16,7 +22,7 @@ export const AboutPage = () => {
                     <li>sql</li>
                     <li>gauss</li>
                 </ul>
-               
+
 
                 <h3>Support XVBA </h3>
                 <p> If you find it useful, please consider supporting it. </p>

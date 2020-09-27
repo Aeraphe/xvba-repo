@@ -1,7 +1,14 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styles from './Terms.module.css';
+import ReactGA from 'react-ga';
 
 export const TermsPage = () => {
+    useEffect(() => {
+        ReactGA.event({
+            category: 'Terms',
+            action: 'Access Terms Page'
+        });
+    })
     return (
         <div className={styles['Container']}>
             <div className={styles['Content']}>

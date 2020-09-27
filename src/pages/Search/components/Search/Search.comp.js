@@ -6,6 +6,7 @@ import { SearchResultListComp } from '../SearchResultList/SearchResultList.comp'
 import { useDispatch, useSelector } from "react-redux";
 import { searchPackagesThunk, getSearchPackagesThunk, getSearchTextThunk } from "../../../../shared/reducers/search-packages.slice";
 import { LoadingSharedComp } from '../../../../shared/components/Loading/loading';
+import ReactGA from 'react-ga';
 
 let lastSearch = "";
 
@@ -23,6 +24,11 @@ export const SearchComp = () => {
     const handleOnClickSearch = async () => {
 
         if (lastSearch !== search) {
+            ReactGA.event({
+                category: 'Search',
+                action: 'Search Package',
+                value: search
+              });
             lastSearch = search;
             setLoading(true)
             await dispatch(searchPackagesThunk(search));

@@ -1,15 +1,18 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from "./Upload-Package-Form.module.css";
 import { useFormValidation } from '../../../../shared/services/custom-hooks/useForm';
 import { validateUploadPackages, validPackageDescriptionAlert, validPackageNameAlert, validFileTypeAlert } from '../../../../shared/services/form-validations/validate-upload-packages'
 import PackagesHttpService from "../../../../shared/services/packagesHttp.service";
 import { fetchPackagesByUserId } from "../../../../shared/reducers/user-packages.slice";
 import { LoadingSharedComp } from '../../../../shared/components/Loading/loading';
-
+import ReactGA from 'react-ga';
 import { useDispatch } from "react-redux";
 
 
 export const UploadPackageForm = ({ toggleModal }) => {
+    useEffect(() => {
+        ReactGA.modalview('/upload-package');
+    })
     const dispatch = useDispatch();
     const [formData, setFormData] = useState();
     const [showLoading, setShowLoading] = useState(false)

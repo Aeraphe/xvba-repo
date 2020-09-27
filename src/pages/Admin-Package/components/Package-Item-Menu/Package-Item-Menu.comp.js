@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { deleteUserPackage, fetchPackagesByUserId } from "../../../../shared/reducers/user-packages.slice";
 import PackageHttpServices from "../../../../shared/services/packagesHttp.service";
 import { LoadingSharedComp } from '../../../../shared/components/Loading/loading';
+import ReactGA from 'react-ga';
 
 let fileSelected = undefined;
 let alertTitle = ""
@@ -38,15 +39,17 @@ export const PackageItemMenuComp = ({ children, id }) => {
     }
 
     const handleAccept = async () => {
+        ReactGA.modalview('/upload-package/delete');
         setShowLoading(true)
         await dispatch(deleteUserPackage(id))
         await dispatch(fetchPackagesByUserId())
         setShowLoading(false)
         setToggle(false);
+
     }
 
     const handlerShowModal = () => {
-        
+        ReactGA.modalview('/upload-package/update');
         setShowUpdatePackage(!showUpdatePackage);
     }
 
