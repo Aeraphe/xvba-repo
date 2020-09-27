@@ -32,7 +32,7 @@
 
 }
 
-.header-menu li a{
+.header-menu  a{
     color: #939393;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-size: 1.0rem;
@@ -40,6 +40,8 @@
     
 }
 
-.header-menu li a:hover{
-    color: #f4f4f4;
+
+.header-menu a:hover, a:active, a.active{
+
+  color: #81B441;
 }

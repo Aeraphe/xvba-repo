@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from "react-redux";
 import styles from './Header.module.css'
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 
 
@@ -28,11 +28,11 @@ export const Header = () => {
 
 const LINKS =
     [
-        <li><Link to="/">Home</Link></li>,
-        <li><Link to="/xvba-extension">Xvba-Extension</Link></li>,
-        <li><Link to="/xvba-cli">Xvba-Cli</Link></li>,
-        <li><Link to="/tutorial">Tutorial</Link></li>,
-        <li protected="true" > <Link to="/upload-package">Publish</Link></li>,
+        <li><NavLink activeClassName={styles.active} exact to="/">Home</NavLink></li>,
+        <li><NavLink activeClassName={styles.active} exact to="/xvba-extension">Xvba-Extension</NavLink></li>,
+        <li><NavLink activeClassName={styles.active} exact to="/xvba-cli">Xvba-Cli</NavLink></li>,
+        <li><NavLink activeClassName={styles.active} exact to="/tutorial">Tutorial</NavLink></li>,
+        <li protected="true" > <NavLink activeClassName={styles.active} to="/upload-package">Publish</NavLink></li>,
 
     ];
 
@@ -54,9 +54,9 @@ const HeaderLinkGuard = () => {
 
 
     if (isLogged) {
-        linksChecked.push(<li key="logout"><Link to="/login">Logout</Link></li>)
+        linksChecked.push(<li key="logout"><NavLink activeClassName={styles.active} to="/login">Logout</NavLink></li>)
     } else {
-        linksChecked.push(<li key="login"><Link to="/login">Login</Link></li>)
+        linksChecked.push(<li key="login"><NavLink activeClassName={styles.active} to="/login">Login</NavLink></li>)
     }
 
     return (linksChecked)
