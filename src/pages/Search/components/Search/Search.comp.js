@@ -34,11 +34,14 @@ export const SearchComp = () => {
     return (
         <div className={styles['Container']}>
             <div className={styles['Search-Logo']}>
-                <XvbaLogoSharedComp size="7rem" />
+                <XvbaLogoSharedComp size="7rem" >
+              
+                </XvbaLogoSharedComp>
+                <small style={{fontSize:"10px" ,position:"relative",right:'0px', top:'110px'}}>Version 1.0.0-b</small>
             </div>
             <div className={styles['Search-Container']}>
                 <input value={search ? search : ''} onKeyPress={e => handleKeyPress(e)} onChange={(e) => { setSearch(e.target.value) }} placeholder="Search VBA Package" className={styles['Search-Input']}></input>
-                <button onClick={() => handleOnClickSearch()} className={styles['Search-Input-Btn']}>Search</button>
+                <button onClick={() => handleOnClickSearch()} className={styles['Search-Input-Btn']}>Search Packages</button>
             </div>
             <ListPackages></ListPackages>
         </div>
