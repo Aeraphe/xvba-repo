@@ -46,3 +46,10 @@
   margin-bottom: 11px;
   margin-bottom: 11px;
 }
+
+.Loading{
+  position: absolute;
+  right: 27px;
+  bottom: 55px;
+
+}

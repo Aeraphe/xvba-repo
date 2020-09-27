@@ -1,13 +1,18 @@
 import React, { useState } from 'react';
 import styles from "./Upload-Package-Form.module.css";
 import { useFormValidation } from '../../../../shared/services/custom-hooks/useForm';
-import { validateUploadPackages, validPackageDescriptionAlert, validPackageNameAlert,validFileTypeAlert } from '../../../../shared/services/form-validations/validate-upload-packages'
+import { validateUploadPackages, validPackageDescriptionAlert, validPackageNameAlert, validFileTypeAlert } from '../../../../shared/services/form-validations/validate-upload-packages'
 import PackagesHttpService from "../../../../shared/services/packagesHttp.service";
 import { fetchPackagesByUserId } from "../../../../shared/reducers/user-packages.slice";
+import { LoadingSharedComp } from '../../../../shared/components/Loading/loading';
+
 import { useDispatch } from "react-redux";
+
+
 export const UploadPackageForm = ({ toggleModal }) => {
     const dispatch = useDispatch();
     const [formData, setFormData] = useState();
+    const [showLoading, setShowLoading] = useState(false)
 
     const INITIAL_VALUES = {
         name: "",
@@ -30,7 +35,9 @@ export const UploadPackageForm = ({ toggleModal }) => {
 
     const handleSubmit = async (e) => {
         try {
+
             e.preventDefault();
+            setShowLoading(true)
             let postData = new FormData();
             postData.append('package', formData)
             postData.append('data', JSON.stringify(values))
@@ -38,6 +45,7 @@ export const UploadPackageForm = ({ toggleModal }) => {
             clearFields();
             toggleModal();
             dispatch(fetchPackagesByUserId())
+            setShowLoading(false)
         } catch (error) {
 
         }
@@ -48,7 +56,7 @@ export const UploadPackageForm = ({ toggleModal }) => {
     const handleInputFileChange = (e) => {
 
 
-        handleChange({ name:'file',value: e.target.files[0].name })
+        handleChange({ name: 'file', value: e.target.files[0].name })
         setFormData(e.target.files[0]);
 
     }
@@ -79,6 +87,9 @@ export const UploadPackageForm = ({ toggleModal }) => {
                     ></textarea>
                     <label htmlFor="file"> Choose a file:  {validAlerts.file}</label>
                     <p><input onChange={e => handleInputFileChange(e)} id="file" type="file" /></p>
+                    <div style={{ visibility: showLoading ? 'visible' : 'hidden' }} className={styles['Loading']}>
+                        <LoadingSharedComp />
+                    </div>
                     <hr></hr>
                     <div className={styles['Btn-Container']}>
                         <button disabled={isSubmitting()} className={styles['Form-Btn']} type="submit">Upload</button>
