@@ -19,10 +19,10 @@ export const routes = {
         <Route key="r1" path='/' exact component={SearchPage}></Route>,
         <Route key="r2" path='/login' exact component={LoginPage}></Route>,
         <Route key="r3" path='/show-package/:package' exact component={ShowPackagePage} ></Route>,
-        <Route key="r4" path='/privacy' exact component={PrivacyPolicyPage} ></Route>,
-        <Route key="r5" path='/terms' exact component={TermsPage} ></Route>,
-        <Route key="r6" path='/xvba-extension' exact component={VscodeExtensionPage}></Route>,
-        <Route key="r7" path='/xvba-cli' exact component={XvbaCliPage}></Route>
+        <Route key="r5" path='/privacy' exact component={PrivacyPolicyPage} ></Route>,
+        <Route key="r6" path='/terms' exact component={TermsPage} ></Route>,
+        <Route key="r7" path='/xvba-extension' exact component={VscodeExtensionPage}></Route>,
+        <Route key="r8" path='/xvba-cli' exact component={XvbaCliPage}></Route>
     ]
 }
 
