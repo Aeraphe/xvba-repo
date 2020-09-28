@@ -19,20 +19,21 @@ export const XvbaCliPage = () => {
         <>
             <div className={styles['Container']}>
                 <div className={styles['Container-Grid']}>
-                    <div className={styles['Menu-Container']}>
-                        <div className={styles['Menu-Title']}>Menu</div>
-                        <div className={styles['Menu']}>
-                            <ul>
-                                <li className={styles['Menu-Btn']}><span>: :</span> About Xvba-Cli</li>
-                            </ul>
-                        </div>
-                    </div>
+
                     <div className={styles['Readme-Container']}>
                         <div className={styles['Readme']} dangerouslySetInnerHTML={readmeExtension} ></div>
                     </div>
 
                 </div>
 
+            </div>
+            <div className={styles['Menu-Container']}>
+                <div className={styles['Menu-Title']}>Menu</div>
+                <div className={styles['Menu']}>
+                    <ul>
+                        <li className={styles['Menu-Btn']}><span>: :</span> About Xvba-Cli</li>
+                    </ul>
+                </div>
             </div>
         </>
     )

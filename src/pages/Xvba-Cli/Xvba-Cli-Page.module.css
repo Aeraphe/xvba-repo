@@ -1,46 +1,49 @@
 .Container {
-  position: relative;
   height: 100%;
 }
 
 .Container-Grid {
   display: grid;
-  grid-template-columns: 197px 1fr;
+  margin-left: 197px;
+  grid-template-columns: 1fr;
   grid-row: 1fr;
   height: 100%;
 }
 
 .Menu-Container {
+  position: fixed;
+  z-index: 10;
+  top: 39px;
+  height: 100%;
+  width: 197px;
   background-color: rgb(61, 73, 62);
   color: #ffff;
 }
 .Menu-Title {
-    
   background-color: rgb(36, 83, 54);
-    min-height: 31px;
-    line-height: 31px;
-    padding-left: 7px;
-    font-size: 14px;
-    border-bottom: 1px solid rgba(204, 204, 204, 0.479);
-    border-top: 1px solid rgba(204, 204, 204, 0.479);
-
+  min-height: 31px;
+  line-height: 31px;
+  padding-left: 7px;
+  font-size: 14px;
+  border-bottom: 1px solid rgba(204, 204, 204, 0.479);
+  border-top: 1px solid rgba(204, 204, 204, 0.479);
 }
-.Menu ul{
-    list-style: none;
-    margin: 0;
-    padding: 0;
+.Menu ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 .Menu-Btn {
-    min-height: 27px;
-    line-height: 27px;
-    padding-left: 7px;
-    font-size: 14px;
+  min-height: 27px;
+  line-height: 27px;
+  padding-left: 7px;
+  font-size: 14px;
   border-bottom: 1px solid rgba(204, 204, 204, 0.479);
-    cursor: pointer;
+  cursor: pointer;
 }
 
-.Menu-Btn:hover{
-    background-color: rgb(61, 74, 97);
+.Menu-Btn:hover {
+  background-color: rgb(61, 74, 97);
 }
 .Readme-Container {
   background-color: #ffff;
