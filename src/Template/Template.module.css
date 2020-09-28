@@ -1,4 +1,5 @@
 .grid-container {
+  
   display: grid;
   grid-template-areas: "header" "main" "footer";
   grid-template-columns: 1fr;
@@ -9,6 +10,13 @@
 
 .header{
   grid-area: header;
+  position: fixed; 
+  top: 0; 
+  width: 100%;
+  height: 40px;
+  z-index: 200;
+
+
 }
 
 .main{
