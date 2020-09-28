@@ -1,0 +1,56 @@
+.Container {
+    position: relative;
+    height: 100%;
+  }
+  
+  .Container-Grid {
+    display: grid;
+    grid-template-columns: 197px 1fr;
+    grid-row: 1fr;
+    height: 100%;
+  }
+  
+  .Menu-Container {
+    background-color: rgb(61, 73, 62);
+    color: #ffff;
+  }
+  .Menu-Title {
+      
+      background-color: rgb(36, 83, 54);
+      min-height: 31px;
+      line-height: 31px;
+      padding-left: 7px;
+      font-size: 14px;
+      border-bottom: 1px solid rgba(204, 204, 204, 0.479);
+      border-top: 1px solid rgba(204, 204, 204, 0.479);
+  
+  }
+  .Menu ul{
+      list-style: none;
+      margin: 0;
+      padding: 0;
+  }
+  .Menu-Btn {
+      min-height: 27px;
+      line-height: 27px;
+      padding-left: 7px;
+      font-size: 14px;
+    border-bottom: 1px solid rgba(204, 204, 204, 0.479);
+      cursor: pointer;
+  }
+  
+  .Menu-Btn:hover{
+      background-color: rgb(61, 74, 97);
+  }
+  .Readme-Container {
+    background-color: #ffff;
+  }
+  .Readme {
+ 
+    overflow-y: scroll;
+    position: relative;
+    margin: 17px;
+    padding-left: 15px;
+    background-color: #ffff;
+  }
+  
