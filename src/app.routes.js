@@ -8,6 +8,7 @@ import { TermsPage } from './pages/Terms/Terms.page';
 import { VscodeExtensionPage } from './pages/Vscode-Extension/Vscode-Extension-Page';
 import { XvbaCliPage } from './pages/Xvba-Cli/Xvba-Cli-Page';
 import {AboutPage} from './pages/About/About-page'
+import {TutorialPage} from './pages/Tutorial/Tutorial-page'
 import { Route } from 'react-router-dom';
 
 
@@ -24,6 +25,7 @@ export const routes = {
         <Route key="r7" path='/xvba-extension' exact component={VscodeExtensionPage}></Route>,
         <Route key="r8" path='/xvba-cli' exact component={XvbaCliPage}></Route>,
         <Route key="r9" path='/about' exact component={AboutPage}></Route>,
+        <Route key="r10" path='/tutorial' exact component={TutorialPage}></Route>,
     ]
 }
 
