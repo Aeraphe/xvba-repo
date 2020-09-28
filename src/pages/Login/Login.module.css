@@ -1,13 +1,13 @@
 .LoginPage{
     display: flex;
     justify-content: center;
-    margin-top: 100px;
+    padding-top:4%;
 
 }
 
 .Loading{
     position: absolute;
-    top:200px;
+    top:150px;
     margin: auto;
     padding-left: 190px;
 }

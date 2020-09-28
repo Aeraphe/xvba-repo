@@ -8,10 +8,9 @@
   box-shadow: 0px 0px 21px -5px;
   height: 470px;
   width: 317px;
-  padding: 21px;
-  background-color: #ffff;
+  padding: 21px;  background-color: #ffff;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
-  margin-top: 17px;
+
 }
 
 .Login-Form-Content p {
