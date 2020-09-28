@@ -1,7 +1,11 @@
 .Footer{
+    position: relative;
+    overflow:hidden;
+    z-index: 10;
     background-color: rgb(0, 0, 0);
     height: 85px;
     width: 100%;
+
    
 }
 
