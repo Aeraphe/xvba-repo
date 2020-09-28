@@ -10,7 +10,7 @@ import { checkUserLogged } from "./shared/reducers/authenticationSlice";
 import { routes } from "./app.routes";
 import { DBServices } from "./shared/services/indexddb/db.service";
 import ReactGA from 'react-ga';
-ReactGA.initialize('UA-179147780-1');
+ReactGA.initialize('UA-176345056-1');
 ReactGA.pageview(window.location.pathname + window.location.search);
 
 // Initialize Firebase
