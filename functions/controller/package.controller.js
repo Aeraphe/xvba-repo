@@ -35,6 +35,10 @@ module.exports = {
                 let storage = admin.storage()
                 let bucked = storage.bucket("xvba-repository.appspot.com");
                 const stream = bucked.file('xvba-files/' + fileName).createReadStream();
+                //Increment Download
+                const increment = admin.firestore.FieldValue.increment(1);
+                const packRef = db.collection('packages').doc(pack[0].id);
+                packRef.update({downloads:increment})
                 return { stream, result: { ...Response.format([], req, { code: 200, message: 'Download package' + packageName + " Successfully" }) } };
             } else {
                 return Response.format([], req, { code: 403, message: 'Permission Denied' });
