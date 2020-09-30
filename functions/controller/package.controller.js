@@ -38,7 +38,7 @@ module.exports = {
                 //Increment Download
                 const increment = admin.firestore.FieldValue.increment(1);
                 const packRef = db.collection('packages').doc(pack[0].id);
-                packRef.update({downloads:increment})
+                packRef.update({ downloads: increment })
                 return { stream, result: { ...Response.format([], req, { code: 200, message: 'Download package' + packageName + " Successfully" }) } };
             } else {
                 return Response.format([], req, { code: 403, message: 'Permission Denied' });
@@ -100,10 +100,10 @@ module.exports = {
             const downloadGuard = DownloadGuardService(oldPackage, userId);
             //Get new package Version
             const newPackageVersion = packageCheckedData.config.version;
-            
+
             //Check if the version is valid
             const isValidVersion = await checkVersion(newPackageVersion, oldPackage[0].version.vn)
-     
+
             if (downloadGuard && isValidVersion) {
                 const config = packageCheckedData.config;
                 //Store package zip file
@@ -116,12 +116,12 @@ module.exports = {
 
                 const packageVersion = {
                     vn: config.version,
-                    file: filesStoragePackage[0].rename,
-                    size: filesStoragePackage[0].size,
-                    readme_file: filesStorageReadme[0].rename,
+                    file: filesStoragePackage.rename,
+                    size: filesStoragePackage.size,
+                    readme_file: filesStorageReadme.rename,
                     create_ate: createAt,
                 };
-      
+
                 await addPackageVersion(packageId, packageVersion);
 
                 return Response.format(postData.data, req, { code: 200, message: 'Package Upload Successfully' });
@@ -169,7 +169,7 @@ module.exports = {
 
             const { savePackage } = PackageRepository;
             const createAt = Date.now();
-
+           
             const packageData = {
                 user_id: userId,
                 name: postData.data.name,
@@ -179,20 +179,20 @@ module.exports = {
                 public: true,
                 rating: 0,
                 downloads: 0,
-                version:{
+                version: {
                     vn: config.version,
-                    file: filesStoragePackage[0].rename,
-                    size: filesStoragePackage[0].size,
-                    readme_file: filesStorageReadme[0].rename,
+                    file: filesStoragePackage.rename,
+                    size: filesStoragePackage.size,
+                    readme_file: filesStorageReadme.rename,
                     create_ate: createAt,
                 },
                 create_ate: createAt
             };
             const packageVersion = {
                 vn: config.version,
-                file: filesStoragePackage[0].rename,
-                size: filesStoragePackage[0].size,
-                readme_file: filesStorageReadme[0].rename,
+                file: filesStoragePackage.rename,
+                size: filesStoragePackage.size,
+                readme_file: filesStorageReadme.rename,
                 create_ate: createAt,
             };
 

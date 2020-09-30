@@ -1,10 +1,16 @@
-const admin = require('firebase-admin');
+const admin = require('../firestore.init');
 const fs = require('fs');
-const fsAsync = require("fs").promises;
 const path = require('path');
 let bucketName = "xvba-repository.appspot.com";
-const bucked = admin.storage().bucket(bucketName)
 
+
+
+
+const corConf = [
+
+]
+admin.storage().bucket(bucketName).setCorsConfiguration(corConf)
+const bucket = admin.storage().bucket(bucketName)
 
 /**
  * 
@@ -12,43 +18,50 @@ const bucked = admin.storage().bucket(bucketName)
  * @param {Object} options { destination,append_name}
  */
 const storePackage = async (files, options) => {
-    let resp = [];
 
-    const store = new Promise(
-        (resolve, reject) => {
-            try {
+    try {
 
-                files.forEach(async element => {
+        return new Promise(
+            (resolve, reject) => {
+                for (const element of files) {
+
                     let ext = path.extname(element.file);
                     const last_name = options.append_name ? options.append_name : "";
                     let fileName = Date.now() + last_name + ext;
                     //Get the file size
-                    const stat = await fsAsync.stat(element.file)
-                    let fileRenamed = await bucked.upload(
-                        element.file, {
-                        destination: options.destination + "/" + fileName
-                    }).then(() => {
-                        fs.unlinkSync(element.file);
-                        resp.push({ file: element.file, rename: fileName, destination: options.destination, size: stat.size });
-                        return resp
+                    fs.stat(element.file, (error, stats) => {
+                        if (error) {
+                            reject(error)
+                        }
+                        bucket.upload(
+                            element.file, {
+                            destination: options.destination + "/" + fileName
+                        }).then(() => {
+                            fs.unlinkSync(element.file)
+                            resolve(({ file: element.file, rename: fileName, destination: options.destination, size: stats.size }))
+
+                        }).catch(
+                            error => {
+                                reject(error)
+                            }
+                        )
                     })
-                    resolve(fileRenamed)
-                });
 
-
-            } catch (error) {
-                reject(error)
+                };
             }
+        )
 
-        }
-    )
-    return store
+
+    } catch (error) {
+        console.log(error)
+    }
+
 }
 
 
-const deletePackageFile = async ( name) => {
+const deletePackageFile = async (name) => {
     const filePath = "xvba-files/" + name;
-    const file = bucked.file(filePath);
+    const file = bucket.file(filePath);
     return await file.delete().then(
         val => {
             return val;
