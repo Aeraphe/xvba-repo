@@ -4,7 +4,7 @@
   grid-template-areas: "header" "main" "footer";
   grid-template-columns: 1fr;
   grid-template-rows: 40px 1fr 85px;
-  min-height: 100vh;
+  min-height: 100%;
 }
 
 
