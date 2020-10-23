@@ -1,13 +1,12 @@
 .Container {
   position: relative;
-  height: 100%;
 }
 
 .Container-Grid {
   display: grid;
   grid-template-columns: 197px 1fr;
   grid-row: 1fr;
-  height: 100%;
+
 }
 
 .Menu-Container {
@@ -50,4 +49,5 @@
   margin: 17px;
   padding-left: 15px;
   background-color: #ffff;
+ 
 }
