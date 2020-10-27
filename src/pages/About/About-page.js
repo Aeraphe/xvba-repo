@@ -18,9 +18,8 @@ export const AboutPage = () => {
                 <p>You can test and create your packages with Xvba-cli</p>
                 <h4>Some example packages are:</h4>
                 <ul>
+                    <li>excel-types</li>
                     <li>linear</li>
-                    <li>sql</li>
-                    <li>gauss</li>
                 </ul>
 
 
