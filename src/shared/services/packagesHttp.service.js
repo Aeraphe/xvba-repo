@@ -16,26 +16,23 @@ class PackagesHttpService {
 
     get = async () => {
         const config = getAuthHeaderToken();
-        return await axios.get(endpoints.packages.url, config).then(
-            res => res.data
-        );
+        const response = await axios.get(endpoints.packages.url, config);
+        return response.data;
 
     };
 
 
     getPackageReadme = async (packageName) => {
 
-        return await axios.get(endpoints.packages.file_readme + "/" + packageName).then(
-            res => res.data
-        );
+        const response = await axios.get(endpoints.packages.file_readme + "/" + packageName);
+        return response.data;
 
     };
 
     getUserAuthPackages = async () => {
         const config = getAuthHeaderToken();
-        return await axios.get(endpoints.packages.user_auth_packages, config).then(
-            res => res.data
-        );
+        const response = await axios.get(endpoints.packages.user_auth_packages, config);
+        return response.data;
     }
 
     uploadNewPackage = async (data, callback) => {
@@ -54,11 +51,8 @@ class PackagesHttpService {
             }
         }
 
-        return await axios.post(endpoints.packages.url, data, uploadConf).then(
-            res => {
-                return res.data
-            }
-        )
+        const response = await axios.post(endpoints.packages.url, data, uploadConf);
+        return response.data;
     }
 
 
@@ -78,11 +72,8 @@ class PackagesHttpService {
             }
         }
      
-        return await axios.put(endpoints.packages.update, data, uploadConf).then(
-            res => {
-                return res.data
-            }
-        )
+        const response = await axios.put(endpoints.packages.update, data, uploadConf);
+        return response.data;
     }
     /**
      * Search for packages by name
@@ -92,28 +83,21 @@ class PackagesHttpService {
     fuseSearch = async (search) => {
         const config = getAuthHeaderToken();
         let data = { name: search }
-        return await axios.post(endpoints.packages.url + '/fuse-search', data, config).then(
-            res => {
-                return res.data
-            }
-        )
+        const response = await axios.post(endpoints.packages.url + '/fuse-search', data, config)
+        return response.data;
     }
 
     searchByName = async (search) => {
         const config = getAuthHeaderToken();
         let data = { name: search };
-        return await axios.post(endpoints.packages.url + '/search-name', data, config).then(
-            res => {
-                return res.data
-            }
-        )
+        const response = await axios.post(endpoints.packages.url + '/search-name', data, config);
+        return response.data;
     }
 
     delete = async (id) => {
         const config = getAuthHeaderToken();
-        return await axios.delete(endpoints.packages.url + "/" + id, config).then(
-            res => res.data
-        );
+        const response =  await axios.delete(endpoints.packages.url + "/" + id, config);
+        return response.data;
 
     };
 
