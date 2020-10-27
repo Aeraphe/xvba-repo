@@ -118,12 +118,13 @@ const getPackageLastVersionDetails = async (docId) => {
 //Check Package version string request
 const splitPackageNameVersion = (nameVersion) => {
     const nameVersionSplit = nameVersion.split('@');
-    const reg = new RegExp('@');
-    if (reg.test(nameVersion)) {
+    const regexVersionFormat = new RegExp(/^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$/,"gm");
+  
+    if (regexVersionFormat.test(nameVersionSplit[1])) {
         const version = nameVersionSplit[1].match(/^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$/gm);
-        return { version: version !== null ? version[0] : 'Not found', name: nameVersionSplit[0] }
+        return { version: version !== null ? version[0] : 'latest', name: nameVersionSplit[0] }
     } else {
-        return { version: 'latest', name: nameVersionSplit[0] }
+        return { version: 'latest', name: nameVersion }
     }
 
 }
